@@ -8,7 +8,7 @@ using System.Web.Security;
 using System.Web.SessionState;
 using System.Web.Http;
 
-namespace CatalogueNew
+namespace CatalogueNew.Web
 {
     public class Global : HttpApplication
     {

@@ -1,1 +1,1 @@
-﻿<%@ Application Codebehind="Global.asax.cs" Inherits="CatalogueNew.Global" Language="C#" %>
+﻿<%@ Application Codebehind="Global.asax.cs" Inherits="CatalogueNew.Web.Global" Language="C#" %>
