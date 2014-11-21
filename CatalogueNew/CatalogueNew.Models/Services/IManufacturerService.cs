@@ -11,7 +11,7 @@ namespace CatalogueNew.Models.Services
     {
         IEnumerable<Manufacturer> GetAll();
 
-        Manufacturer Find(int? id);
+        Manufacturer Find(int id);
 
         void Add(Manufacturer manufacturer);
 

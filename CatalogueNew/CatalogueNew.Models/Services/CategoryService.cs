@@ -22,7 +22,7 @@ namespace CatalogueNew.Models.Services
             return context.Categories.ToList();
         }
 
-        public Category Find(int? id)
+        public Category Find(int id)
         {
             return context.Categories.Find(id);
         }
