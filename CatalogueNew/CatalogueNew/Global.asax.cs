@@ -7,11 +7,20 @@ using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
 using System.Web.Http;
+using log4net;
 
 namespace CatalogueNew.Web
 {
     public class Global : HttpApplication
     {
+        void Application_Error(Object sender, EventArgs e)
+        {
+            var log = DependencyResolver.Current.GetService<ILog>();
+            Exception ex = Server.GetLastError().GetBaseException();
+
+            log.Error("App_Error", ex);
+        }
+
         void Application_Start(object sender, EventArgs e)
         {
             // Code that runs on application startup
