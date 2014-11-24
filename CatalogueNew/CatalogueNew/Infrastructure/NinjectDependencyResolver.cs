@@ -36,9 +36,12 @@ namespace CatalogueNew.Web.Infrastructure
                 .InSingletonScope();
             kernel.Bind<ICatalogueContext>().To<CatalogueContext>()
                 .InRequestScope();
-            kernel.Bind<IProductService>().To<ProductService>();
-            kernel.Bind<IManufacturerService>().To<ManufacturerService>();
-            kernel.Bind<ICategoryService>().To<CategoryService>();
+            kernel.Bind<IProductService>().To<ProductService>()
+                .InRequestScope();
+            kernel.Bind<IManufacturerService>().To<ManufacturerService>()
+                .InRequestScope();
+            kernel.Bind<ICategoryService>().To<CategoryService>()
+                .InRequestScope();
 
         }
     }
