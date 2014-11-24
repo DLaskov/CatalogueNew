@@ -1,8 +1,12 @@
-﻿@model CatalogueNew.Models.Entities.Product
-
-@{
+﻿@{
     ViewBag.Title = "Index";
 }
-
-<h2>Index</h2>
-@ViewBag.Product.Name
+<head>
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <h2>Index</h2>
+    @ViewBag.Product.Name
+    @ViewBag.Product.Category.Name
+    @ViewBag.Product.ProductYear
+</body>
