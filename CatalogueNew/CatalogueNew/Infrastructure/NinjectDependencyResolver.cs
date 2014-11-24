@@ -1,5 +1,6 @@
 ﻿using log4net;
 using Ninject;
+using Ninject.Web.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,8 +34,8 @@ namespace CatalogueNew.Web.Infrastructure
         {
             kernel.Bind<ILog>().ToMethod(x => LogManager.GetLogger(typeof(Controller)))
                 .InSingletonScope();
-            kernel.Bind(typeof(ICatalogueContext)).To(typeof(CatalogueContext))
-                .InSingletonScope();
+            kernel.Bind<ICatalogueContext>().To<CatalogueContext>()
+                .InRequestScope();
             kernel.Bind<IProductService>().To<ProductService>();
             kernel.Bind<IManufacturerService>().To<ManufacturerService>();
             kernel.Bind<ICategoryService>().To<CategoryService>();
