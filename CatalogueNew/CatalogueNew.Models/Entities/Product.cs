@@ -30,9 +30,8 @@ namespace CatalogueNew.Models.Entities
         public int CategoryID { get; set; }
         public Category Category { get; set; }
 
-        [DataType(DataType.Date)]
         [DisplayName("Year of product")]
-        public DateTime ProductYear { get; set; }
+        public int ProductYear { get; set; }
 
         [Required]
         [MaxLength(1000)]
