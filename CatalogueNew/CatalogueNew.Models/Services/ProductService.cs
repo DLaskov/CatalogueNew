@@ -33,7 +33,7 @@ namespace CatalogueNew.Models.Services
 
         public Product GetAt(int index)
         {
-            return context.Products.ElementAt(index);
+            return context.Products.Find(index);
         }
 
         public void Remove(Product product)
