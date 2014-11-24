@@ -9,7 +9,7 @@ namespace CatalogueNew.Models.Services
 {
     public class ProductService : IProductService
     {
-        private CatalogueContext context;
+        private ICatalogueContext context;
 
         public ProductService()
         {
