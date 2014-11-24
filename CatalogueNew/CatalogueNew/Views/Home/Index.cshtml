@@ -1,7 +1,16 @@
-﻿@{
+﻿@model CatalogueNew.Web.Views.AppViewPage
+@{
     ViewBag.Title = "Index";
 }
-<h2>Index</h2>
-@ViewBag.Product.Name
-@ViewBag.Product.Category.Name
-@ViewBag.Product.ProductYear
+<head>
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <h2>Index</h2>
+    <p>
+        Hello @CurrentUser.Name.
+    </p>
+    <p>
+        <a href="@Url.Action("logout", "auth")">Log Out</a>
+    </p>
+</body>

@@ -10,6 +10,7 @@ using System.Web.Security;
 using System.Web.SessionState;
 using System.Web.Http;
 using log4net;
+using CatalogueNew.Web.App_Start;
 
 namespace CatalogueNew.Web
 {
@@ -30,6 +31,7 @@ namespace CatalogueNew.Web
             GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             log4net.Config.XmlConfigurator.Configure(new FileInfo(Server.MapPath("~/Web.config")));
         }
     }
