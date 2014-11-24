@@ -35,7 +35,10 @@ namespace CatalogueNew.Models.Services
         {
             return context.Products.Find(index);
         }
-
+        public Category GetCategory(int id)
+        {
+            return context.Categories.Find(id);
+        }
         public void Remove(Product product)
         {
             throw new NotImplementedException();
