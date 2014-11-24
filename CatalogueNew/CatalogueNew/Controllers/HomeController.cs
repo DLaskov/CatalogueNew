@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CatalogueNew.Models.Services;
+using CatalogueNew.Models.Entities;
 
 namespace CatalogueNew.Web.Controllers
 {
@@ -13,7 +14,8 @@ namespace CatalogueNew.Web.Controllers
         public ActionResult Index()
         {
             ProductService ps = new ProductService();
-            ViewBag.Product = ps.GetAt(0);
+            ViewBag.Product = ps.GetAt(12);
+            ViewBag.Product.Category = ps.GetCategory(ViewBag.Product.CategoryID);
             return View();
         }
     }
