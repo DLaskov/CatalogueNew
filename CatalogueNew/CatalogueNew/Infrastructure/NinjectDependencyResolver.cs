@@ -11,6 +11,7 @@ using CatalogueNew.Models.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Ninject.Parameters;
+using CatalogueNew.Web.Controllers;
 
 namespace CatalogueNew.Web.Infrastructure
 {

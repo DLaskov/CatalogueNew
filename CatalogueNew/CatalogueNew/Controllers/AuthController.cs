@@ -83,6 +83,8 @@ namespace CatalogueNew.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            UserValidator(userManager);
+
             if (!ModelState.IsValid)
             {
                 return View();
@@ -131,7 +133,7 @@ namespace CatalogueNew.Web.Controllers
         {
             usermanager.UserValidator = new UserValidator<User>(usermanager)
             {
-                AllowOnlyAlphanumericUserNames = false
+                AllowOnlyAlphanumericUserNames = true
             };
         }
 
