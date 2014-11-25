@@ -12,6 +12,9 @@ namespace CatalogueNew.Web.App_Start
     using Ninject.Web.Common;
     using System.Web.Mvc;
     using CatalogueNew.Web.Infrastructure;
+    using Microsoft.AspNet.Identity;
+    using CatalogueNew.Models.Entities;
+    using Microsoft.AspNet.Identity.EntityFramework;
 
     public static class NinjectWebCommon 
     {

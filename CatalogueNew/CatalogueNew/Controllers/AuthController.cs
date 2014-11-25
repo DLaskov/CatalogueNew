@@ -99,8 +99,13 @@ namespace CatalogueNew.Web.Controllers
 
             var user = new User
             {
-                UserName = model.Email,
-                FirstName = model.FirstName
+                UserName = model.UserName,
+                FirstName = model.FirstName,
+                BirthDate = model.BirthDate,
+                Email = model.Email,
+                LastName = model.LastName,
+                Gender = (int)model.Gender
+
             };
 
             var result = await userManager.CreateAsync(user, model.Password);
@@ -132,14 +137,14 @@ namespace CatalogueNew.Web.Controllers
             return ctx.Authentication;
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && userManager != null)
-            {
-                userManager.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing && userManager != null)
+        //    {
+        //        userManager.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
 
 
     }

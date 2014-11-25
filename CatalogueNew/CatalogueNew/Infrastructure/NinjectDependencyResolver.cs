@@ -10,6 +10,7 @@ using CatalogueNew.Models.Entities;
 using CatalogueNew.Models.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Ninject.Parameters;
 
 namespace CatalogueNew.Web.Infrastructure
 {
@@ -36,15 +37,18 @@ namespace CatalogueNew.Web.Infrastructure
         {
             kernel.Bind<ILog>().ToMethod(x => LogManager.GetLogger(typeof(Controller)))
                 .InSingletonScope();
-            kernel.Bind<ICatalogueContext>().To<CatalogueContext>()
-                .InRequestScope();
+            //kernel.Bind<ICatalogueContext>().To<CatalogueContext>()
+            //    .InRequestScope();
             kernel.Bind<IProductService>().To<ProductService>();
             kernel.Bind<IManufacturerService>().To<ManufacturerService>();
-            kernel.Bind<ICategoryService>().To<CategoryService>();
-            kernel.Bind(typeof(UserStore<User>)).To<CatalogueContext>()
-                .InRequestScope();
-            kernel.Bind<UserManager<User>>().ToSelf();
-            kernel.Bind<IUserStore<User>>().To<UserStore<User>>();
+            //kernel.Bind<ICategoryService>().To<CategoryService>();
+            //kernel.Bind(typeof(UserStore<User>)).To<CatalogueContext>()
+            //    .InRequestScope();
+            kernel.Bind<CatalogueContext>().ToSelf().InRequestScope();
+            kernel.Bind<IUserStore<User>>().To<UserStore<User>>()
+                .WithConstructorArgument("context", kernel.Get<CatalogueContext>());
+            kernel.Bind<UserManager<User>>().ToSelf()
+                .WithConstructorArgument("store", kernel.Get<IUserStore<User>>());
 
         }
     }
