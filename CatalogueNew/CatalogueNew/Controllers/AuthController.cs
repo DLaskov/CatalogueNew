@@ -16,13 +16,8 @@ namespace CatalogueNew.Web.Controllers
     [AllowAnonymous]
     public class AuthController : Controller
     {
-        private readonly UserManager<User> userManager;
-
-        public AuthController(UserManager<User> userManager)
-        {
-            this.userManager = userManager;
-            UserValidator(this.userManager);
-        }
+        private readonly UserManager<User> userManager =
+            DependencyResolver.Current.GetService<UserManager<User>>();
 
         [HttpGet]
         public ActionResult LogIn(string returnUrl)
@@ -133,12 +128,11 @@ namespace CatalogueNew.Web.Controllers
         }
 
         private void UserValidator(UserManager<User> usermanager)
-        {          
+        {
             usermanager.UserValidator = new UserValidator<User>(usermanager)
             {
-                AllowOnlyAlphanumericUserNames = true
+                AllowOnlyAlphanumericUserNames = false
             };
-
         }
 
         //protected override void Dispose(bool disposing)

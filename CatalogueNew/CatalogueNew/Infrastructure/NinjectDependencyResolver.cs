@@ -37,14 +37,11 @@ namespace CatalogueNew.Web.Infrastructure
         {
             kernel.Bind<ILog>().ToMethod(x => LogManager.GetLogger(typeof(Controller)))
                 .InSingletonScope();
-            //kernel.Bind<ICatalogueContext>().To<CatalogueContext>()
-            //    .InRequestScope();
+            kernel.Bind<ICatalogueContext>().To<CatalogueContext>()
+                .InRequestScope();
             kernel.Bind<IProductService>().To<ProductService>();
             kernel.Bind<IManufacturerService>().To<ManufacturerService>();
             kernel.Bind<ICategoryServices>().To<CategoryServices>();
-            //kernel.Bind(typeof(UserStore<User>)).To<CatalogueContext>()
-            //    .InRequestScope();
-            kernel.Bind<CatalogueContext>().ToSelf().InRequestScope();
             kernel.Bind<IUserStore<User>>().To<UserStore<User>>()
                 .WithConstructorArgument("context", kernel.Get<CatalogueContext>());
             kernel.Bind<UserManager<User>>().ToSelf()
