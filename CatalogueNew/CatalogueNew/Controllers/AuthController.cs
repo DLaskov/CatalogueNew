@@ -31,7 +31,7 @@ namespace CatalogueNew.Web.Controllers
         [HttpGet]
         public ActionResult LogIn(string returnUrl)
         {
-            var model = new LogInModel
+            var model = new LogInViewModel
             {
                 ReturnUrl = returnUrl
             };
@@ -40,7 +40,7 @@ namespace CatalogueNew.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> LogIn(LogInModel model)
+        public async Task<ActionResult> LogIn(LogInViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -90,7 +90,7 @@ namespace CatalogueNew.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Register(RegisterModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -99,8 +99,12 @@ namespace CatalogueNew.Web.Controllers
 
             var user = new User
             {
-                UserName = model.Email,
-                FirstName = model.FirstName
+                UserName = model.UserName,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Gender = (Gender)model.Genders,
+                BirthDate = model.BirthDate
+
             };
 
             var result = await userManager.CreateAsync(user, model.Password);

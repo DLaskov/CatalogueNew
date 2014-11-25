@@ -1282,3 +1282,771 @@ System.InvalidOperationException: The entity type User is not part of the model 
    at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)
    at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
    at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+ERROR 2014-11-25 14:36:14,498   339ms Controller             Application_Error  - App_Error
+Ninject.ActivationException: Error activating IUserStore{User}
+More than one matching bindings are available.
+Matching bindings:
+  1) binding from IUserStore{User} to UserStore{User}
+  2) binding from IUserStore{User} to UserStore{User}
+  3) binding from IUserStore{User} to UserManager{User}
+Activation path:
+  3) Injection of dependency IUserStore{User} into parameter store of constructor of type UserManager{User}
+  2) Injection of dependency UserManager{User} into parameter userManager of constructor of type AuthController
+  1) Request for AuthController
+
+Suggestions:
+  1) Ensure that you have defined a binding for IUserStore{User} only once.
+
+   at Ninject.KernelBase.Resolve(IRequest request)
+   at Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   at Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   at Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   at Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   at System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   at Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   at Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   at Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   at System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Web.Mvc.NinjectDependencyResolver.GetService(Type serviceType)
+   at System.Web.Mvc.DefaultControllerFactory.DefaultControllerActivator.Create(RequestContext requestContext, Type controllerType)
+ERROR 2014-11-25 14:37:07,185   300ms Controller             Application_Error  - App_Error
+Ninject.ActivationException: Error activating IUserStore{User}
+More than one matching bindings are available.
+Matching bindings:
+  1) binding from IUserStore{User} to UserStore{User}
+  2) binding from IUserStore{User} to UserManager{User}
+Activation path:
+  3) Injection of dependency IUserStore{User} into parameter store of constructor of type UserManager{User}
+  2) Injection of dependency UserManager{User} into parameter userManager of constructor of type AuthController
+  1) Request for AuthController
+
+Suggestions:
+  1) Ensure that you have defined a binding for IUserStore{User} only once.
+
+   at Ninject.KernelBase.Resolve(IRequest request)
+   at Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   at Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   at Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   at Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   at System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   at Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   at Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   at Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   at System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Web.Mvc.NinjectDependencyResolver.GetService(Type serviceType)
+   at System.Web.Mvc.DefaultControllerFactory.DefaultControllerActivator.Create(RequestContext requestContext, Type controllerType)
+ERROR 2014-11-25 14:37:59,320   275ms Controller             Application_Error  - App_Error
+Ninject.ActivationException: Error activating IUserStore{User}
+More than one matching bindings are available.
+Matching bindings:
+  1) self-binding of IUserStore{User}
+  2) binding from IUserStore{User} to UserManager{User}
+Activation path:
+  3) Injection of dependency IUserStore{User} into parameter store of constructor of type UserManager{User}
+  2) Injection of dependency UserManager{User} into parameter userManager of constructor of type AuthController
+  1) Request for AuthController
+
+Suggestions:
+  1) Ensure that you have defined a binding for IUserStore{User} only once.
+
+   at Ninject.KernelBase.Resolve(IRequest request)
+   at Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   at Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   at Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   at Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   at System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   at Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   at Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   at Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   at System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Web.Mvc.NinjectDependencyResolver.GetService(Type serviceType)
+   at System.Web.Mvc.DefaultControllerFactory.DefaultControllerActivator.Create(RequestContext requestContext, Type controllerType)
+ERROR 2014-11-25 14:38:26,548   260ms Controller             Application_Error  - App_Error
+Ninject.ActivationException: Error activating IUserStore{User} using self-binding of IUserStore{User}
+No constructor was available to create an instance of the implementation type.
+
+Activation path:
+  3) Injection of dependency IUserStore{User} into parameter store of constructor of type UserManager{User}
+  2) Injection of dependency UserManager{User} into parameter userManager of constructor of type AuthController
+  1) Request for AuthController
+
+Suggestions:
+  1) Ensure that the implementation type has a public constructor.
+  2) If you have implemented the Singleton pattern, use a binding with InSingletonScope() instead.
+
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   at Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   at Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   at Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   at System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   at Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   at Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   at Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   at System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Web.Mvc.NinjectDependencyResolver.GetService(Type serviceType)
+   at System.Web.Mvc.DefaultControllerFactory.DefaultControllerActivator.Create(RequestContext requestContext, Type controllerType)
+ERROR 2014-11-25 14:38:44,066   288ms Controller             Application_Error  - App_Error
+Ninject.ActivationException: Error activating IUserStore{User} using self-binding of IUserStore{User}
+No constructor was available to create an instance of the implementation type.
+
+Activation path:
+  3) Injection of dependency IUserStore{User} into parameter store of constructor of type UserManager{User}
+  2) Injection of dependency UserManager{User} into parameter userManager of constructor of type AuthController
+  1) Request for AuthController
+
+Suggestions:
+  1) Ensure that the implementation type has a public constructor.
+  2) If you have implemented the Singleton pattern, use a binding with InSingletonScope() instead.
+
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   at Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   at Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   at Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   at System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   at Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   at Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   at Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   at System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Web.Mvc.NinjectDependencyResolver.GetService(Type serviceType)
+   at System.Web.Mvc.DefaultControllerFactory.DefaultControllerActivator.Create(RequestContext requestContext, Type controllerType)
+ERROR 2014-11-25 14:39:00,625   273ms Controller             Application_Error  - App_Error
+Ninject.ActivationException: Error activating IUserStore{User} using self-binding of IUserStore{User}
+No constructor was available to create an instance of the implementation type.
+
+Activation path:
+  3) Injection of dependency IUserStore{User} into parameter store of constructor of type UserManager{User}
+  2) Injection of dependency UserManager{User} into parameter userManager of constructor of type AuthController
+  1) Request for AuthController
+
+Suggestions:
+  1) Ensure that the implementation type has a public constructor.
+  2) If you have implemented the Singleton pattern, use a binding with InSingletonScope() instead.
+
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   at Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   at Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   at Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   at System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   at Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   at Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   at Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   at System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Web.Mvc.NinjectDependencyResolver.GetService(Type serviceType)
+   at System.Web.Mvc.DefaultControllerFactory.DefaultControllerActivator.Create(RequestContext requestContext, Type controllerType)
+ERROR 2014-11-25 14:39:23,967   273ms Controller             Application_Error  - App_Error
+Ninject.ActivationException: Error activating IUserStore{User} using binding from IUserStore{User} to UserManager{User}
+A cyclical dependency was detected between the constructors of two services.
+
+Activation path:
+  4) Injection of dependency IUserStore{User} into parameter store of constructor of type UserManager{User}
+  3) Injection of dependency IUserStore{User} into parameter store of constructor of type UserManager{User}
+  2) Injection of dependency UserManager{User} into parameter userManager of constructor of type AuthController
+  1) Request for AuthController
+
+Suggestions:
+  1) Ensure that you have not declared a dependency for IUserStore{User} on any implementations of the service.
+  2) Consider combining the services into a single one to remove the cycle.
+  3) Use property injection instead of constructor injection, and implement IInitializable
+     if you need initialization logic to be run after property values have been injected.
+
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   at Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   at Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   at Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   at System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   at Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   at Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   at Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   at System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   at Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   at Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   at Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   at System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Web.Mvc.NinjectDependencyResolver.GetService(Type serviceType)
+   at System.Web.Mvc.DefaultControllerFactory.DefaultControllerActivator.Create(RequestContext requestContext, Type controllerType)
+ERROR 2014-11-25 14:39:52,753   271ms Controller             Application_Error  - App_Error
+Ninject.ActivationException: Error activating IUserStore{User}
+No matching bindings are available, and the type is not self-bindable.
+Activation path:
+  3) Injection of dependency IUserStore{User} into parameter store of constructor of type UserManager{User}
+  2) Injection of dependency UserManager{User} into parameter userManager of constructor of type AuthController
+  1) Request for AuthController
+
+Suggestions:
+  1) Ensure that you have defined a binding for IUserStore{User}.
+  2) If the binding was defined in a module, ensure that the module has been loaded into the kernel.
+  3) Ensure you have not accidentally created more than one kernel.
+  4) If you are using constructor arguments, ensure that the parameter name matches the constructors parameter name.
+  5) If you are using automatic module loading, ensure the search path and filters are correct.
+
+   at Ninject.KernelBase.Resolve(IRequest request)
+   at Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   at Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   at Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   at Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   at System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   at Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   at Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   at Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   at System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Web.Mvc.NinjectDependencyResolver.GetService(Type serviceType)
+   at System.Web.Mvc.DefaultControllerFactory.DefaultControllerActivator.Create(RequestContext requestContext, Type controllerType)
+ERROR 2014-11-25 14:40:08,338   265ms Controller             Application_Error  - App_Error
+Ninject.ActivationException: Error activating IUserStore{User}
+No matching bindings are available, and the type is not self-bindable.
+Activation path:
+  3) Injection of dependency IUserStore{User} into parameter store of constructor of type UserManager{User}
+  2) Injection of dependency UserManager{User} into parameter userManager of constructor of type AuthController
+  1) Request for AuthController
+
+Suggestions:
+  1) Ensure that you have defined a binding for IUserStore{User}.
+  2) If the binding was defined in a module, ensure that the module has been loaded into the kernel.
+  3) Ensure you have not accidentally created more than one kernel.
+  4) If you are using constructor arguments, ensure that the parameter name matches the constructors parameter name.
+  5) If you are using automatic module loading, ensure the search path and filters are correct.
+
+   at Ninject.KernelBase.Resolve(IRequest request)
+   at Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   at Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   at Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   at Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   at System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   at Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   at Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   at Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   at System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Web.Mvc.NinjectDependencyResolver.GetService(Type serviceType)
+   at System.Web.Mvc.DefaultControllerFactory.DefaultControllerActivator.Create(RequestContext requestContext, Type controllerType)
+ERROR 2014-11-25 14:43:27,561   265ms Controller             Application_Error  - App_Error
+Ninject.ActivationException: Error activating UserManager{User} using binding from UserManager{User} to IUserStore{User}
+No constructor was available to create an instance of the implementation type.
+
+Activation path:
+  2) Injection of dependency UserManager{User} into parameter userManager of constructor of type AuthController
+  1) Request for AuthController
+
+Suggestions:
+  1) Ensure that the implementation type has a public constructor.
+  2) If you have implemented the Singleton pattern, use a binding with InSingletonScope() instead.
+
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   at Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   at Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   at Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   at System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Web.Mvc.NinjectDependencyResolver.GetService(Type serviceType)
+   at System.Web.Mvc.DefaultControllerFactory.DefaultControllerActivator.Create(RequestContext requestContext, Type controllerType)
+ERROR 2014-11-25 14:45:18,419   275ms Controller             Application_Error  - App_Error
+Ninject.ActivationException: Error activating UserManager{User}
+More than one matching bindings are available.
+Matching bindings:
+  1) binding from UserManager{User} to IUserStore{User}
+  2) binding from UserManager{User} to AuthController
+Activation path:
+  2) Injection of dependency UserManager{User} into parameter userManager of constructor of type AuthController
+  1) Request for AuthController
+
+Suggestions:
+  1) Ensure that you have defined a binding for UserManager{User} only once.
+
+   at Ninject.KernelBase.Resolve(IRequest request)
+   at Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   at Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   at Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   at Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   at System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Web.Mvc.NinjectDependencyResolver.GetService(Type serviceType)
+   at System.Web.Mvc.DefaultControllerFactory.DefaultControllerActivator.Create(RequestContext requestContext, Type controllerType)
+ERROR 2014-11-25 14:47:01,838   288ms Controller             Application_Error  - App_Error
+Ninject.ActivationException: Error activating UserManager{User}
+More than one matching bindings are available.
+Matching bindings:
+  1) binding from UserManager{User} to IUserStore{User}
+  2) binding from UserManager{User} to AuthController
+Activation path:
+  2) Injection of dependency UserManager{User} into parameter userManager of constructor of type AuthController
+  1) Request for AuthController
+
+Suggestions:
+  1) Ensure that you have defined a binding for UserManager{User} only once.
+
+   at Ninject.KernelBase.Resolve(IRequest request)
+   at Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   at Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   at Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   at Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   at System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Web.Mvc.NinjectDependencyResolver.GetService(Type serviceType)
+   at System.Web.Mvc.DefaultControllerFactory.DefaultControllerActivator.Create(RequestContext requestContext, Type controllerType)
+ERROR 2014-11-25 14:48:48,560   273ms Controller             Application_Error  - App_Error
+Ninject.ActivationException: Error activating UserManager{User}
+More than one matching bindings are available.
+Matching bindings:
+  1) binding from UserManager{User} to IUserStore{User}
+  2) binding from UserManager{User} to AuthController
+Activation path:
+  2) Injection of dependency UserManager{User} into parameter userManager of constructor of type AuthController
+  1) Request for AuthController
+
+Suggestions:
+  1) Ensure that you have defined a binding for UserManager{User} only once.
+
+   at Ninject.KernelBase.Resolve(IRequest request)
+   at Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   at Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   at Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   at Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   at System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Web.Mvc.NinjectDependencyResolver.GetService(Type serviceType)
+   at System.Web.Mvc.DefaultControllerFactory.DefaultControllerActivator.Create(RequestContext requestContext, Type controllerType)
+ERROR 2014-11-25 14:49:29,844   263ms Controller             Application_Error  - App_Error
+Ninject.ActivationException: Error activating IUserStore{User}
+No matching bindings are available, and the type is not self-bindable.
+Activation path:
+  2) Injection of dependency IUserStore{User} into parameter store of constructor of type UserManager{User}
+  1) Request for AuthController
+
+Suggestions:
+  1) Ensure that you have defined a binding for IUserStore{User}.
+  2) If the binding was defined in a module, ensure that the module has been loaded into the kernel.
+  3) Ensure you have not accidentally created more than one kernel.
+  4) If you are using constructor arguments, ensure that the parameter name matches the constructors parameter name.
+  5) If you are using automatic module loading, ensure the search path and filters are correct.
+
+   at Ninject.KernelBase.Resolve(IRequest request)
+   at Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   at Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   at Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   at Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   at System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Web.Mvc.NinjectDependencyResolver.GetService(Type serviceType)
+   at System.Web.Mvc.DefaultControllerFactory.DefaultControllerActivator.Create(RequestContext requestContext, Type controllerType)
+ERROR 2014-11-25 14:50:03,738   262ms Controller             Application_Error  - App_Error
+Ninject.ActivationException: Error activating IUserStore{User} using binding from IUserStore{User} to UserManager{User}
+A cyclical dependency was detected between the constructors of two services.
+
+Activation path:
+  3) Injection of dependency IUserStore{User} into parameter store of constructor of type UserManager{User}
+  2) Injection of dependency IUserStore{User} into parameter store of constructor of type UserManager{User}
+  1) Request for AuthController
+
+Suggestions:
+  1) Ensure that you have not declared a dependency for IUserStore{User} on any implementations of the service.
+  2) Consider combining the services into a single one to remove the cycle.
+  3) Use property injection instead of constructor injection, and implement IInitializable
+     if you need initialization logic to be run after property values have been injected.
+
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   at Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   at Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   at Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   at System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   at Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   at Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   at Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   at System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Web.Mvc.NinjectDependencyResolver.GetService(Type serviceType)
+   at System.Web.Mvc.DefaultControllerFactory.DefaultControllerActivator.Create(RequestContext requestContext, Type controllerType)
+ERROR 2014-11-25 15:07:10,915   482ms Controller             Application_Error  - App_Error
+Ninject.ActivationException: Error activating IUserStore{User} using binding from IUserStore{User} to UserManager{User}
+A cyclical dependency was detected between the constructors of two services.
+
+Activation path:
+  4) Injection of dependency IUserStore{User} into parameter store of constructor of type UserManager{User}
+  3) Injection of dependency IUserStore{User} into parameter store of constructor of type UserManager{User}
+  2) Injection of dependency UserManager{User} into parameter userManager of constructor of type AuthController
+  1) Request for AuthController
+
+Suggestions:
+  1) Ensure that you have not declared a dependency for IUserStore{User} on any implementations of the service.
+  2) Consider combining the services into a single one to remove the cycle.
+  3) Use property injection instead of constructor injection, and implement IInitializable
+     if you need initialization logic to be run after property values have been injected.
+
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   at Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   at Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   at Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   at System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   at Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   at Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   at Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   at System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   at Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   at Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   at Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   at System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Web.Mvc.NinjectDependencyResolver.GetService(Type serviceType)
+   at System.Web.Mvc.DefaultControllerFactory.DefaultControllerActivator.Create(RequestContext requestContext, Type controllerType)
+ERROR 2014-11-25 15:15:32,044  1963ms Controller             Application_Error  - App_Error
+System.Web.HttpCompileException (0x80004005): c:\Users\mitko_000\AppData\Local\Temp\Temporary ASP.NET Files\root\67f71712\8d6cf246\App_Web_login.cshtml.dcb67440.3en3tvfh.0.cs(33): error CS0234: The type or namespace name 'LogInModel' does not exist in the namespace 'CatalogueNew.Web.Models' (are you missing an assembly reference?)
+   at System.Web.Compilation.AssemblyBuilder.Compile()
+   at System.Web.Compilation.BuildProvidersCompiler.PerformBuild()
+   at System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(VirtualPath virtualPath, HttpContext context, Boolean allowCrossApp, Boolean throwIfNotFound)
+   at System.Web.Compilation.BuildManager.GetCompiledType(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetCompiledType(String virtualPath)
+   at System.Web.Mvc.BuildManagerWrapper.System.Web.Mvc.IBuildManager.GetCompiledType(String virtualPath)
+   at System.Web.Mvc.BuildManagerCompiledView.Render(ViewContext viewContext, TextWriter writer)
+   at System.Web.Mvc.ViewResultBase.ExecuteResult(ControllerContext context)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResult(ControllerContext controllerContext, ActionResult actionResult)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilterRecursive(IList`1 filters, Int32 filterIndex, ResultExecutingContext preContext, ControllerContext controllerContext, ActionResult actionResult)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilterRecursive(IList`1 filters, Int32 filterIndex, ResultExecutingContext preContext, ControllerContext controllerContext, ActionResult actionResult)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultWithFilters(ControllerContext controllerContext, IList`1 filters, ActionResult actionResult)
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass21.<>c__DisplayClass2b.<BeginInvokeAction>b__1c()
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass21.<BeginInvokeAction>b__1e(IAsyncResult asyncResult)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.CallEndDelegate(IAsyncResult asyncResult)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
+   at System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeAction(IAsyncResult asyncResult)
+   at System.Web.Mvc.Controller.<BeginExecuteCore>b__1d(IAsyncResult asyncResult, ExecuteCoreState innerState)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
+   at System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
+   at System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)
+   at System.Web.Mvc.Controller.EndExecuteCore(IAsyncResult asyncResult)
+   at System.Web.Mvc.Controller.<BeginExecute>b__15(IAsyncResult asyncResult, Controller controller)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
+   at System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
+   at System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)
+   at System.Web.Mvc.Controller.EndExecute(IAsyncResult asyncResult)
+   at System.Web.Mvc.Controller.System.Web.Mvc.Async.IAsyncController.EndExecute(IAsyncResult asyncResult)
+   at System.Web.Mvc.MvcHandler.<BeginProcessRequest>b__5(IAsyncResult asyncResult, ProcessRequestState innerState)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
+   at System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
+   at System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)
+   at System.Web.Mvc.MvcHandler.EndProcessRequest(IAsyncResult asyncResult)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+ERROR 2014-11-25 15:33:25,351  7053ms Controller             Application_Error  - App_Error
+System.Web.HttpCompileException (0x80004005): f:\Projects\CatalogueNew\CatalogueNew\CatalogueNew\Views\Auth\Register.cshtml(43): error CS1061: 'CatalogueNew.Web.Models.RegisterViewModel' does not contain a definition for 'Gender' and no extension method 'Gender' accepting a first argument of type 'CatalogueNew.Web.Models.RegisterViewModel' could be found (are you missing a using directive or an assembly reference?)
+   at System.Web.Compilation.AssemblyBuilder.Compile()
+   at System.Web.Compilation.BuildProvidersCompiler.PerformBuild()
+   at System.Web.Compilation.BuildManager.CompileWebFile(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(VirtualPath virtualPath, HttpContext context, Boolean allowCrossApp, Boolean throwIfNotFound)
+   at System.Web.Compilation.BuildManager.GetCompiledType(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetCompiledType(String virtualPath)
+   at System.Web.Mvc.BuildManagerWrapper.System.Web.Mvc.IBuildManager.GetCompiledType(String virtualPath)
+   at System.Web.Mvc.BuildManagerCompiledView.Render(ViewContext viewContext, TextWriter writer)
+   at System.Web.Mvc.ViewResultBase.ExecuteResult(ControllerContext context)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResult(ControllerContext controllerContext, ActionResult actionResult)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilterRecursive(IList`1 filters, Int32 filterIndex, ResultExecutingContext preContext, ControllerContext controllerContext, ActionResult actionResult)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultFilterRecursive(IList`1 filters, Int32 filterIndex, ResultExecutingContext preContext, ControllerContext controllerContext, ActionResult actionResult)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionResultWithFilters(ControllerContext controllerContext, IList`1 filters, ActionResult actionResult)
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass21.<>c__DisplayClass2b.<BeginInvokeAction>b__1c()
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass21.<BeginInvokeAction>b__1e(IAsyncResult asyncResult)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.CallEndDelegate(IAsyncResult asyncResult)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
+   at System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeAction(IAsyncResult asyncResult)
+   at System.Web.Mvc.Controller.<BeginExecuteCore>b__1d(IAsyncResult asyncResult, ExecuteCoreState innerState)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
+   at System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
+   at System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)
+   at System.Web.Mvc.Controller.EndExecuteCore(IAsyncResult asyncResult)
+   at System.Web.Mvc.Controller.<BeginExecute>b__15(IAsyncResult asyncResult, Controller controller)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
+   at System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
+   at System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)
+   at System.Web.Mvc.Controller.EndExecute(IAsyncResult asyncResult)
+   at System.Web.Mvc.Controller.System.Web.Mvc.Async.IAsyncController.EndExecute(IAsyncResult asyncResult)
+   at System.Web.Mvc.MvcHandler.<BeginProcessRequest>b__5(IAsyncResult asyncResult, ProcessRequestState innerState)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncVoid`1.CallEndDelegate(IAsyncResult asyncResult)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.End()
+   at System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
+   at System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)
+   at System.Web.Mvc.MvcHandler.EndProcessRequest(IAsyncResult asyncResult)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)

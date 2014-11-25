@@ -10,11 +10,11 @@ namespace CatalogueNew.Web.Controllers
 {
     public class CategoryController : Controller
     {
-        ICategoryServices categoryServices;
+        ICategoryService categoryServices;
 
         public CategoryController()
         {
-            this.categoryServices = DependencyResolver.Current.GetService<ICategoryServices>();
+            this.categoryServices = DependencyResolver.Current.GetService<ICategoryService>();
         }
 
         public ActionResult Index(int? id)

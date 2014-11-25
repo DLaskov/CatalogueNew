@@ -6,13 +6,14 @@ using System.Web;
 
 namespace CatalogueNew.Web.Models
 {
-    public class RegisterModel
+    public class RegisterViewModel
     {
         public enum GenderType
         {
             Male = 1,
-            Female = 0
+            Female = 2
         }
+
         [Required]
         public string UserName { get; set; }
 
@@ -29,7 +30,7 @@ namespace CatalogueNew.Web.Models
 
         public string LastName { get; set; }
 
-        public GenderType Gender { get; set; }
+        public GenderType Genders { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime? BirthDate { get; set; }

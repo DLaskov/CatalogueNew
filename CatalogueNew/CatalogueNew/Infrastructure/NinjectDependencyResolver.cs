@@ -10,6 +10,7 @@ using CatalogueNew.Models.Entities;
 using CatalogueNew.Models.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using CatalogueNew.Web.Controllers;
 
 namespace CatalogueNew.Web.Infrastructure
 {
@@ -41,11 +42,8 @@ namespace CatalogueNew.Web.Infrastructure
             kernel.Bind<IProductService>().To<ProductService>();
             kernel.Bind<IManufacturerService>().To<ManufacturerService>();
             kernel.Bind<ICategoryService>().To<CategoryService>();
-            kernel.Bind(typeof(UserStore<User>)).To<CatalogueContext>()
-                .InRequestScope();
-            kernel.Bind<UserManager<User>>().ToSelf();
-            kernel.Bind<IUserStore<User>>().To<UserStore<User>>();
-
+            //kernel.Bind(typeof(CatalogueContext)).To(typeof(IUserStore<User>));
+            //kernel.Bind(typeof(IUserStore<User>)).To(typeof(UserManager<User>));
         }
     }
 }
