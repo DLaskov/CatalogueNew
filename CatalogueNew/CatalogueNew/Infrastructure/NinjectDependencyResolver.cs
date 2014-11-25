@@ -44,9 +44,6 @@ namespace CatalogueNew.Web.Infrastructure
                 .InRequestScope();
             kernel.Bind<ICategoryService>().To<CategoryService>()
                 .InRequestScope();
-            kernel.Bind(typeof(UserStore<User>)).To<CatalogueContext>()
-                .InRequestScope();
-
         }
     }
 }
