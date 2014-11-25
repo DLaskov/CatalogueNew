@@ -15,8 +15,6 @@ namespace CatalogueNew.Web
 {
     public class Startup
     {
-        public static Func<UserManager<User>> UserManagerFactory { get; private set; }
-
         public void Configuration(IAppBuilder app)
         {
             app.UseCookieAuthentication(new CookieAuthenticationOptions
@@ -24,20 +22,6 @@ namespace CatalogueNew.Web
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/auth/login")
             });
-
-
-            // configure the user manager
-            UserManagerFactory = () =>
-            {
-                var usermanager = new UserManager<User>(new UserStore<User>(new CatalogueContext()));
-                // allow alphanumeric characters in username
-                usermanager.UserValidator = new UserValidator<User>(usermanager)
-                {
-                    AllowOnlyAlphanumericUserNames = false
-                };
-
-                return usermanager;
-            };
         }
     }
 }

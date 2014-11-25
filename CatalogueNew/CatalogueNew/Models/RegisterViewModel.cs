@@ -10,8 +10,8 @@ namespace CatalogueNew.Web.Models
     {
         public enum GenderType
         {
-            Male = 1,
-            Female = 2
+            Male = 0,
+            Female = 1
         }
 
         [Required]
@@ -30,7 +30,7 @@ namespace CatalogueNew.Web.Models
 
         public string LastName { get; set; }
 
-        public GenderType Genders { get; set; }
+        public GenderType Gender { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime? BirthDate { get; set; }
