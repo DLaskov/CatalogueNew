@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace CatalogueNew.Web.Models
 {
-    public class LogInModel
+    public class LogInViewModel
     {
         [Required]
         [DataType(DataType.EmailAddress)]
