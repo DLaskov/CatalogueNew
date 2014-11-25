@@ -8,140 +8,140 @@ using CatalogueNew.Models.Services;
 
 namespace CatalogueNew.Web.Controllers
 {
-    //public class CategoryController : Controller
-    //{
-        //ICategoryServices categoryServices;
+    public class CategoryController : Controller
+    {
+        ICategoryServices categoryServices;
 
-        //public CategoryController()
-        //{
-        //    this.categoryServices = DependencyResolver.Current.GetService<ICategoryServices>();
-        //}
+        public CategoryController()
+        {
+            this.categoryServices = DependencyResolver.Current.GetService<ICategoryServices>();
+        }
 
-        //public ActionResult Index(int? id)
-        //{
-        //    var categories = categoryServices.Data.Categories;
-        //    var paginatedCategories = categoryServices.GetCategories(categories, id);
+        public ActionResult Index(int? id)
+        {
+            var categories = categoryServices.Data.Categories;
+            var paginatedCategories = categoryServices.GetCategories(categories, id);
 
-        //    ViewBag.Pages = Math.Ceiling((double)categories.Count() / categoryServices.PageSize);
-        //    ViewBag.Id = id;
-            
-        //    return View(paginatedCategories);
-        //}
+            ViewBag.Pages = Math.Ceiling((double)categories.Count() / categoryServices.PageSize);
+            ViewBag.Id = id;
 
-        //public ActionResult Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
+            return View(paginatedCategories);
+        }
 
-        //    Category category = categoryServices.Find(id);
-        //    if (category == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
-        //    var model = new CategoryViewModel()
-        //    {
-        //        CategoryID = category.CategoryID,
-        //        Name = category.Name
-        //    };
+            Category category = categoryServices.Find(id);
+            if (category == null)
+            {
+                return HttpNotFound();
+            }
 
-        //    return View(model);
-        //}
+            var model = new CategoryViewModel()
+            {
+                CategoryID = category.CategoryID,
+                Name = category.Name
+            };
 
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
+            return View(model);
+        }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create(CategoryViewModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var category = new Category()
-        //        {
-        //            Name = model.Name
-        //        };
-        //        categoryServices.Add(category);
-        //        return RedirectToAction("Index");
-        //    }
+        public ActionResult Create()
+        {
+            return View();
+        }
 
-        //    return View(model);
-        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(CategoryViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var category = new Category()
+                {
+                    Name = model.Name
+                };
+                categoryServices.Add(category);
+                return RedirectToAction("Index");
+            }
 
-        //public ActionResult Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
+            return View(model);
+        }
 
-        //    Category category = categoryServices.Find(id);
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
-        //    if (category == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
+            Category category = categoryServices.Find(id);
 
-        //    var model = new CategoryViewModel()
-        //    {
-        //        CategoryID = category.CategoryID,
-        //        Name = category.Name
-        //    };
+            if (category == null)
+            {
+                return HttpNotFound();
+            }
 
-        //    return View(model);
-        //}
+            var model = new CategoryViewModel()
+            {
+                CategoryID = category.CategoryID,
+                Name = category.Name
+            };
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit(CategoryViewModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var category = new Category()
-        //        {
-        //            CategoryID = model.CategoryID,
-        //            Name = model.Name
-        //        };
-        //        categoryServices.Modify(category);
-        //        return RedirectToAction("Index");
-        //    }
+            return View(model);
+        }
 
-        //    return View(model);
-        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(CategoryViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var category = new Category()
+                {
+                    CategoryID = model.CategoryID,
+                    Name = model.Name
+                };
+                categoryServices.Modify(category);
+                return RedirectToAction("Index");
+            }
 
-        //public ActionResult Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
+            return View(model);
+        }
 
-        //    Category category = categoryServices.Find(id);
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
-        //    if (category == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
+            Category category = categoryServices.Find(id);
 
-        //    var model = new CategoryViewModel()
-        //    {
-        //        CategoryID = category.CategoryID,
-        //        Name = category.Name
-        //    };
+            if (category == null)
+            {
+                return HttpNotFound();
+            }
 
-        //    return View(model);
-        //}
+            var model = new CategoryViewModel()
+            {
+                CategoryID = category.CategoryID,
+                Name = category.Name
+            };
 
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteConfirmed(int id)
-        //{
-        //    categoryServices.Remove(id);
-        //    return RedirectToAction("Index");
-    //    }
-    //}
+            return View(model);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            categoryServices.Remove(id);
+            return RedirectToAction("Index");
+        }
+    }
 }

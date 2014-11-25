@@ -101,7 +101,6 @@ namespace CatalogueNew.Web.Controllers
                 Email = model.Email,
                 LastName = model.LastName,
                 Gender = (int)model.Gender
-
             };
 
             var result = await userManager.CreateAsync(user, model.Password);
