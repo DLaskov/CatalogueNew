@@ -1,20 +1,24 @@
 ﻿using CatalogueNew.Models.Entities;
 using System;
 using System.Collections.Generic;
-
 namespace CatalogueNew.Models.Services
 {
-    public interface ICategoryService
+    public interface ICategoryServices
     {
-        IEnumerable<Category> GetAll();
+        CatalogueContext Data { get; }
+        int PageSize { get; }
 
-        Category Find(int id);
+        IEnumerable<Category> GetCategories(IEnumerable<Category> categories, int? id);
+
+        Category Find(int? id);
 
         void Add(Category category);
 
         void Modify(Category category);
 
         void Remove(Category category);
+
+        void Remove(int id);
 
     }
 }
