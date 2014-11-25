@@ -38,12 +38,14 @@ namespace CatalogueNew.Web.Infrastructure
                 .InSingletonScope();
             kernel.Bind<ICatalogueContext>().To<CatalogueContext>()
                 .InRequestScope();
-            kernel.Bind<IProductService>().To<ProductService>()
+            kernel.Bind<IProductService>().To<ProductService>();
+            kernel.Bind<IManufacturerService>().To<ManufacturerService>();
+            kernel.Bind<ICategoryService>().To<CategoryService>();
+            kernel.Bind(typeof(UserStore<User>)).To<CatalogueContext>()
                 .InRequestScope();
-            kernel.Bind<IManufacturerService>().To<ManufacturerService>()
-                .InRequestScope();
-            kernel.Bind<ICategoryServices>().To<CategoryServices>()
-                .InRequestScope();
+            kernel.Bind<UserManager<User>>().ToSelf();
+            kernel.Bind<IUserStore<User>>().To<UserStore<User>>();
+
         }
     }
 }
