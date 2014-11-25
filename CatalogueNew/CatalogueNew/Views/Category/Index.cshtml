@@ -1,0 +1,54 @@
+﻿@model IEnumerable<CatalogueNew.Models.Entities.Category>
+
+@{
+    ViewBag.Title = "Category";
+}
+
+<h2>Category</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", new { @class = "btn btn-default" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ParentCategoryID)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.CategoryID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.CategoryID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.CategoryID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div class="row">
+    <nav>
+        <ul class="pagination">
+            @for (int i = 1; i <= ViewBag.Pages; i++)
+            {
+                if (ViewBag.Id == i)
+                {
+                    <li class="active"><a href="@Url.Action("Index", new { id = i })">@i</a></li>
+                }
+                else
+                {
+                    <li><a href="@Url.Action("Index", new { id = i })">@i</a></li>
+                }
+            }
+        </ul>
+    </nav>
+</div>
