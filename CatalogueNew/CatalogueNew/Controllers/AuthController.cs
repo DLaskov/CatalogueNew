@@ -126,8 +126,6 @@ namespace CatalogueNew.Web.Controllers
             GetAuthenticationManager().SignIn(identity);
         }
 
-
-
         private IAuthenticationManager GetAuthenticationManager()
         {
             var ctx = Request.GetOwinContext();

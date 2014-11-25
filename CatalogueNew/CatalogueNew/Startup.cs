@@ -26,8 +26,7 @@ namespace CatalogueNew.Web
             // configure the user manager
             UserManagerFactory = () =>
             {
-                var usermanager = new UserManager<User>(
-                    new UserStore<User>(new CatalogueContext()));
+                var usermanager = new UserManager<User>(new UserStore<User>());
                 // allow alphanumeric characters in username
                 usermanager.UserValidator = new UserValidator<User>(usermanager)
                 {

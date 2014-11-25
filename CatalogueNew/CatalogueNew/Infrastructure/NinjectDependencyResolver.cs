@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using CatalogueNew.Models.Entities;
 using CatalogueNew.Models.Services;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace CatalogueNew.Web.Infrastructure
 {
@@ -41,6 +43,8 @@ namespace CatalogueNew.Web.Infrastructure
             kernel.Bind<IManufacturerService>().To<ManufacturerService>()
                 .InRequestScope();
             kernel.Bind<ICategoryService>().To<CategoryService>()
+                .InRequestScope();
+            kernel.Bind(typeof(UserStore<User>)).To<CatalogueContext>()
                 .InRequestScope();
 
         }
