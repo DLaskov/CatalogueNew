@@ -47,7 +47,7 @@ namespace CatalogueNew.Web.Controllers
                 return View();
             }
 
-            var user = await userManager.FindAsync(model.Email, model.Password);
+            User user = await userManager.FindAsync(model.Email, model.Password);
 
             if (user != null)
             {

@@ -42,7 +42,7 @@ namespace CatalogueNew.Web.Infrastructure
                 .InRequestScope();
             kernel.Bind<IManufacturerService>().To<ManufacturerService>()
                 .InRequestScope();
-            kernel.Bind<ICategoryService>().To<CategoryService>()
+            kernel.Bind<ICategoryServices>().To<CategoryServices>()
                 .InRequestScope();
         }
     }
