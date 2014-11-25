@@ -21,7 +21,7 @@ namespace CatalogueNew.Web.Controllers
         public AuthController(UserManager<User> userManager)
         {
             this.userManager = userManager;
-            UserValidator(userManager);
+            UserValidator(this.userManager);
         }
 
         [HttpGet]
@@ -133,11 +133,12 @@ namespace CatalogueNew.Web.Controllers
         }
 
         private void UserValidator(UserManager<User> usermanager)
-        {
+        {          
             usermanager.UserValidator = new UserValidator<User>(usermanager)
             {
-                AllowOnlyAlphanumericUserNames = false
+                AllowOnlyAlphanumericUserNames = true
             };
+
         }
 
         //protected override void Dispose(bool disposing)
