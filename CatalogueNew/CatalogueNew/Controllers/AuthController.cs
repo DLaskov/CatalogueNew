@@ -18,20 +18,16 @@ namespace CatalogueNew.Web.Controllers
     {
         private readonly UserManager<User> userManager;
 
-        public AuthController()
-            : this(Startup.UserManagerFactory.Invoke())
-        {
-        }
-
         public AuthController(UserManager<User> userManager)
         {
             this.userManager = userManager;
+            UserValidator(userManager);
         }
 
         [HttpGet]
         public ActionResult LogIn(string returnUrl)
         {
-            var model = new LogInModel
+            var model = new LogInViewModel
             {
                 ReturnUrl = returnUrl
             };
@@ -40,7 +36,7 @@ namespace CatalogueNew.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> LogIn(LogInModel model)
+        public async Task<ActionResult> LogIn(LogInViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -134,6 +130,14 @@ namespace CatalogueNew.Web.Controllers
         {
             var ctx = Request.GetOwinContext();
             return ctx.Authentication;
+        }
+
+        private void UserValidator(UserManager<User> usermanager)
+        {
+            usermanager.UserValidator = new UserValidator<User>(usermanager)
+            {
+                AllowOnlyAlphanumericUserNames = false
+            };
         }
 
         //protected override void Dispose(bool disposing)
