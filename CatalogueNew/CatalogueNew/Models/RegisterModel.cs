@@ -11,7 +11,7 @@ namespace CatalogueNew.Web.Models
         public enum GenderType
         {
             Male = 1,
-            Female = 0
+            Female = 2
         }
         [Required]
         public string UserName { get; set; }
