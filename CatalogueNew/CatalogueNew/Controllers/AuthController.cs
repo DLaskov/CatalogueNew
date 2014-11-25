@@ -16,13 +16,8 @@ namespace CatalogueNew.Web.Controllers
     [AllowAnonymous]
     public class AuthController : Controller
     {
-        private readonly UserManager<User> userManager;
-
-        public AuthController(UserManager<User> userManager)
-        {
-            this.userManager = userManager;
-            UserValidator(userManager);
-        }
+        private readonly UserManager<User> userManager =
+            DependencyResolver.Current.GetService<UserManager<User>>();
 
         [HttpGet]
         public ActionResult LogIn(string returnUrl)
