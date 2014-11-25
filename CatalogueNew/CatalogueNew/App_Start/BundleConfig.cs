@@ -10,7 +10,13 @@
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.min.css",
                       "~/Content/bootstrap-theme.min.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/catalogue.css"));
+            bundles.Add(new ScriptBundle("~/Scripts/js").Include(
+                      "~/Scripts/bootstrap.min.js",
+                      "~/Scripts/jquery-1.9.0.min.js"));
+            bundles.Add(new ScriptBundle("~/Scripts/jquery.validate").Include(
+                      "~/Scripts/jquery.validate.min.js"));
         }
     }
 }
