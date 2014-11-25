@@ -90,7 +90,7 @@ namespace CatalogueNew.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Register(RegisterModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (!ModelState.IsValid)
             {
