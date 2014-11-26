@@ -46,7 +46,11 @@ namespace CatalogueNew.Web.Infrastructure
             kernel.Bind<IUserStore<User>>().To<UserStore<User>>()
                 .WithConstructorArgument("context", kernel.Get<CatalogueContext>());
             kernel.Bind<UserManager<User>>().ToSelf()
+                .InRequestScope()
                 .WithConstructorArgument("store", kernel.Get<IUserStore<User>>());
+            kernel.Bind<IManufacturerService>().To<ManufacturerService>()
+                .InRequestScope()
+                .WithConstructorArgument("context", kernel.Get<CatalogueContext>());
 
         }
     }

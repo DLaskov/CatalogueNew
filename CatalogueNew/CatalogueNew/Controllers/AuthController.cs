@@ -3,6 +3,7 @@ using CatalogueNew.Web.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +17,13 @@ namespace CatalogueNew.Web.Controllers
     [AllowAnonymous]
     public class AuthController : Controller
     {
-        private readonly UserManager<User> userManager =
-            DependencyResolver.Current.GetService<UserManager<User>>();
+
+        private UserManager<User> userManager;
+
+        public AuthController(UserManager<User> userManager)
+        {
+            this.userManager = userManager;
+        }
 
         [HttpGet]
         public ActionResult LogIn(string returnUrl)
@@ -83,7 +89,6 @@ namespace CatalogueNew.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            UserValidator(userManager);
 
             if (!ModelState.IsValid)
             {
@@ -129,23 +134,14 @@ namespace CatalogueNew.Web.Controllers
             return ctx.Authentication;
         }
 
+        [Inject]
         private void UserValidator(UserManager<User> usermanager)
         {
             usermanager.UserValidator = new UserValidator<User>(usermanager)
             {
-                AllowOnlyAlphanumericUserNames = true
+                AllowOnlyAlphanumericUserNames = false
             };
         }
-
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing && userManager != null)
-        //    {
-        //        userManager.Dispose();
-        //    }
-        //    base.Dispose(disposing);
-        //}
-
 
     }
 }
