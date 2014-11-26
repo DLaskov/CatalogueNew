@@ -140,13 +140,13 @@ namespace CatalogueNew.Web.Controllers
                 AllowOnlyAlphanumericUserNames = true
             };
         }
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && userManager != null)
-            {
-                userManager.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing && userManager != null)
+        //    {
+        //        userManager.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
     }
 }

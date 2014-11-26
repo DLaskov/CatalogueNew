@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace CatalogueNew.Web.Views
 {
-    public abstract class AppViewPage<LogInModel> : WebViewPage<LogInModel>
+    public abstract class AppViewPage<LogInViewModel> : WebViewPage<LogInViewModel>
     {
         protected AppUserClaims CurrentUser
         {
