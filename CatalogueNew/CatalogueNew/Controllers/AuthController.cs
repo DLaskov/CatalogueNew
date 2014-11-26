@@ -16,22 +16,13 @@ namespace CatalogueNew.Web.Controllers
     [AllowAnonymous]
     public class AuthController : Controller
     {
-        private readonly UserManager<User> userManager;
-
-        public AuthController()
-            : this(Startup.UserManagerFactory.Invoke())
-        {
-        }
-
-        public AuthController(UserManager<User> userManager)
-        {
-            this.userManager = userManager;
-        }
+        private readonly UserManager<User> userManager =
+            DependencyResolver.Current.GetService<UserManager<User>>();
 
         [HttpGet]
         public ActionResult LogIn(string returnUrl)
         {
-            var model = new LogInModel
+            var model = new LogInViewModel
             {
                 ReturnUrl = returnUrl
             };
@@ -40,7 +31,7 @@ namespace CatalogueNew.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> LogIn(LogInModel model)
+        public async Task<ActionResult> LogIn(LogInViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -90,8 +81,10 @@ namespace CatalogueNew.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Register(RegisterModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            UserValidator(userManager);
+
             if (!ModelState.IsValid)
             {
                 return View();
@@ -99,8 +92,12 @@ namespace CatalogueNew.Web.Controllers
 
             var user = new User
             {
-                UserName = model.Email,
-                FirstName = model.FirstName
+                UserName = model.UserName,
+                FirstName = model.FirstName,
+                BirthDate = model.BirthDate,
+                Email = model.Email,
+                LastName = model.LastName,
+                Gender = (int)model.Gender
             };
 
             var result = await userManager.CreateAsync(user, model.Password);
@@ -132,14 +129,22 @@ namespace CatalogueNew.Web.Controllers
             return ctx.Authentication;
         }
 
-        protected override void Dispose(bool disposing)
+        private void UserValidator(UserManager<User> usermanager)
         {
-            if (disposing && userManager != null)
+            usermanager.UserValidator = new UserValidator<User>(usermanager)
             {
-                userManager.Dispose();
-            }
-            base.Dispose(disposing);
+                AllowOnlyAlphanumericUserNames = true
+            };
         }
+
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing && userManager != null)
+        //    {
+        //        userManager.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
 
 
     }

@@ -10,7 +10,7 @@ namespace CatalogueNew.Models.Services
     public class ProductService : IProductService
     {
         private ICatalogueContext context;
-
+        
         public ProductService()
         {
             context = new CatalogueContext();

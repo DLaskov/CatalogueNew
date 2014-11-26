@@ -6,13 +6,14 @@ using System.Web;
 
 namespace CatalogueNew.Web.Models
 {
-    public class RegisterModel
+    public class RegisterViewModel
     {
         public enum GenderType
         {
-            Male = 1,
-            Female = 0
+            Male = 0,
+            Female = 1
         }
+
         [Required]
         public string UserName { get; set; }
 
