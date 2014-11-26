@@ -1,14 +1,12 @@
 ﻿using CatalogueNew.Models.Entities;
+using CatalogueNew.Models.Infrastructure;
 using System;
 using System.Collections.Generic;
 namespace CatalogueNew.Models.Services
 {
-    public interface ICategoryServices
+    public interface ICategoryService
     {
-        CatalogueContext Data { get; }
-        int PageSize { get; }
-
-        IEnumerable<Category> GetCategories(IEnumerable<Category> categories, int? id);
+        CategoryList GetCategories(int? page);
 
         Category Find(int? id);
 
@@ -19,6 +17,5 @@ namespace CatalogueNew.Models.Services
         void Remove(Category category);
 
         void Remove(int id);
-
     }
 }

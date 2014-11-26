@@ -1,38 +1,23 @@
 ﻿using CatalogueNew.Models.Entities;
+using CatalogueNew.Models.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CatalogueNew.Models.Services
 {
-    public class CategoryServices : ICategoryServices
+    public class CategoryService : PaginationService<Category>, ICategoryService
     {
-        private CatalogueContext data;
-        public CatalogueContext Data
-        {
-            get { return data; }
-        }
+        private ICatalogueContext data;
 
-        private const int pageSize = 3;
-        int ICategoryServices.PageSize
-        {
-            get { return pageSize; }
-        }
-
-        public CategoryServices(CatalogueContext data)
+        public CategoryService(ICatalogueContext data)
         {
             this.data = data;
-        }
-
-        public IEnumerable<Category> GetCategories(IEnumerable<Category> categories, int? id)
-        {
-            int pageNumber = id.GetValueOrDefault(1);
-            var getCategories = categories.OrderBy(x => x.CategoryID).Skip((pageNumber - 1) * pageSize).Take(pageSize);
-
-            return getCategories;
         }
 
         public Category Find(int? id)
