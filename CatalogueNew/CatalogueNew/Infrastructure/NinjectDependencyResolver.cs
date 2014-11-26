@@ -42,11 +42,12 @@ namespace CatalogueNew.Web.Infrastructure
                 .InRequestScope();
             kernel.Bind<IProductService>().To<ProductService>();
             kernel.Bind<IManufacturerService>().To<ManufacturerService>();
-            kernel.Bind<ICategoryServices>().To<CategoryServices>();
+            kernel.Bind<ICategoryService>().To<CategoryService>();
             kernel.Bind<IUserStore<User>>().To<UserStore<User>>()
                 .WithConstructorArgument("context", kernel.Get<CatalogueContext>());
             kernel.Bind<UserManager<User>>().ToSelf()
                 .WithConstructorArgument("store", kernel.Get<IUserStore<User>>());
+            kernel.Bind(typeof(IPaginationService<>)).To(typeof(PaginationService<>));
 
         }
     }

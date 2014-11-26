@@ -21,14 +21,14 @@ namespace CatalogueNew.Web.Controllers
         public ActionResult Index(int? page)
         {
             CategoryList categoryList = categoryServices.GetCategories(page);
-           
+
             var categoryListViewModel = new CategoryListViewModel()
             {
                 Categories = categoryList.Categories,
                 Pages = (int)categoryList.Pages,
                 Page = page,
             };
-
+            
             return View(categoryListViewModel);
         }
 
