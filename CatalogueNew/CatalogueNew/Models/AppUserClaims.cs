@@ -17,7 +17,15 @@ namespace CatalogueNew.Web.Models
         {
             get
             {
-                return this.FindFirst(ClaimTypes.Name).Value;
+                try
+                {
+                    return this.FindFirst(ClaimTypes.Name).Value;
+                }
+                catch (Exception)
+                {
+                    return "";
+                }
+
             }
         }
     }
