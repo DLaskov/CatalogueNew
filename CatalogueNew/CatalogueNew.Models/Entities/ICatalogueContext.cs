@@ -7,19 +7,17 @@ namespace CatalogueNew.Models.Entities
 {
     public interface ICatalogueContext
     {
-        IDbSet<Category> Categories { get; }
-        IDbSet<Comment> Comments { get; }
-        IDbSet<Image> Images { get; }
-        IDbSet<LikeDislike> LikesDislikes { get; }
-        IDbSet<Manufacturer> Manufacturers { get; }
-        IDbSet<Product> Products { get; }
-        IDbSet<ProductTag> ProductsTags { get; }
-        IDbSet<Rating> Ratings { get; }
-        IDbSet<Tag> Tags { get; }
-        IDbSet<Wishlist> Wishlists { get; }
-        IDbSet<User> Users { get; }
-
+        IDbSet<Category> Categories { get; set; }
+        IDbSet<Comment> Comments { get; set; }
+        IDbSet<Image> Images { get; set; }
+        IDbSet<LikeDislike> LikesDislikes { get; set; }
+        IDbSet<Manufacturer> Manufacturers { get; set; }
+        IDbSet<Product> Products { get; set; }
+        IDbSet<ProductTag> ProductsTags { get; set; }
+        IDbSet<Rating> Ratings { get; set; }
+        IDbSet<Tag> Tags { get; set; }
+        IDbSet<Wishlist> Wishlists { get; set; }
+        DbEntityEntry Entry(object entity);
         int SaveChanges();
-        DbEntityEntry Entry(Object entity);
     }
 }

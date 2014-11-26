@@ -47,6 +47,8 @@ namespace CatalogueNew.Web.Infrastructure
                 .WithConstructorArgument("context", kernel.Get<ICatalogueContext>());
             kernel.Bind<UserManager<User>>().ToSelf()
                 .WithConstructorArgument("store", kernel.Get<IUserStore<User>>());
+            kernel.Bind(typeof(IPaginationService<>)).To(typeof(PaginationService<>));
+
         }
     }
 }

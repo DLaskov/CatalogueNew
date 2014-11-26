@@ -2,20 +2,13 @@
 using CatalogueNew.Models.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
 namespace CatalogueNew.Models.Services
 {
-    public interface ICategoryService
+    public interface IPaginationService<T>
     {
         CategoryList GetCategories(int? page);
-
-        Category Find(int? id);
-
-        void Add(Category category);
-
-        void Modify(Category category);
-
-        void Remove(Category category);
-
-        void Remove(int id);
     }
 }
