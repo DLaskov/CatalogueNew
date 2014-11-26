@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 namespace CatalogueNew.Models.Services
 {
-    public interface ICategoryServices
+    public interface ICategoryService
     {
-        CatalogueContext Data { get; }
+        
         int PageSize { get; }
 
         IEnumerable<Category> GetCategories(IEnumerable<Category> categories, int? id);

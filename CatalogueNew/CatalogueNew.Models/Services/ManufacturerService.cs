@@ -11,9 +11,9 @@ namespace CatalogueNew.Models.Services
 {
     public class ManufacturerService: IManufacturerService
     {
-        private CatalogueContext context;
+        private ICatalogueContext context;
 
-        public ManufacturerService(CatalogueContext context)
+        public ManufacturerService(ICatalogueContext context)
         {
             this.context = context;
         }

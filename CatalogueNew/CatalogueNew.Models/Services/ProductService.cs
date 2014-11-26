@@ -11,9 +11,9 @@ namespace CatalogueNew.Models.Services
     {
         private ICatalogueContext context;
         
-        public ProductService()
+        public ProductService(ICatalogueContext context)
         {
-            context = new CatalogueContext();
+            this.context = context;
         }
 
         public void Add(Product product)

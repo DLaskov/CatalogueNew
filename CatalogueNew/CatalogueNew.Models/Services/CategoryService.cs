@@ -8,21 +8,17 @@ using System.Threading.Tasks;
 
 namespace CatalogueNew.Models.Services
 {
-    public class CategoryServices : ICategoryServices
+    public class CategoryService : ICategoryService
     {
-        private CatalogueContext data;
-        public CatalogueContext Data
-        {
-            get { return data; }
-        }
+        private ICatalogueContext data;
 
         private const int pageSize = 3;
-        int ICategoryServices.PageSize
+        int ICategoryService.PageSize
         {
             get { return pageSize; }
         }
 
-        public CategoryServices(CatalogueContext data)
+        public CategoryService(ICatalogueContext data)
         {
             this.data = data;
         }
@@ -31,7 +27,7 @@ namespace CatalogueNew.Models.Services
         {
             int pageNumber = id.GetValueOrDefault(1);
             var getCategories = categories.OrderBy(x => x.CategoryID).Skip((pageNumber - 1) * pageSize).Take(pageSize);
-
+           
             return getCategories;
         }
 

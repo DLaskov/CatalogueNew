@@ -16,8 +16,12 @@ namespace CatalogueNew.Web.Controllers
     [AllowAnonymous]
     public class AuthController : Controller
     {
-        private readonly UserManager<User> userManager =
-            DependencyResolver.Current.GetService<UserManager<User>>();
+        private readonly UserManager<User> userManager;
+
+        public AuthController(UserManager<User> userManager)
+        {
+            this.userManager = userManager;
+        }
 
         [HttpGet]
         public ActionResult LogIn(string returnUrl)
@@ -128,7 +132,7 @@ namespace CatalogueNew.Web.Controllers
             var ctx = Request.GetOwinContext();
             return ctx.Authentication;
         }
-
+        
         private void UserValidator(UserManager<User> usermanager)
         {
             usermanager.UserValidator = new UserValidator<User>(usermanager)
@@ -136,16 +140,13 @@ namespace CatalogueNew.Web.Controllers
                 AllowOnlyAlphanumericUserNames = true
             };
         }
-
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing && userManager != null)
-        //    {
-        //        userManager.Dispose();
-        //    }
-        //    base.Dispose(disposing);
-        //}
-
-
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && userManager != null)
+            {
+                userManager.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

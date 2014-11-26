@@ -11,6 +11,7 @@ using CatalogueNew.Models.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Ninject.Parameters;
+using Ninject.Extensions.NamedScope;
 using CatalogueNew.Web.Controllers;
 
 namespace CatalogueNew.Web.Infrastructure
@@ -36,18 +37,16 @@ namespace CatalogueNew.Web.Infrastructure
 
         private void AddBindings()
         {
-            kernel.Bind<ILog>().ToMethod(x => LogManager.GetLogger(typeof(Controller)))
-                .InSingletonScope();
+            kernel.Bind<ILog>().ToMethod(x => LogManager.GetLogger("CatalogueLogger"));
             kernel.Bind<ICatalogueContext>().To<CatalogueContext>()
                 .InRequestScope();
             kernel.Bind<IProductService>().To<ProductService>();
             kernel.Bind<IManufacturerService>().To<ManufacturerService>();
-            kernel.Bind<ICategoryServices>().To<CategoryServices>();
+            kernel.Bind<ICategoryService>().To<CategoryService>();
             kernel.Bind<IUserStore<User>>().To<UserStore<User>>()
-                .WithConstructorArgument("context", kernel.Get<CatalogueContext>());
+                .WithConstructorArgument("context", kernel.Get<ICatalogueContext>());
             kernel.Bind<UserManager<User>>().ToSelf()
                 .WithConstructorArgument("store", kernel.Get<IUserStore<User>>());
-
         }
     }
 }
