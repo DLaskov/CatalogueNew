@@ -5,27 +5,31 @@ using System.Web.Mvc;
 using CatalogueNew.Models.Entities;
 using CatalogueNew.Web.Models;
 using CatalogueNew.Models.Services;
+using CatalogueNew.Models.Infrastructure;
 
 namespace CatalogueNew.Web.Controllers
 {
     public class CategoryController : Controller
     {
-        ICategoryServices categoryServices;
+        private ICategoryService categoryServices;
 
-        public CategoryController()
+        public CategoryController(ICategoryService categoryServices)
         {
-            this.categoryServices = DependencyResolver.Current.GetService<ICategoryServices>();
+            this.categoryServices = categoryServices;
         }
 
-        public ActionResult Index(int? id)
+        public ActionResult Index(int? page)
         {
-            var categories = categoryServices.Data.Categories;
-            var paginatedCategories = categoryServices.GetCategories(categories, id);
+            CategoryList categoryList = categoryServices.GetCategories(page);
+           
+            var categoryListViewModel = new CategoryListViewModel()
+            {
+                Categories = categoryList.Categories,
+                Pages = (int)categoryList.Pages,
+                Page = page,
+            };
 
-            ViewBag.Pages = Math.Ceiling((double)categories.Count() / categoryServices.PageSize);
-            ViewBag.Id = id;
-            
-            return View(paginatedCategories);
+            return View(categoryListViewModel);
         }
 
         public ActionResult Details(int? id)

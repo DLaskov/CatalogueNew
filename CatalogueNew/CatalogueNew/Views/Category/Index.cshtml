@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CatalogueNew.Models.Entities.Category>
+﻿@model CategoryListViewModel
 
 @{
     ViewBag.Title = "Category";
@@ -16,7 +16,7 @@
         </th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var item in @Model.Categories)
     {
         <tr>
             <td>
@@ -38,15 +38,15 @@
 <div class="row">
     <nav>
         <ul class="pagination">
-            @for (int i = 1; i <= ViewBag.Pages; i++)
+            @for (int i = 1; i <= @Model.Pages; i++)
             {
-                if (ViewBag.Id == i)
+                if (@Model.Page == i)
                 {
-                    <li class="active"><a href="@Url.Action("Index", new { id = i })">@i</a></li>
+                    <li class="active"><a href="@Url.Action("Index", new { page = i })">@i</a></li>
                 }
                 else
                 {
-                    <li><a href="@Url.Action("Index", new { id = i })">@i</a></li>
+                    <li><a href="@Url.Action("Index", new { page = i })">@i</a></li>
                 }
             }
         </ul>
