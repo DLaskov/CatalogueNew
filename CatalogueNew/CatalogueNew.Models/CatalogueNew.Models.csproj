@@ -68,7 +68,7 @@
     <Compile Include="Entities\Manufacturer.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\ProductTag.cs" />
-    <Compile Include="Infrastructure\CategoryList.cs" />
+    <Compile Include="Infrastructure\PagesList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\Rating.cs" />
     <Compile Include="Services\CategoryService.cs" />

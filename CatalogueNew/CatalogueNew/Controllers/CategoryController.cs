@@ -20,11 +20,11 @@ namespace CatalogueNew.Web.Controllers
 
         public ActionResult Index(int? page)
         {
-            CategoryList categoryList = categoryServices.GetCategories(page);
+            PagesList<Category> categoryList = categoryServices.GetCategories(page);
 
             var categoryListViewModel = new CategoryListViewModel()
             {
-                Categories = categoryList.Categories,
+                Categories = categoryList.PageItems,
                 Pages = (int)categoryList.Pages,
                 Page = page,
             };

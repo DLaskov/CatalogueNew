@@ -9,6 +9,6 @@ namespace CatalogueNew.Models.Services
 {
     public interface IPaginationService<T>
     {
-        CategoryList GetCategories(int? page);
+        PagesList<T> GetItems(int? page);
     }
 }
