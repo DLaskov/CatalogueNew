@@ -23,8 +23,7 @@ namespace CatalogueNew.Web.Models
                 }
                 catch (Exception)
                 {
-
-                    return " ";
+                    return "";
                 }
                 
             }
