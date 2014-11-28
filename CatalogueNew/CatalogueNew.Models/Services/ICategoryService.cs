@@ -6,16 +6,16 @@ namespace CatalogueNew.Models.Services
 {
     public interface ICategoryService
     {
-        CategoryList GetCategories(int? page);
+        //CategoryList GetCategories(int? page);
 
-        Category Find(int? id);
+        //Category Find(int? id);
 
-        void Add(Category category);
+        //void Add(Category category);
 
-        void Modify(Category category);
+        //void Modify(Category category);
 
-        void Remove(Category category);
+        //void Remove(Category category);
 
-        void Remove(int id);
+        //void Remove(int id);
     }
 }

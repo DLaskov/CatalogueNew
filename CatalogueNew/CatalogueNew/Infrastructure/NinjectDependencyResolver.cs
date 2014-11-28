@@ -47,7 +47,7 @@ namespace CatalogueNew.Web.Infrastructure
                 .InRequestScope()
                 .WithConstructorArgument("context", kernel.Get<ICatalogueContext>());
             kernel.Bind<UserManager<User>>().ToSelf().InRequestScope(); 
-            kernel.Bind(typeof(IPaginationService<>)).To(typeof(PaginationService<>));
+            //kernel.Bind(typeof(IPaginationService<>)).To(typeof(PaginationService<>));
 
         }
     }

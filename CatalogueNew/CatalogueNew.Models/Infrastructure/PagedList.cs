@@ -14,8 +14,19 @@ namespace CatalogueNew.Models.Infrastructure
         public int PageCount { get; private set; }
         public int CurrentPage { get; private set; }
 
-        public PagedList(IQueryable<T> source, int page, int pageSize)
+        public PagedList(IQueryable<T> source, int pageSize)
         {
+            Items = source;
+            PageCount = source.Count() / pageSize;
+        }
+        
+        public PagedList<T> GetPage(int page, int pageSize) {
+            if (page > PageCount)
+            {
+                throw new IndexOutOfRangeException();
+            }
+            CurrentPage = page;
+            return new PagedList<T>(Items.Skip((CurrentPage - 1) * pageSize).Take(pageSize), pageSize);
         }
     }
 }
