@@ -4,18 +4,7 @@ using System;
 using System.Collections.Generic;
 namespace CatalogueNew.Models.Services
 {
-    public interface ICategoryService
+    public interface ICategoryService : IBaseService<Category>
     {
-        PagedList<Category> GetItems(int? page);
-
-        Category Find(int? id);
-
-        void Add(Category category);
-
-        void Modify(Category category);
-
-        void Remove(Category category);
-
-        void Remove(int id);
     }
 }

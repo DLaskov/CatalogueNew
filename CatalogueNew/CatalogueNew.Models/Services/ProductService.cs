@@ -16,35 +16,32 @@ namespace CatalogueNew.Models.Services
             this.context = context;
         }
 
-        public void Add(Product product)
-        {
-            if (product == null)
-            {
-                throw new NullReferenceException("Only non-nullable objects allowed!");
-            }
-
-            context.Products.Add(product);
-        }
-
-        public void Get(Product product)
+        public Infrastructure.PagedList<Product> GetItems(int? page)
         {
             throw new NotImplementedException();
         }
 
-        public Product GetAt(int index)
-        {
-            return context.Products.Find(index);
-        }
-        public Category GetCategory(int id)
-        {
-            return context.Categories.Find(id);
-        }
-        public void Remove(Product product)
+        public Product Find(int? id)
         {
             throw new NotImplementedException();
         }
 
-        public void RemoveAt(int index)
+        public void Add(Product category)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Modify(Product category)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Remove(Product category)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Remove(int id)
         {
             throw new NotImplementedException();
         }

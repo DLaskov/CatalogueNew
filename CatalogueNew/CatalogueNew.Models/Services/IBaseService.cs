@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CatalogueNew.Models.Services
 {
-    interface IBaseService<T>
+    public interface IBaseService<T>
     {
         PagedList<T> GetItems(int? page);
 

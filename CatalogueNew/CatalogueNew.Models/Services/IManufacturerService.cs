@@ -7,16 +7,8 @@ using System.Threading.Tasks;
 
 namespace CatalogueNew.Models.Services
 {
-    public interface IManufacturerService
+    public interface IManufacturerService : IBaseService<Manufacturer>
     {
         IEnumerable<Manufacturer> GetAll();
-
-        Manufacturer Find(int id);
-
-        void Add(Manufacturer manufacturer);
-
-        void Modify(Manufacturer manufacturer);
-
-        void Remove(Manufacturer manufacturer);
     }
 }
