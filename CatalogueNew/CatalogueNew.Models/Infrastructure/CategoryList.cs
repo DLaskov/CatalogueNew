@@ -10,6 +10,6 @@ namespace CatalogueNew.Models.Infrastructure
     public class CategoryList
     {
         public IEnumerable<Category> Categories { get; set; }
-        public double Pages { get; set; }
+        public int Count { get; set; }
     }
 }

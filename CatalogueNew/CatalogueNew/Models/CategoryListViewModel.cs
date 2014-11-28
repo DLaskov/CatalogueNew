@@ -13,7 +13,7 @@ namespace CatalogueNew.Web.Models
         public string Name { get; set; }
         public int? ParentCategoryID { get; set; }
         public IEnumerable<Category> Categories { get; set; }
-        public int Pages { get; set; }
+        public int Count { get; set; }
         public int? Page { get; set; }
     }
 }
