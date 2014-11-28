@@ -20,13 +20,11 @@ namespace CatalogueNew.Web.Controllers
 
         public ActionResult Index(int? page)
         {
-            PaginationList<CategoryService> categoryPaginationList = new PaginationList<CategoryService>(categoryServices as CategoryService);
-            CategoryList categoryList = categoryPaginationList.Item.GetCategories(page);
 
             var categoryListViewModel = new CategoryListViewModel()
             {
-                Categories = categoryList.Categories,
-                Count = categoryList.Count,
+                Categories = categories.Categories,
+                Count = categories.Count,
                 Page = page,
             };
 

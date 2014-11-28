@@ -14,57 +14,52 @@ namespace CatalogueNew.Models.Services
 {
     public class CategoryService : ICategoryService
     {
-        private ICatalogueContext data;
-        private readonly int pageSize = Int32.Parse(ConfigurationManager.AppSettings["PageSize"]);
+        private ICatalogueContext context;
+        private readonly int pageSize = 3;
 
-        public CategoryService(ICatalogueContext data)
+        public CategoryService(ICatalogueContext context)
         {
-            this.data = data;
+            this.context = context;
         }
 
         public Category Find(int? id)
         {
-            return data.Categories.Find(id);
+            return context.Categories.Find(id);
         }
 
         public void Add(Category category)
         {
-            data.Categories.Add(category);
-            data.SaveChanges();
+            context.Categories.Add(category);
+            context.SaveChanges();
         }
 
 
         public void Modify(Category category)
         {
-            data.Entry(category).State = EntityState.Modified;
-            data.SaveChanges();
+            context.Entry(category).State = EntityState.Modified;
+            context.SaveChanges();
         }
 
         public void Remove(Category category)
         {
-            data.Categories.Remove(category);
-            data.SaveChanges();
+            context.Categories.Remove(category);
+            context.SaveChanges();
         }
 
         public void Remove(int id)
         {
             var category = this.Find(id);
-            data.Categories.Remove(category);
-            data.SaveChanges();
+            context.Categories.Remove(category);
+            context.SaveChanges();
         }
 
-        public CategoryList GetCategories(int? page)
+        public CategoryList GetCategories(int page)
         {
-            var pagedList = new PagedList<Category>(data.Categories.OrderBy(c => c.Name), page, pageSize);
-            var categories = data.Categories;
-            int pageNumber = page.GetValueOrDefault(1);
-            var getCategories = categories.OrderBy(x => x.CategoryID).Skip((pageNumber - 1) * pageSize).Take(pageSize);
-            var pages = ((int)(Math.Ceiling((double)categories.Count() / pageSize)));
 
             var categoryList = new CategoryList()
             {
-                Categories = getCategories,
-                Count = pages
+                Categories = pagedList.Items,
+                Count = pagedList.PageCount
             };
 
             return categoryList;
