@@ -8,22 +8,14 @@ using System.Threading.Tasks;
 
 namespace CatalogueNew.Models.Infrastructure
 {
-    class PagedList<T> where T : class
+    public class PagedList<T>
     {
-        public IQueryable<T> Items { get; set; }
-        public int PagesCount;
-        int pageSize =
-            Int32.TryParse(System.Configuration.ConfigurationSettings.AppSettings["PageSize"]);
-        public void PagedList<T>(IDbSet<T> table)
-        {
-            Items = table.AsQueryable();
-            PagesCount = (int)Math.Ceiling(table.Count() / pageSize);
-        }
+        public IEnumerable<T> Items { get; private set; }
+        public int PageCount { get; private set; }
+        public int CurrentPage { get; private set; }
 
-        public T GetPage(int? page)
+        public PagedList(IQueryable<T> source, int page, int pageSize)
         {
-            
-
         }
     }
 }
