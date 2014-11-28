@@ -20,13 +20,13 @@ namespace CatalogueNew.Web.Controllers
 
         public ActionResult Index(int? page)
         {
-            
+            var pageItems = categoryServices.GetItems(page);
 
             var categoryListViewModel = new CategoryListViewModel()
             {
-                Categories = categoryServices.GetCategories(),
-                Count = categoryServices.GetCategories().C,
-                Page = page,
+                Categories = pageItems.Items.AsEnumerable(),
+                Count = pageItems.PageCount,
+                Page = pageItems.CurrentPage
             };
 
             return View(categoryListViewModel);

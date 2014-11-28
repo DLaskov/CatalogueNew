@@ -53,10 +53,10 @@ namespace CatalogueNew.Models.Services
             data.SaveChanges();
         }
 
-        public PagedList<Category> GetCategories(int? page)
+        public PagedList<Category> GetItems(int? page)
         {
-            var pagedList = new PagedList<Category>(data.Categories.OrderBy(c => c.Name), pageSize);
-            return pagedList.GetPage(page.GetValueOrDefault(1), pageSize);
+            var pagedList = new PagedList<Category>(data.Categories.OrderBy(c => c.Name), page, pageSize);
+            return pagedList;
         }
     }
 }

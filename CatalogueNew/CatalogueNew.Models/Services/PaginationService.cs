@@ -11,31 +11,26 @@ namespace CatalogueNew.Models.Services
 {
     public class PaginationService<T> : IPaginationService<T> where T : class
     {
-        private ICatalogueContext data;
-
         private readonly int pageSize = Int32.Parse(System.Configuration.ConfigurationSettings.AppSettings["PageSize"]);//3;
 
-        public PaginationService()
-            : this(new CatalogueContext())
-        {
-        }
+        private ICatalogueContext data;
 
         public PaginationService(ICatalogueContext data)
         {
             this.data = data;
         }
 
-        public CategoryList GetCategories(int? page)
+        public PagesList<T> GetItems(int? page)
         {
             var categories = data.Categories;
             int pageNumber = page.GetValueOrDefault(1);
             var getCategories = categories.OrderBy(x => x.CategoryID).Skip((pageNumber - 1) * pageSize).Take(pageSize);
             var pages = Math.Ceiling((double)categories.Count() / pageSize);
 
-            var categoryList = new CategoryList()
+            var categoryList = new PagesList<T>()
             {
-                 Categories = getCategories,
-                  Pages = pages
+                 PageItems = getCategories.AsEnumerable(),
+                 Pages = pages
             };
 
             return categoryList;

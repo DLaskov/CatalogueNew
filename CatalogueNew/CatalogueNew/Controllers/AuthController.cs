@@ -3,6 +3,7 @@ using CatalogueNew.Web.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -132,21 +133,14 @@ namespace CatalogueNew.Web.Controllers
             var ctx = Request.GetOwinContext();
             return ctx.Authentication;
         }
-        
+
         private void UserValidator(UserManager<User> usermanager)
         {
             usermanager.UserValidator = new UserValidator<User>(usermanager)
             {
-                AllowOnlyAlphanumericUserNames = true
+                AllowOnlyAlphanumericUserNames = false
             };
         }
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing && userManager != null)
-        //    {
-        //        userManager.Dispose();
-        //    }
-        //    base.Dispose(disposing);
-        //}
+
     }
 }
