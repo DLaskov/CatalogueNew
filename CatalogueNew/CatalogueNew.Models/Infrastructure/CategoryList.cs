@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace CatalogueNew.Models.Infrastructure
 {
-    public class PagesList<T>
+    public class CategoryList
     {
-        public IEnumerable<T> PageItems { get; set; }
-
-        public double Pages { get; set; }
+        public IEnumerable<Category> Categories { get; set; }
+        public int Count { get; set; }
     }
 }
