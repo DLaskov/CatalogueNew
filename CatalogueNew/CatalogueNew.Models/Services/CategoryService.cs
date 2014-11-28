@@ -14,55 +14,49 @@ namespace CatalogueNew.Models.Services
 {
     public class CategoryService : ICategoryService
     {
-        private ICatalogueContext context;
-        private readonly int pageSize = 3;
+        private ICatalogueContext data;
+        private readonly int pageSize = Int32.Parse(ConfigurationManager.AppSettings["PageSize"]);
 
-        public CategoryService(ICatalogueContext context)
+        public CategoryService(ICatalogueContext data)
         {
-            this.context = context;
+            this.data = data;
         }
 
         public Category Find(int? id)
         {
-            return context.Categories.Find(id);
+            return data.Categories.Find(id);
         }
 
         public void Add(Category category)
         {
-            context.Categories.Add(category);
-            context.SaveChanges();
+            data.Categories.Add(category);
+            data.SaveChanges();
         }
 
 
         public void Modify(Category category)
         {
-            context.Entry(category).State = EntityState.Modified;
-            context.SaveChanges();
+            data.Entry(category).State = EntityState.Modified;
+            data.SaveChanges();
         }
 
         public void Remove(Category category)
         {
-            context.Categories.Remove(category);
-            context.SaveChanges();
+            data.Categories.Remove(category);
+            data.SaveChanges();
         }
 
         public void Remove(int id)
         {
             var category = this.Find(id);
-            context.Categories.Remove(category);
-            context.SaveChanges();
+            data.Categories.Remove(category);
+            data.SaveChanges();
         }
 
-        public CategoryList GetCategories(int page)
+        public PagedList<Category> GetItems(int? page)
         {
-
-            var categoryList = new CategoryList()
-            {
-                Categories = pagedList.Items,
-                Count = pagedList.PageCount
-            };
-
-            return categoryList;
+            var pagedList = new PagedList<Category>(data.Categories.OrderBy(c => c.Name), page, pageSize);
+            return pagedList;
         }
     }
 }
