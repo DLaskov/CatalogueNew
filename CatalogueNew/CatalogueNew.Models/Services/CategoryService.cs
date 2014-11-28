@@ -55,6 +55,7 @@ namespace CatalogueNew.Models.Services
 
         public CategoryList GetCategories(int? page)
         {
+            var pagedList = new PagedList<Category>(data.Categories.OrderBy(c => c.Name), page, pageSize);
             var categories = data.Categories;
             int pageNumber = page.GetValueOrDefault(1);
             var getCategories = categories.OrderBy(x => x.CategoryID).Skip((pageNumber - 1) * pageSize).Take(pageSize);
