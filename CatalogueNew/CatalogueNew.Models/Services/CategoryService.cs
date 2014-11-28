@@ -12,50 +12,49 @@ using System.Threading.Tasks;
 
 namespace CatalogueNew.Models.Services
 {
-    public class CategoryService : ICategoryService
+    public class CategoryService : BaseService, ICategoryService
     {
-        private ICatalogueContext data;
-        private readonly int pageSize = Int32.Parse(ConfigurationManager.AppSettings["PageSize"]);
+        private const int pageSize = 3;
 
-        public CategoryService(ICatalogueContext data)
+        public CategoryService(ICatalogueContext context)
+            : base(context)
         {
-            this.data = data;
         }
 
         public Category Find(int? id)
         {
-            return data.Categories.Find(id);
+            return this.Context.Categories.Find(id);
         }
 
         public void Add(Category category)
         {
-            data.Categories.Add(category);
-            data.SaveChanges();
+            this.Context.Categories.Add(category);
+            this.Context.SaveChanges();
         }
 
 
         public void Modify(Category category)
         {
-            data.Entry(category).State = EntityState.Modified;
-            data.SaveChanges();
+            this.Context.Entry(category).State = EntityState.Modified;
+            this.Context.SaveChanges();
         }
 
         public void Remove(Category category)
         {
-            data.Categories.Remove(category);
-            data.SaveChanges();
+            this.Context.Categories.Remove(category);
+            this.Context.SaveChanges();
         }
 
         public void Remove(int id)
         {
             var category = this.Find(id);
-            data.Categories.Remove(category);
-            data.SaveChanges();
+            this.Context.Categories.Remove(category);
+            this.Context.SaveChanges();
         }
 
         public PagedList<Category> GetItems(int? page)
         {
-            var pagedList = new PagedList<Category>(data.Categories.OrderBy(c => c.Name), page, pageSize);
+            var pagedList = new PagedList<Category>(this.Context.Categories.OrderBy(c => c.Name), page, pageSize);
             return pagedList;
         }
     }

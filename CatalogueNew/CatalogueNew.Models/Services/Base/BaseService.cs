@@ -7,8 +7,13 @@ using System.Threading.Tasks;
 
 namespace CatalogueNew.Models.Services
 {
-    public interface IManufacturerService : IBaseService<Manufacturer>
+    public class BaseService
     {
-        IEnumerable<Manufacturer> GetAll();
+        protected ICatalogueContext Context { get; private set; }
+
+        public BaseService(ICatalogueContext context)
+        {
+            Context = context;
+        }
     }
 }

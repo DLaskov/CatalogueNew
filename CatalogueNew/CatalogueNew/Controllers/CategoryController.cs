@@ -24,7 +24,7 @@ namespace CatalogueNew.Web.Controllers
 
             var categoryListViewModel = new CategoryListViewModel()
             {
-                Categories = pageItems.Items.AsEnumerable(),
+                Categories = pageItems.Items.ToList(),
                 Count = pageItems.PageCount,
                 Page = pageItems.CurrentPage
             };

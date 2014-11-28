@@ -235,7 +235,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\App\" />
-    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CatalogueNew.Models\CatalogueNew.Models.csproj">
