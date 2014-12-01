@@ -8,15 +8,16 @@ using System.Threading.Tasks;
 
 namespace CatalogueNew.Models.Services
 {
-    public class BaseService<T> where T : class
+    public class BaseService<T> : IBaseService<T> where T : class
     {
         protected ICatalogueContext Context { get; private set; }
+
         protected IDbSet<T> DbSet { get; set; }
 
         public BaseService(ICatalogueContext context)
         {
             this.Context = context;
-            this.DbSet = this.Context.Set<T>();
+            //this.DbSet = this.Context.Set<T>();
         }
 
         public virtual IQueryable<T> All()
