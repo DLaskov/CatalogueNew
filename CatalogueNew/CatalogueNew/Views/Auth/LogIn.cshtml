@@ -10,9 +10,9 @@
 @using (Html.BeginForm("LogIn", "Auth", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     <div class="form-group">
-        <label for="@Html.IdFor(x => x.Email)">Email</label>
-        <input type="email" class="form-control" id="@Html.IdFor(x => x.Email)" name="@Html.IdFor(x => x.Email)"
-               placeholder="Enter email" required="required" />
+        <label for="@Html.IdFor(x => x.UserName)">Username or email</label>
+        <input type="text" class="form-control" id="@Html.IdFor(x => x.UserName)" name="@Html.IdFor(x => x.UserName)"
+               placeholder="Enter username or email" required="required" />
     </div>
     <div class="form-group">
         <label for="@Html.IdFor(x => x.Password)">Password</label>

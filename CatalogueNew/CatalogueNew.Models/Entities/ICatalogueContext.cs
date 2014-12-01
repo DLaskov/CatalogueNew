@@ -19,7 +19,5 @@ namespace CatalogueNew.Models.Entities
         IDbSet<Wishlist> Wishlists { get; set; }
         DbEntityEntry Entry(object entity);
         int SaveChanges();
-        DbSet<TEntity> Set<TEntity>() 
-            where TEntity : class;
     }
 }
