@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CatalogueNew.Models.Services
 {
-    public class ProductService : BaseService, IProductService
+    public class ProductService : BaseService<Product>, IProductService
     {
         private const int pageSize = 3;
 

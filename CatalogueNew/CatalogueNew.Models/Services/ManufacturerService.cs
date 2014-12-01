@@ -11,7 +11,7 @@ using System.Configuration;
 
 namespace CatalogueNew.Models.Services
 {
-    public class ManufacturerService : BaseService, IManufacturerService
+    public class ManufacturerService : BaseService<Manufacturer>, IManufacturerService
     {
         private readonly int pageSize = 5;
 

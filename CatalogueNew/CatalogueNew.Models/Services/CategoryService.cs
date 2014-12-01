@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace CatalogueNew.Models.Services
 {
-    public class CategoryService : BaseService, ICategoryService
+    public class CategoryService : BaseService<Category>, ICategoryService
     {
         private const int pageSize = 3;
 
