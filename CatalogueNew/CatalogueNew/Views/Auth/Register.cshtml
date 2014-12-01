@@ -8,19 +8,10 @@
     All fields marked with <span class="required">*</span> are required!
 </div>
 <br />
-<script language="javascript">
-    $("#registerForm").submit( function() {
-        if ($("#@Html.IdFor(x => x.Password)").value != $("#passwordConfirm")) {
-            alert("Password doesn't match!");
-        } else {
-            $("#registerForm").submit();
-        }
-        }
-      );
-</script>
+@Html.ValidationSummary(true)
+
 @using (Html.BeginForm("Register", "Auth", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "registerForm" }))
-{
-    @Html.ValidationSummary(true)
+{  
     <div class="form-group">
         <label for="@Html.IdFor(x => x.UserName)">Username<span class="required">*</span></label>
         <input type="text" class="form-control" id="@Html.IdFor(x => x.UserName)" name="@Html.IdFor(x => x.UserName)"
@@ -59,7 +50,7 @@
     <div class="form-group">
         <label for="@Html.IdFor(x => x.Gender)">Gender </label>
         <div class="col-xs-offset-1">
-            <input type="radio" id="radioMale" class="radio-inline" 
+            <input type="radio" id="radioMale" class="radio-inline"
                    name="@Html.IdFor(x => x.Gender)" value="Male" />&nbsp;
             <label for="radioMale">Male</label>
             <input type="radio" id="radioFemale" class="radio-inline"
@@ -67,5 +58,18 @@
             <label for="radioFemale">Female</label>
         </div>
     </div>
-    <input type="submit" class="btn btn-default" value="Register" onclick="return submit();" />
+    <input type="submit" class="btn btn-default" value="Register" />
 }
+<script language="javascript">
+    $("#registerForm").submit(function (event) {
+        if ($("#@Html.IdFor(x => x.Password)").val() != $("#passwordConfirm").val()) {
+            $("#passwordConfirm").after("<p>Password doesn't match.</p>");
+            event.preventDefault();            
+        }
+        if ($("#@Html.IdFor(x => x.UserName)").val() == $("#@Html.IdFor(x => x.Password)").val()) {
+            $("#@Html.IdFor(x => x.Password)").after("<p>Password must be different from username.</p>");
+            event.preventDefault();          
+        }
+        return;
+    })
+</script>

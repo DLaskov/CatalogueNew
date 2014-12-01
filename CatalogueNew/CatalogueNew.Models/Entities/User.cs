@@ -7,7 +7,7 @@ namespace CatalogueNew.Models.Entities
     using System.Data.Entity.Spatial;
     using Microsoft.AspNet.Identity.EntityFramework;
 
-    public partial class User : IdentityUser
+    public class User : IdentityUser
     {
         public enum GenderType
         {

@@ -6,7 +6,7 @@ namespace CatalogueNew.Models.Entities
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Manufacturer
+    public class Manufacturer
     {
         [Key]
         public int ManufacturerID { get; set; }
