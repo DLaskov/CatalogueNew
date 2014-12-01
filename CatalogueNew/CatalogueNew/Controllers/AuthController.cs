@@ -45,6 +45,7 @@ namespace CatalogueNew.Web.Controllers
             }
 
             User user = await userManager.FindAsync(model.UserName , model.Password);
+
             if (user == null)
             {
                 user = await userManager.FindByEmailAsync(model.UserName);

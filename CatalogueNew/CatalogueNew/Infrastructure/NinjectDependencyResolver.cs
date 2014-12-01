@@ -13,6 +13,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Ninject.Parameters;
 using Ninject.Extensions.NamedScope;
 using CatalogueNew.Web.Controllers;
+using System.Data.Entity;
 
 namespace CatalogueNew.Web.Infrastructure
 {
@@ -46,8 +47,7 @@ namespace CatalogueNew.Web.Infrastructure
             kernel.Bind<IUserStore<User>>().To<UserStore<User>>()
                 .InRequestScope()
                 .WithConstructorArgument("context", kernel.Get<ICatalogueContext>());
-            kernel.Bind<UserManager<User>>().ToSelf().InRequestScope();
-
+            kernel.Bind<UserManager<User>>().ToSelf();
         }
     }
 }

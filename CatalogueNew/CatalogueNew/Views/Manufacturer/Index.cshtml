@@ -1,0 +1,51 @@
+﻿@model ManufacturerListViewModel
+
+@{
+    ViewBag.Title = "Manufacturer";
+}
+
+<h2>Manufacturer</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", new { @class = "btn btn-default" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+    </tr>
+
+    @foreach (var item in @Model.Manufacturers)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ManufacturerID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ManufacturerID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ManufacturerID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div class="row">
+    <nav>
+        <ul class="pagination">
+            @for (int i = 1; i <= @Model.Count; i++)
+            {
+                if (@Model.Page == i)
+                {
+                    <li class="active"><a href="@Url.Action("Index", new { page = i })">@i</a></li>
+                }
+                else
+                {
+                    <li><a href="@Url.Action("Index", new { page = i })">@i</a></li>
+                }
+            }
+        </ul>
+    </nav>
+</div>

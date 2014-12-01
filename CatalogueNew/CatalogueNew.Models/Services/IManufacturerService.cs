@@ -1,4 +1,5 @@
 ﻿using CatalogueNew.Models.Entities;
+using CatalogueNew.Models.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,5 +21,7 @@ namespace CatalogueNew.Models.Services
         void Remove(Manufacturer category);
 
         void Remove(int id);
+
+        PagedList<Manufacturer> GetItems(int? page);
     }
 }
