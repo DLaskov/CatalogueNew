@@ -3,16 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using CatalogueNew.Models.Entities;
 
 namespace CatalogueNew.Web.Models
 {
     public class RegisterViewModel
     {
-        public enum GenderType
-        {
-            Male = 0,
-            Female = 1
-        }
 
         [Required]
         public string UserName { get; set; }
@@ -30,7 +26,7 @@ namespace CatalogueNew.Web.Models
 
         public string LastName { get; set; }
 
-        public GenderType Gender { get; set; }
+        public User.GenderType Gender { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime? BirthDate { get; set; }
