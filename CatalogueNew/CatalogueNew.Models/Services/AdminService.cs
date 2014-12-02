@@ -1,5 +1,6 @@
 ﻿using CatalogueNew.Models.Entities;
 using CatalogueNew.Models.Infrastructure;
+using CatalogueNew.Models.Services.Base;
 using CatalogueNew.Models.Services.Contracts;
 using CatalogueNew.Web.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -79,7 +80,7 @@ namespace CatalogueNew.Models.Services
             this.Context.SaveChanges();
         }
 
-        public PagedList<User> GetUsers(int? page)
+        public PagedList<User> GetUsers(int page)
         {
             var pagedList = new PagedList<User>(this.Context.Users.OrderBy(c => c.UserName), page, pageSize);
             return pagedList;

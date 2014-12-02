@@ -1,10 +1,10 @@
-﻿@model CategoryListViewModel
+﻿@model ManufacturerListViewModel
 
 @{
-    ViewBag.Title = "Category";
+    ViewBag.Title = "Manufacturer";
 }
 
-<h2>Category</h2>
+<h2>Manufacturer</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create", new { @class = "btn btn-default" })
@@ -16,19 +16,16 @@
         </th>
     </tr>
 
-    @foreach (var item in @Model.Categories)
+    @foreach (var item in @Model.Manufacturers)
     {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ParentCategoryID)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.CategoryID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.CategoryID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.CategoryID })
+                @Html.ActionLink("Edit", "Edit", new { id = item.ManufacturerID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ManufacturerID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ManufacturerID })
             </td>
         </tr>
     }

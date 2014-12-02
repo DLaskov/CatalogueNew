@@ -7,7 +7,7 @@ namespace CatalogueNew.Models.Entities
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Product
+    public class Product
     {
         public Product()
         {

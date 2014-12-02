@@ -6,7 +6,7 @@ namespace CatalogueNew.Models.Entities
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Comment
+    public class Comment
     {
         [Key]
         public int CommentID { get; set; }

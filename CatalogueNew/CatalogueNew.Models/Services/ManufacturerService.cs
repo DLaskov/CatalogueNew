@@ -11,7 +11,7 @@ using System.Configuration;
 
 namespace CatalogueNew.Models.Services
 {
-    public class ManufacturerService : BaseService, IManufacturerService
+    public class ManufacturerService : BaseService<Manufacturer>, IManufacturerService
     {
         private readonly int pageSize = 5;
 
@@ -25,7 +25,7 @@ namespace CatalogueNew.Models.Services
             return this.Context.Manufacturers.ToList();
         }
 
-        public Manufacturer Find(int? id)
+        public Manufacturer Find(int id)
         {
             return this.Context.Manufacturers.Find(id);
         }
@@ -55,7 +55,7 @@ namespace CatalogueNew.Models.Services
             this.Context.SaveChanges();
         }
 
-        public PagedList<Manufacturer> GetItems(int? page)
+        public PagedList<Manufacturer> GetManufacturers(int page)
         {
             var pagedList = new PagedList<Manufacturer>(this.Context.Manufacturers.OrderBy(c => c.Name), page, pageSize);
             return pagedList;

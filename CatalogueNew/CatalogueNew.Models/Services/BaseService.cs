@@ -1,19 +1,20 @@
 ﻿using CatalogueNew.Models.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CatalogueNew.Models.Services.Base
+namespace CatalogueNew.Models.Services
 {
-    public class BaseService
+    public class BaseService<T> where T : class
     {
         protected ICatalogueContext Context { get; private set; }
 
         public BaseService(ICatalogueContext context)
         {
-            Context = context;
+            this.Context = context;
         }
     }
 }

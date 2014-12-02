@@ -26,7 +26,7 @@ namespace CatalogueNew.Models.Services.Contracts
 
         User Find(string id);
 
-        PagedList<User> GetUsers(int? page);
+        PagedList<User> GetUsers(int page);
 
         IEnumerable<User> GetAll();
 

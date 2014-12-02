@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using System.Web.UI;
 using CatalogueNew.Models.Entities;
 using CatalogueNew.Web.Models;
 using CatalogueNew.Models.Services;
@@ -18,39 +19,23 @@ namespace CatalogueNew.Web.Controllers
             this.categoryServices = categoryServices;
         }
 
-        public ActionResult Index(int? page)
+        public ActionResult Index(int page = 1)
         {
-            var pageItems = categoryServices.GetItems(page);
-
-            var categoryListViewModel = new CategoryListViewModels()
-            {
-                Categories = pageItems.Users.ToList(),
-                Count = pageItems.PageCount,
-                Page = pageItems.CurrentPage
-            };
+            PagedList<Category> pageItems = categoryServices.GetCategories(page);
+            var categoryListViewModel = new CategoryListViewModel(pageItems);
 
             return View(categoryListViewModel);
         }
 
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
             Category category = categoryServices.Find(id);
             if (category == null)
             {
                 return HttpNotFound();
             }
 
-            var model = new CategoryViewModels()
-            {
-                CategoryID = category.CategoryID,
-                Name = category.Name
-            };
-
+            var model = new CategoryViewModel(category);
             return View(model);
         }
 
@@ -61,7 +46,7 @@ namespace CatalogueNew.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CategoryViewModels model)
+        public ActionResult Create(CategoryViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -76,13 +61,8 @@ namespace CatalogueNew.Web.Controllers
             return View(model);
         }
 
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
             Category category = categoryServices.Find(id);
 
             if (category == null)
@@ -90,18 +70,13 @@ namespace CatalogueNew.Web.Controllers
                 return HttpNotFound();
             }
 
-            var model = new CategoryViewModels()
-            {
-                CategoryID = category.CategoryID,
-                Name = category.Name
-            };
-
+            var model = new CategoryViewModel(category);
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(CategoryViewModels model)
+        public ActionResult Edit(CategoryViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -117,13 +92,8 @@ namespace CatalogueNew.Web.Controllers
             return View(model);
         }
 
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
             Category category = categoryServices.Find(id);
 
             if (category == null)
@@ -131,12 +101,7 @@ namespace CatalogueNew.Web.Controllers
                 return HttpNotFound();
             }
 
-            var model = new CategoryViewModels()
-            {
-                CategoryID = category.CategoryID,
-                Name = category.Name
-            };
-
+            var model = new CategoryViewModel(category);
             return View(model);
         }
 

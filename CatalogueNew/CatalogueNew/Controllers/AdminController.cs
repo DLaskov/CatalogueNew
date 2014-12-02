@@ -118,7 +118,7 @@ namespace CatalogueNew.Web.Controllers
                 isModerator = true;
             }
 
-            UserRole roles = new Models.UserRole()
+            UserRole roles = new UserRole()
             {
                 IsAdmin = isAdmin,
                 IsManager = isManager,

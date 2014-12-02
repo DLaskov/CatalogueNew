@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace CatalogueNew.Models.Services
 {
-    public class CategoryService : BaseService, ICategoryService
+    public class CategoryService : BaseService<Category>, ICategoryService
     {
         private const int pageSize = 3;
 
@@ -21,7 +21,7 @@ namespace CatalogueNew.Models.Services
         {
         }
 
-        public Category Find(int? id)
+        public Category Find(int id)
         {
             return this.Context.Categories.Find(id);
         }
@@ -52,7 +52,7 @@ namespace CatalogueNew.Models.Services
             this.Context.SaveChanges();
         }
 
-        public PagedList<Category> GetItems(int? page)
+        public PagedList<Category> GetCategories(int page)
         {
             var pagedList = new PagedList<Category>(this.Context.Categories.OrderBy(c => c.Name), page, pageSize);
             return pagedList;

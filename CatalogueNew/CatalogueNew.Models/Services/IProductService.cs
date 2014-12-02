@@ -10,9 +10,9 @@ namespace CatalogueNew.Models.Services
 {
     public interface IProductService
     {
-        PagedList<Product> GetItems(int? page);
+        PagedList<Product> GetItems(int page);
 
-        Product Find(int? id);
+        Product Find(int id);
 
         void Add(Product category);
 

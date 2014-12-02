@@ -7,18 +7,17 @@ using System.Web;
 
 namespace CatalogueNew.Web.Models
 {
-    public class CategoryListViewModels
+    public class ManufacturerListViewModel
     {
-        public int CategoryID { get; set; }
+        public int ManufacturerID { get; set; }
         public string Name { get; set; }
-        public int? ParentCategoryID { get; set; }
-        public IEnumerable<Category> Categories { get; set; }
+        public IEnumerable<Manufacturer> Manufacturers { get; set; }
         public int Count { get; set; }
         public int Page { get; set; }
 
-        public CategoryListViewModel(PagedList<Category> pageItems)
+        public ManufacturerListViewModel(PagedList<Manufacturer> pageItems)
         {
-            Categories = pageItems.Items.ToList();
+            Manufacturers = pageItems.Items.ToList();
             Count = pageItems.PageCount;
             Page = pageItems.CurrentPage;
         }

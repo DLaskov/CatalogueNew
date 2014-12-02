@@ -14,7 +14,8 @@
                       "~/Content/catalogue.css"));
             bundles.Add(new ScriptBundle("~/Scripts/js").Include(
                       "~/Scripts/bootstrap.min.js",
-                      "~/Scripts/jquery-1.9.0.min.js"));
+                      "~/Scripts/jquery-1.9.0.min.js",
+                      "~/Scripts/jquery-1.9.0.min.map"));
             bundles.Add(new ScriptBundle("~/Scripts/jquery.validate").Include(
                       "~/Scripts/jquery.validate.min.js"));
         }

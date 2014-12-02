@@ -6,9 +6,9 @@ namespace CatalogueNew.Models.Services
 {
     public interface ICategoryService
     {
-        PagedList<Category> GetItems(int? page);
+        PagedList<Category> GetCategories(int page);
 
-        Category Find(int? id);
+        Category Find(int id);
 
         void Add(Category category);
 

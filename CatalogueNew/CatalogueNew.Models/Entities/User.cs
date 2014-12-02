@@ -7,8 +7,14 @@ namespace CatalogueNew.Models.Entities
     using System.Data.Entity.Spatial;
     using Microsoft.AspNet.Identity.EntityFramework;
 
-    public partial class User : IdentityUser
+    public class User : IdentityUser
     {
+        public enum GenderType
+        {
+            Male = 0,
+            Female = 1
+        }
+        
         public User()
         {
             Wishlists = new HashSet<Wishlist>();
@@ -24,14 +30,9 @@ namespace CatalogueNew.Models.Entities
         [DataType(DataType.Date)]
         public DateTime? BirthDate { get; set; }
 
-        public GenderType? Gender { get; set; }
+        public GenderType Gender { get; set; }
 
         public virtual ICollection<Wishlist> Wishlists { get; set; }
-    }
 
-    public enum GenderType
-    {
-        Male = 0,
-        Female = 1
     }
 }

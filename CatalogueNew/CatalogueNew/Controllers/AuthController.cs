@@ -38,14 +38,20 @@ namespace CatalogueNew.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> LogIn(LogInViewModel model)
         {
+            bool passwordMatch = true;
             if (!ModelState.IsValid)
             {
                 return View();
             }
 
-            User user = await userManager.FindAsync(model.Email, model.Password);
+            User user = await userManager.FindAsync(model.UserName , model.Password);
 
-            if (user != null)
+            if (user == null)
+            {
+                user = await userManager.FindByEmailAsync(model.UserName);
+                passwordMatch = await userManager.CheckPasswordAsync(user, model.Password);
+            }
+            if (user != null && passwordMatch)
             {
                 var identity = await userManager.CreateIdentityAsync(
                     user, DefaultAuthenticationTypes.ApplicationCookie);
@@ -56,7 +62,7 @@ namespace CatalogueNew.Web.Controllers
             }
 
             // user authN failed
-            ModelState.AddModelError("", "Invalid email or password");
+            ModelState.AddModelError("", "Invalid username or password");
             return View();
         }
 

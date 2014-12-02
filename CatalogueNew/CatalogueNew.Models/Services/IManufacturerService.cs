@@ -1,4 +1,5 @@
 ﻿using CatalogueNew.Models.Entities;
+using CatalogueNew.Models.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace CatalogueNew.Models.Services
     {
         IEnumerable<Manufacturer> GetAll();
 
-        Manufacturer Find(int? id);
+        Manufacturer Find(int id);
 
         void Add(Manufacturer category);
 
@@ -20,5 +21,7 @@ namespace CatalogueNew.Models.Services
         void Remove(Manufacturer category);
 
         void Remove(int id);
+
+        PagedList<Manufacturer> GetManufacturers(int page);
     }
 }
