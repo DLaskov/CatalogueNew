@@ -10,7 +10,7 @@
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.min.css",
                       "~/Content/bootstrap-theme.min.css",
-                      "~/Content/site.css",
+                      "~/Content/Site.css",
                       "~/Content/catalogue.css"));
             bundles.Add(new ScriptBundle("~/Scripts/js").Include(
                       "~/Scripts/bootstrap.min.js",

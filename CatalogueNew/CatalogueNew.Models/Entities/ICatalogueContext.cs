@@ -17,6 +17,9 @@ namespace CatalogueNew.Models.Entities
         IDbSet<Rating> Ratings { get; set; }
         IDbSet<Tag> Tags { get; set; }
         IDbSet<Wishlist> Wishlists { get; set; }
+        IDbSet<User> Users { get; set; }
+        IDbSet<IdentityUserRole> UserRoles { get; set; }
+        IDbSet<IdentityRole> Roles { get; set; }
         DbEntityEntry Entry(object entity);
         int SaveChanges();
     }
