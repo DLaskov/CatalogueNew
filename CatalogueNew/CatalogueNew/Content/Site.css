@@ -16,3 +16,12 @@ textarea {
     max-width: 280px;
 }
 
+@font-face {
+    font-family: 'glyphicons_halflingsregular';
+    src: url('../fonts/glyphicons-halflings-regular.eot');
+    src: url('../fonts/glyphicons-halflings-regular-webfont.woff') format('woff'),
+         url('../fonts/glyphicons-halflings-regular-webfont.ttf') format('truetype'),
+         url('../fonts/glyphicons-halflings-regular-webfont.svg#glyphicons_halflingsregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
