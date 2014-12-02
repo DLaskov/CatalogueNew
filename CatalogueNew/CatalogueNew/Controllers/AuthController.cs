@@ -102,7 +102,7 @@ namespace CatalogueNew.Web.Controllers
                 BirthDate = model.BirthDate,
                 Email = model.Email,
                 LastName = model.LastName,
-                Gender = (int)model.Gender
+                Gender = model.Gender
             };
 
             var result = await userManager.CreateAsync(user, model.Password);

@@ -22,9 +22,9 @@ namespace CatalogueNew.Web.Controllers
         {
             var pageItems = categoryServices.GetItems(page);
 
-            var categoryListViewModel = new CategoryListViewModel()
+            var categoryListViewModel = new CategoryListViewModels()
             {
-                Categories = pageItems.Items.ToList(),
+                Categories = pageItems.Users.ToList(),
                 Count = pageItems.PageCount,
                 Page = pageItems.CurrentPage
             };
@@ -45,7 +45,7 @@ namespace CatalogueNew.Web.Controllers
                 return HttpNotFound();
             }
 
-            var model = new CategoryViewModel()
+            var model = new CategoryViewModels()
             {
                 CategoryID = category.CategoryID,
                 Name = category.Name
@@ -61,7 +61,7 @@ namespace CatalogueNew.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CategoryViewModel model)
+        public ActionResult Create(CategoryViewModels model)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +90,7 @@ namespace CatalogueNew.Web.Controllers
                 return HttpNotFound();
             }
 
-            var model = new CategoryViewModel()
+            var model = new CategoryViewModels()
             {
                 CategoryID = category.CategoryID,
                 Name = category.Name
@@ -101,7 +101,7 @@ namespace CatalogueNew.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(CategoryViewModel model)
+        public ActionResult Edit(CategoryViewModels model)
         {
             if (ModelState.IsValid)
             {
@@ -131,7 +131,7 @@ namespace CatalogueNew.Web.Controllers
                 return HttpNotFound();
             }
 
-            var model = new CategoryViewModel()
+            var model = new CategoryViewModels()
             {
                 CategoryID = category.CategoryID,
                 Name = category.Name

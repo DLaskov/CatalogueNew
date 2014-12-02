@@ -6,9 +6,10 @@ using System.Web;
 
 namespace CatalogueNew.Web.Models
 {
-    public class CategoryViewModel
+    public class UsersListViewModels
     {
-        public int CategoryID { get; set; }
-        public string Name { get; set; }
+        public IEnumerable<User> Users { get; set; }
+        public int Count { get; set; }
+        public int? Page { get; set; }
     }
 }

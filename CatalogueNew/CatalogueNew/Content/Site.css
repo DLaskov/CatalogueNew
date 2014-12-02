@@ -16,3 +16,10 @@ textarea {
     max-width: 280px;
 }
 
+h1, h2, h3 {
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+}

@@ -10,7 +10,7 @@ namespace CatalogueNew.Models.Infrastructure
 {
     public class PagedList<T>
     {
-        public IEnumerable<T> Items { get; private set; }
+        public IEnumerable<T> Users { get; private set; }
 
         public int PageCount { get; private set; }
 
@@ -20,7 +20,7 @@ namespace CatalogueNew.Models.Infrastructure
         {
             CurrentPage = page.GetValueOrDefault(1);
             PageCount = ((int)(Math.Ceiling((double)source.Count() / pageSize)));
-            Items = source.Skip((CurrentPage - 1) * pageSize).Take(pageSize);
+            Users = source.Skip((CurrentPage - 1) * pageSize).Take(pageSize);
         }
     }
 }

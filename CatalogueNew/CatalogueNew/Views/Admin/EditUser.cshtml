@@ -1,0 +1,132 @@
+﻿@model UserViewModels
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit Customer</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.UserID)
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.FirstName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Gender, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                <div class="editor-field">
+                    @Html.RadioButtonFor(m => m.Gender, "Male", new { @id = "male" })
+                    @Html.Label("Male", new { @for = "male" }) &nbsp;
+                    @Html.RadioButtonFor(m => m.Gender, "Female", new { @id = "female" })
+                    @Html.Label("Female", new { @for = "female" })
+                    @Html.ValidationMessageFor(m => m.Gender)
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.BirthDate, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                <div class="form-group input-group-sm">
+                    @Html.TextBoxFor(model => model.BirthDate, new { @class = "form-control datepicker", placeholder = "Enter Drop-off date here..." })
+                    @Html.ValidationMessageFor(model => model.BirthDate)
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Roles", new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.Label("Admin", new { @for = "admin" })
+
+                    @if (@Model.isAdmin == true)
+                    {
+                        <input type="checkbox" class="role" name="admin" id="admin" checked="checked" />
+                    }
+                    else
+                    {
+                        <input type="checkbox" class="role" name="admin" id="admin" />
+                    }
+
+                </div>
+                <div class="checkbox">
+                    @Html.Label("Manager", new { @for = "manager" })
+
+                    @if (@Model.isManager == true)
+                    {
+                        <input type="checkbox" class="role" name="manager" id="manager" checked="checked" />
+                    }
+                    else
+                    {
+                        <input type="checkbox" class="role" name="manager" id="manager" />
+                    }
+
+                </div>
+                <div class="checkbox">
+                    @Html.Label("Moderator", new { @for = "moderator" })
+
+                    @if (@Model.isModerator == true)
+                    {
+                        <input type="checkbox" class="role" name="moderator" id="moderator" checked="checked" />
+                    }
+                    else
+                    {
+                        <input type="checkbox" class="role" name="moderator" id="moderator" />
+                    }
+
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-success" />
+                @Html.ActionLink("Back to List", "Users", null, new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.datepicker').datepicker();
+        });
+    </script>
+}

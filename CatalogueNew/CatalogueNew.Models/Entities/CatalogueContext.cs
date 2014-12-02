@@ -25,5 +25,6 @@ namespace CatalogueNew.Models.Entities
         public virtual IDbSet<Rating> Ratings { get; set; }
         public virtual IDbSet<Tag> Tags { get; set; }
         public virtual IDbSet<Wishlist> Wishlists { get; set; }
+        public virtual IDbSet<IdentityUserRole> UserRoles { get; set; }
     }
 }

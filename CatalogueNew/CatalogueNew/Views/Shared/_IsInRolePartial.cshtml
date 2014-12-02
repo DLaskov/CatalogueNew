@@ -1,0 +1,42 @@
+﻿@model UserViewModels
+
+    @if (Model.isAdmin)
+{
+        <td>
+            <img src="~/fonts/glyphicons_193_circle_ok.png" />
+        </td>
+}
+else
+{
+        <td>
+            <img src="~/fonts/glyphicons_192_circle_remove.png" />
+        </td>
+}
+
+    @if (Model.isManager)
+{
+        <td>
+            <img src="~/fonts/glyphicons_193_circle_ok.png" />
+        </td>
+}
+else
+{
+        <td>
+            <img src="~/fonts/glyphicons_192_circle_remove.png" />
+        </td>
+}
+
+    @if (Model.isModerator)
+{
+        <td>
+            <img src="~/fonts/glyphicons_193_circle_ok.png" />
+        </td>
+}
+else
+{
+        <td>
+            <img src="~/fonts/glyphicons_192_circle_remove.png" />
+        </td>
+}
+
+
