@@ -12,7 +12,7 @@ namespace CatalogueNew.Models.Services
     {
         IEnumerable<Manufacturer> GetAll();
 
-        Manufacturer Find(int? id);
+        Manufacturer Find(int id);
 
         void Add(Manufacturer category);
 
@@ -22,6 +22,6 @@ namespace CatalogueNew.Models.Services
 
         void Remove(int id);
 
-        PagedList<Manufacturer> GetItems(int? page);
+        PagedList<Manufacturer> GetManufacturers(int page);
     }
 }

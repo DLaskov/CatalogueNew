@@ -16,9 +16,9 @@ namespace CatalogueNew.Models.Infrastructure
 
         public int CurrentPage { get; private set; }
 
-        public PagedList(IQueryable<T> source, int? page, int pageSize)
+        public PagedList(IQueryable<T> source, int page, int pageSize)
         {
-            CurrentPage = page.GetValueOrDefault(1);
+            CurrentPage = page;
             PageCount = ((int)(Math.Ceiling((double)source.Count() / pageSize)));
             Items = source.Skip((CurrentPage - 1) * pageSize).Take(pageSize);
         }

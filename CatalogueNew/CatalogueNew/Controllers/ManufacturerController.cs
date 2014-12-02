@@ -1,4 +1,5 @@
 ﻿using CatalogueNew.Models.Entities;
+using CatalogueNew.Models.Infrastructure;
 using CatalogueNew.Models.Services;
 using CatalogueNew.Web.Models;
 using System;
@@ -19,41 +20,23 @@ namespace CatalogueNew.Web.Controllers
             this.manufacturerServices = manufacturerServices;
         }
 
-        public ActionResult Index(int? page)
+        public ActionResult Index(int page = 1)
         {
-            var pageItems = manufacturerServices.GetItems(page);
-
-            var categoryListViewModel = new ManufacturerListViewModel()
-            {
-                Manufacturers = pageItems.Items.ToList(),
-                Count = pageItems.PageCount,
-                Page = pageItems.CurrentPage
-            };
+            PagedList<Manufacturer> pageItems = manufacturerServices.GetManufacturers(page);
+            var categoryListViewModel = new ManufacturerListViewModel(pageItems);
 
             return View(categoryListViewModel);
         }
 
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
             Manufacturer manufacturer = manufacturerServices.Find(id);
-
             if (manufacturer == null)
             {
                 return HttpNotFound();
             }
 
-            var model = new ManufacturerViewModel()
-            {
-                ManufacturerID = manufacturer.ManufacturerID,
-                Name = manufacturer.Name,
-                Description = manufacturer.Description
-            };
-
+            var model = new ManufacturerViewModel(manufacturer);
             return View(model);
         }
 
@@ -81,13 +64,8 @@ namespace CatalogueNew.Web.Controllers
             return View(model);
         }
 
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
             Manufacturer manufacturer = manufacturerServices.Find(id);
 
             if (manufacturer == null)
@@ -95,13 +73,7 @@ namespace CatalogueNew.Web.Controllers
                 return HttpNotFound();
             }
 
-            var model = new ManufacturerViewModel()
-            {
-                ManufacturerID = manufacturer.ManufacturerID,
-                Name = manufacturer.Name,
-                Description = manufacturer.Description
-            };
-
+            var model = new ManufacturerViewModel(manufacturer);
             return View(model);
         }
 
@@ -124,13 +96,8 @@ namespace CatalogueNew.Web.Controllers
             return View(model);
         }
 
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
             Manufacturer manufacturer = manufacturerServices.Find(id);
 
             if (manufacturer == null)
@@ -138,13 +105,7 @@ namespace CatalogueNew.Web.Controllers
                 return HttpNotFound();
             }
 
-            var model = new ManufacturerViewModel()
-            {
-                ManufacturerID = manufacturer.ManufacturerID,
-                Name = manufacturer.Name,
-                Description = manufacturer.Description
-            };
-
+            var model = new ManufacturerViewModel(manufacturer);
             return View(model);
         }
 
@@ -155,7 +116,5 @@ namespace CatalogueNew.Web.Controllers
             manufacturerServices.Remove(id);
             return RedirectToAction("Index");
         }
-
-
     }
 }

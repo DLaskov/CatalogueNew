@@ -23,7 +23,7 @@ namespace CatalogueNew.Models.Services
             return this.Context.Products.ToList();
         }
 
-        public Product Find(int? id)
+        public Product Find(int id)
         {
             return this.Context.Products.Find(id);
         }
@@ -53,7 +53,7 @@ namespace CatalogueNew.Models.Services
             this.Context.SaveChanges();
         }
 
-        public PagedList<Product> GetItems(int? page)
+        public PagedList<Product> GetItems(int page)
         {
             var pagedList = new PagedList<Product>(this.Context.Products.OrderBy(c => c.Name), page, pageSize);
             return pagedList;

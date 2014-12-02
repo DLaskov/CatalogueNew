@@ -14,6 +14,13 @@ namespace CatalogueNew.Web.Models
         public int? ParentCategoryID { get; set; }
         public IEnumerable<Category> Categories { get; set; }
         public int Count { get; set; }
-        public int? Page { get; set; }
+        public int Page { get; set; }
+
+        public CategoryListViewModel(PagedList<Category> pageItems)
+        {
+            Categories = pageItems.Items.ToList();
+            Count = pageItems.PageCount;
+            Page = pageItems.CurrentPage;
+        }
     }
 }

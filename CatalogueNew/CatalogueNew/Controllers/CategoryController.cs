@@ -19,39 +19,23 @@ namespace CatalogueNew.Web.Controllers
             this.categoryServices = categoryServices;
         }
 
-        public ActionResult Index(int? page)
+        public ActionResult Index(int page = 1)
         {
-            var pageItems = categoryServices.GetItems(page);
-
-            var categoryListViewModel = new CategoryListViewModel()
-            {
-                Categories = pageItems.Items.ToList(),
-                Count = pageItems.PageCount,
-                Page = pageItems.CurrentPage
-            };
+            PagedList<Category> pageItems = categoryServices.GetCategories(page);
+            var categoryListViewModel = new CategoryListViewModel(pageItems);
 
             return View(categoryListViewModel);
         }
 
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
             Category category = categoryServices.Find(id);
             if (category == null)
             {
                 return HttpNotFound();
             }
 
-            var model = new CategoryViewModel()
-            {
-                CategoryID = category.CategoryID,
-                Name = category.Name
-            };
-
+            var model = new CategoryViewModel(category);
             return View(model);
         }
 
@@ -77,13 +61,8 @@ namespace CatalogueNew.Web.Controllers
             return View(model);
         }
 
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
             Category category = categoryServices.Find(id);
 
             if (category == null)
@@ -91,12 +70,7 @@ namespace CatalogueNew.Web.Controllers
                 return HttpNotFound();
             }
 
-            var model = new CategoryViewModel()
-            {
-                CategoryID = category.CategoryID,
-                Name = category.Name
-            };
-
+            var model = new CategoryViewModel(category);
             return View(model);
         }
 
@@ -118,13 +92,8 @@ namespace CatalogueNew.Web.Controllers
             return View(model);
         }
 
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
             Category category = categoryServices.Find(id);
 
             if (category == null)
@@ -132,12 +101,7 @@ namespace CatalogueNew.Web.Controllers
                 return HttpNotFound();
             }
 
-            var model = new CategoryViewModel()
-            {
-                CategoryID = category.CategoryID,
-                Name = category.Name
-            };
-
+            var model = new CategoryViewModel(category);
             return View(model);
         }
 

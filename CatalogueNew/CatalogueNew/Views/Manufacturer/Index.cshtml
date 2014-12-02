@@ -35,17 +35,7 @@
 <div class="row">
     <nav>
         <ul class="pagination">
-            @for (int i = 1; i <= @Model.Count; i++)
-            {
-                if (@Model.Page == i)
-                {
-                    <li class="active"><a href="@Url.Action("Index", new { page = i })">@i</a></li>
-                }
-                else
-                {
-                    <li><a href="@Url.Action("Index", new { page = i })">@i</a></li>
-                }
-            }
+            @Html.GetPages(Model.Count, Model.Page)
         </ul>
     </nav>
 </div>
