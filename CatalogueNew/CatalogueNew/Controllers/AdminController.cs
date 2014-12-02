@@ -1,6 +1,6 @@
 ﻿using CatalogueNew.Models.Entities;
 using CatalogueNew.Models.Infrastructure;
-using CatalogueNew.Models.Services.Contracts;
+using CatalogueNew.Models.Services;
 using CatalogueNew.Web.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -25,11 +25,11 @@ namespace CatalogueNew.Web.Controllers
 
         public ActionResult Users(int? page)
         {
-            PagedList<User> userPages = adminServices.GetUsers(page);
+            PagedList<User> userPages = adminServices.GetUsers(page.GetValueOrDefault(1));
 
             var usersListViewModels = new UsersListViewModels()
             {
-                Users = userPages.Users.ToList(),
+                Users = userPages.Items.ToList(),
                 Count = userPages.PageCount,
                 Page = userPages.CurrentPage
             };

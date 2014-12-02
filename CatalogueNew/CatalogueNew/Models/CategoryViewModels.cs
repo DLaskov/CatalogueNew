@@ -7,7 +7,7 @@ using System.Web;
 
 namespace CatalogueNew.Web.Models
 {
-    public class CategoryViewModels
+    public class CategoryViewModel
     {
         public int CategoryID { get; set; }
 

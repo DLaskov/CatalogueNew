@@ -78,7 +78,7 @@
     </Compile>
     <Compile Include="Services\Base\BaseService.cs" />
     <Compile Include="Services\CategoryService.cs" />
-    <Compile Include="Services\Contracts\IAdminService.cs" />
+    <Compile Include="Services\IAdminService.cs" />
     <Compile Include="Services\IBaseService.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -102,7 +102,9 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Services\Contracts\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

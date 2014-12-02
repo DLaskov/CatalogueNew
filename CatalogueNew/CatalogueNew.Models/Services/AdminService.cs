@@ -1,7 +1,7 @@
 ﻿using CatalogueNew.Models.Entities;
 using CatalogueNew.Models.Infrastructure;
 using CatalogueNew.Models.Services.Base;
-using CatalogueNew.Models.Services.Contracts;
+using CatalogueNew.Models.Services;
 using CatalogueNew.Web.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;

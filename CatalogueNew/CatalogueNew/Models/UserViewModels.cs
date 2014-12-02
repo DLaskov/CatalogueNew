@@ -20,7 +20,7 @@ namespace CatalogueNew.Web.Models
 
         public DateTime? BirthDate { get; set; }
 
-        public User.GenderType? Gender { get; set; }
+        public User.GenderType Gender { get; set; }
 
         public bool isAdmin { get; set; }
 

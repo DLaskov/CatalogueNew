@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CatalogueNew.Models.Services.Contracts
+namespace CatalogueNew.Models.Services
 {
     public interface IAdminService
     {
