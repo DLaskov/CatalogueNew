@@ -304,6 +304,7 @@
     <Content Include="Views\Manufacturer\Edit.cshtml" />
     <Content Include="Views\Manufacturer\Index.cshtml" />
     <Content Include="Views\Image\Index.cshtml" />
+    <Content Include="Views\Shared\_PagingPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
