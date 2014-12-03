@@ -1,0 +1,14 @@
+﻿@model CatalogueNew.Models.Entities.Image
+
+@{
+    ViewBag.Title = "Upload image";
+}
+
+<h2>ImageUpload</h2>
+
+@using (Html.BeginForm("Upload", "Image", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{ 
+    <label>Select image:</label>
+    <input type="file" name="imageUpload" id="imageUpload" />
+    <input  type="submit" value="Upload" class="btn" />
+}
