@@ -8,7 +8,8 @@ namespace CatalogueNew.Models.Entities
     using Microsoft.AspNet.Identity.EntityFramework;
 
     public class User : IdentityUser
-    {   
+    {
+        
         public User()
         {
             Wishlists = new HashSet<Wishlist>();
@@ -27,6 +28,7 @@ namespace CatalogueNew.Models.Entities
         public GenderType? Gender { get; set; }
 
         public virtual ICollection<Wishlist> Wishlists { get; set; }
+
     }
 
     public enum GenderType

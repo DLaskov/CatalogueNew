@@ -1,42 +1,42 @@
 ﻿@model UserViewModels
 
-@if (Model.IsAdmin)
+    @if (Model.isAdmin)
 {
-    <td>
-        <img src="~/fonts/glyphicons_193_circle_ok.png" />
-    </td>
+        <td>
+            <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
+        </td>
 }
 else
 {
-    <td>
-        <img src="~/fonts/glyphicons_192_circle_remove.png" />
-    </td>
+        <td>
+            <span class="glyphicon-remove-circle glyphicon" aria-hidden="true"></span>
+        </td>
 }
 
-@if (Model.IsManager)
-{
-    <td>
-        <img src="~/fonts/glyphicons_193_circle_ok.png" />
-    </td>
-}
-else
-{
-    <td>
-        <img src="~/fonts/glyphicons_192_circle_remove.png" />
-    </td>
-}
+    @if (Model.isManager)
+    {
+        <td>
+            <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
+        </td>
+    }
+    else
+    {
+        <td>
+            <span class="glyphicon-remove-circle glyphicon" aria-hidden="true"></span>
+        </td>
+    }
 
-@if (Model.IsModerator)
-{
-    <td>
-        <img src="~/fonts/glyphicons_193_circle_ok.png" />
-    </td>
-}
-else
-{
-    <td>
-        <img src="~/fonts/glyphicons_192_circle_remove.png" />
-    </td>
-}
+    @if (Model.isModerator)
+    {
+        <td>
+            <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
+        </td>
+    }
+    else
+    {
+        <td>
+            <span class="glyphicon-remove-circle glyphicon" aria-hidden="true"></span>
+        </td>
+    }
 
 

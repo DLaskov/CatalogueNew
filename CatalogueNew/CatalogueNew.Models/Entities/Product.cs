@@ -12,7 +12,7 @@ namespace CatalogueNew.Models.Entities
         public Product()
         {
             Comments = new HashSet<Comment>();
-            Images = new HashSet<Image>();
+            //Images = new HashSet<Image>();
             LikesDislikes = new HashSet<LikeDislike>();
             ProductsTags = new HashSet<ProductTag>();
             Ratings = new HashSet<Rating>();
@@ -40,7 +40,7 @@ namespace CatalogueNew.Models.Entities
 
         public virtual ICollection<Comment> Comments { get; set; }
 
-        public virtual ICollection<Image> Images { get; set; }
+        //public virtual ICollection<Image> Images { get; set; }
 
         public virtual ICollection<LikeDislike> LikesDislikes { get; set; }
 
