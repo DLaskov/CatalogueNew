@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using Microsoft.AspNet.Identity;
 
 namespace CatalogueNew.Models.Services
 {
@@ -80,12 +81,6 @@ namespace CatalogueNew.Models.Services
             this.Context.SaveChanges();
         }
 
-        public PagedList<User> GetUsers(int page)
-        {
-            var pagedList = new PagedList<User>(this.Context.Users.OrderBy(c => c.UserName), page, pageSize);
-            return pagedList;
-        }
-
         public void AddUserRole(IdentityUserRole userRole)
         {
             this.Context.UserRoles.Add(userRole);
@@ -106,58 +101,67 @@ namespace CatalogueNew.Models.Services
             }
         }
 
-        public bool IsInRole(string userId, string role)
+        public PagedList<User> GetUsersWhitRoles(int page)
         {
-            var userRoles = this.Context.UserRoles.Where(x => x.UserId == userId);
+            var pagedList = new PagedList<User>(this.Context.Users.OrderBy(c => c.UserName), page, pageSize);
+            var userManager = new UserManager<User>(new UserStore<User>(new CatalogueContext()));
+            var usersRoles = new Dictionary<User, UserRole>();
+            UserRole userRole;
 
-            var userRole = (from ur in this.Context.UserRoles.Where(x => x.UserId == userId)
-                            join r in this.Context.Roles.Where(x => x.Name == role)
-                                on ur.RoleId equals r.Id
-                            select r.Name).FirstOrDefault();
-
-            if (userRole == role)
+            foreach (var user in pagedList.Items)
             {
-                return true;
+                userRole = CheckRoles(user, userManager);
+
+                usersRoles.Add(user, userRole);
+                pagedList.UsersRoles = usersRoles;
             }
 
-            return false;
+            return pagedList;
         }
 
-        public UserRole GetUserRoles(User user)
+        public Dictionary<User, UserRole> GetUserWhitRoles(string userId)
         {
-            var userRoles = this.Context.UserRoles.Where(x => x.UserId == user.Id);
+            var user = this.Context.Users.Where(x => x.Id == userId).FirstOrDefault();
+            var userManager = new UserManager<User>(new UserStore<User>(new CatalogueContext()));
+            var usersRoles = new Dictionary<User, UserRole>();
+            var userRole = CheckRoles(user, userManager);
 
-            bool isAdmin = false;
-            bool isManager = false;
-            bool isModerator = false;
+            usersRoles.Add(user, userRole);
 
-            if (userRoles != null)
+            return usersRoles;
+        }
+
+        private static UserRole CheckRoles(User user, UserManager<User> userManager)
+        {
+
+            var userRole = new UserRole()
             {
-                foreach (var role in userRoles)
+                IsAdmin = false,
+                IsManager = false,
+                IsModerator = false
+            };
+
+            List<string> roles = userManager.GetRoles(user.Id).ToList();
+
+            if (roles.Count != 0)
+            {
+                foreach (var role in roles)
                 {
-                    if (role.RoleId == "1")
+                    if (role == "Admin")
                     {
-                        isAdmin = true;
+                        userRole.IsAdmin = true;
                     }
-                    if (role.RoleId == "2")
+                    else if (role == "Manager")
                     {
-                        isManager = true;
+                        userRole.IsManager = true;
                     }
-                    if (role.RoleId == "3")
+                    else if (role == "Moderator")
                     {
-                        isModerator = true;
+                        userRole.IsModerator = true;
                     }
                 }
             }
-
-            var roles = new UserRole()
-                {
-                    IsAdmin = isAdmin,
-                    IsManager = isManager,
-                    IsModerator = isModerator
-                };
-
-            return roles;
+            return userRole;
         }
     }
 }

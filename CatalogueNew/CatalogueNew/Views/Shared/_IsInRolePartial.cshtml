@@ -1,42 +1,42 @@
 ﻿@model UserViewModels
 
-    @if (Model.IsAdmin)
+@if (Model.IsAdmin)
 {
-        <td>
-            <img src="~/fonts/glyphicons_193_circle_ok.png" />
-        </td>
+    <td>
+        <img src="~/fonts/glyphicons_193_circle_ok.png" />
+    </td>
 }
 else
 {
-        <td>
-            <img src="~/fonts/glyphicons_192_circle_remove.png" />
-        </td>
+    <td>
+        <img src="~/fonts/glyphicons_192_circle_remove.png" />
+    </td>
 }
 
-    @if (Model.IsManager)
+@if (Model.IsManager)
 {
-        <td>
-            <img src="~/fonts/glyphicons_193_circle_ok.png" />
-        </td>
+    <td>
+        <img src="~/fonts/glyphicons_193_circle_ok.png" />
+    </td>
 }
 else
 {
-        <td>
-            <img src="~/fonts/glyphicons_192_circle_remove.png" />
-        </td>
+    <td>
+        <img src="~/fonts/glyphicons_192_circle_remove.png" />
+    </td>
 }
 
-    @if (Model.IsModerator)
+@if (Model.IsModerator)
 {
-        <td>
-            <img src="~/fonts/glyphicons_193_circle_ok.png" />
-        </td>
+    <td>
+        <img src="~/fonts/glyphicons_193_circle_ok.png" />
+    </td>
 }
 else
 {
-        <td>
-            <img src="~/fonts/glyphicons_192_circle_remove.png" />
-        </td>
+    <td>
+        <img src="~/fonts/glyphicons_192_circle_remove.png" />
+    </td>
 }
 
 

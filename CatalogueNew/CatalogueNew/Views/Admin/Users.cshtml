@@ -17,19 +17,58 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Users)
+        @foreach (var item in Model.UsersRoles)
         {
             <tr>
                 <td>
-                    @item.UserName
+                    @item.Key.UserName
                 </td>
                 <td>
-                    <a href="edituser/@item.Id"><img src="~/fonts/glyphicons_030_pencil.png" /></a>
+                    <a href="edituser/@item.Key.Id"><img src="~/fonts/glyphicons_030_pencil.png" /></a>
                 </td>
                 <td>
-                    <a href="deleteuser/@item.Id"><img src="~/fonts/glyphicons_016_bin.png" /></a>
+                    <a href="deleteuser/@item.Key.Id"><img src="~/fonts/glyphicons_016_bin.png" /></a>
                 </td>
-                    @Html.Action("UserRole", "Admin", new { id = @item.Id })
+
+                    @if (item.Value.IsAdmin)
+                    {
+                        <td>
+                            <img src="~/fonts/glyphicons_193_circle_ok.png" />
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <img src="~/fonts/glyphicons_192_circle_remove.png" />
+                        </td>
+                    }
+
+                    @if (item.Value.IsManager)
+                    {
+                        <td>
+                            <img src="~/fonts/glyphicons_193_circle_ok.png" />
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <img src="~/fonts/glyphicons_192_circle_remove.png" />
+                        </td>
+                    }
+
+                    @if (item.Value.IsModerator)
+                    {
+                        <td>
+                            <img src="~/fonts/glyphicons_193_circle_ok.png" />
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <img src="~/fonts/glyphicons_192_circle_remove.png" />
+                        </td>
+                    }
+
             </tr>
         }
     </tbody>
