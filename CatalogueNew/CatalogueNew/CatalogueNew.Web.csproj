@@ -176,6 +176,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="HttpImageHandler.ashx" />
     <None Include="Scripts\jquery-1.9.0.intellisense.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -245,7 +246,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Code\HttpImageHandler.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
@@ -261,7 +261,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\PagingHelper.cs" />
+    <Compile Include="HttpImageHandler.ashx.cs">
+      <DependentUpon>HttpImageHandler.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
     <Compile Include="Models\AppUserClaims.cs" />
     <Compile Include="Models\CategoryListViewModels.cs" />
@@ -301,7 +303,7 @@
     <Content Include="Views\Manufacturer\Details.cshtml" />
     <Content Include="Views\Manufacturer\Edit.cshtml" />
     <Content Include="Views\Manufacturer\Index.cshtml" />
-    <Content Include="Views\Home\ImageUpload.cshtml" />
+    <Content Include="Views\Image\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -311,8 +313,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\App\" />
-    <Folder Include="Views\Image\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CatalogueNew.Models\CatalogueNew.Models.csproj">

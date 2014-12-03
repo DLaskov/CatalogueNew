@@ -12,20 +12,20 @@ namespace CatalogueNew.Models.Entities
         public int ImageID { get; set; }
 
         [Required]
+        [DataType("varbinary(MAX)")]
         public byte[] Value { get; set; }
 
-        [Required]
-        [StringLength(100)]
-        public string ImageName { get; set; }
+        //[StringLength(100)]
+        //public string ImageName { get; set; }
 
         [Required]
         public string MimeType { get; set; }
 
         [Required]
-        public DateTime UpdatedAt { get; set; }
+        public DateTime LastUpdated { get; set; }
 
-        public int ProductID { get; set; }
+        //public int ProductID { get; set; }
 
-        public virtual Product Products { get; set; }
+        //public virtual Product Products { get; set; }
     }
 }

@@ -3,40 +3,40 @@
     @if (Model.isAdmin)
 {
         <td>
-            <img src="~/fonts/glyphicons_193_circle_ok.png" />
+            <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
         </td>
 }
 else
 {
         <td>
-            <img src="~/fonts/glyphicons_192_circle_remove.png" />
+            <span class="glyphicon-remove-circle glyphicon" aria-hidden="true"></span>
         </td>
 }
 
     @if (Model.isManager)
-{
+    {
         <td>
-            <img src="~/fonts/glyphicons_193_circle_ok.png" />
+            <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
         </td>
-}
-else
-{
+    }
+    else
+    {
         <td>
-            <img src="~/fonts/glyphicons_192_circle_remove.png" />
+            <span class="glyphicon-remove-circle glyphicon" aria-hidden="true"></span>
         </td>
-}
+    }
 
     @if (Model.isModerator)
-{
+    {
         <td>
-            <img src="~/fonts/glyphicons_193_circle_ok.png" />
+            <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
         </td>
-}
-else
-{
+    }
+    else
+    {
         <td>
-            <img src="~/fonts/glyphicons_192_circle_remove.png" />
+            <span class="glyphicon-remove-circle glyphicon" aria-hidden="true"></span>
         </td>
-}
+    }
 
 

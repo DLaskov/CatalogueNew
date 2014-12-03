@@ -108,6 +108,11 @@ namespace CatalogueNew.Models.Services
 
         public bool IsInRole(string userId, string role)
         {
+            var userRoles2 = (from role2 in Context.Roles
+                             where role2.Name == role
+                             && Context.UserRoles.Any(ur => ur.RoleId == role2.Id && ur.UserId == userId)
+                             select role2).FirstOrDefault();
+                 
             var userRoles = this.Context.UserRoles.Where(x => x.UserId == userId);
 
             var userRole = (from ur in this.Context.UserRoles.Where(x => x.UserId == userId)

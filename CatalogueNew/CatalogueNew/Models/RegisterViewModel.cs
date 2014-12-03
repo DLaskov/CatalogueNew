@@ -26,7 +26,7 @@ namespace CatalogueNew.Web.Models
 
         public string LastName { get; set; }
 
-        public User.GenderType Gender { get; set; }
+        public GenderType? Gender { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime? BirthDate { get; set; }
