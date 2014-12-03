@@ -80,7 +80,15 @@
         <div class="col-md-offset-5 col-md-7">
             <nav>
                 <ul class="pagination">
-                    @Html.Partial("~/Views/Shared/_PagingPartial.cshtml", Model)
+                    @{
+                        PagingViewModel pageModel = new PagingViewModel
+                        {
+                            Count = Model.Count,
+                            Page = (int)Model.Page
+                        };
+                    }
+
+                    @Html.Partial("~/Views/Shared/_PagingPartial.cshtml", pageModel)
                 </ul>
             </nav>
         </div>
