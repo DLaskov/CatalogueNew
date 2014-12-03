@@ -30,44 +30,44 @@
                     <a href="deleteuser/@item.Key.Id"><img src="~/fonts/glyphicons_016_bin.png" /></a>
                 </td>
 
-                    @if (item.Value.IsAdmin)
-                    {
-                        <td>
-                            <img src="~/fonts/glyphicons_193_circle_ok.png" />
-                        </td>
-                    }
-                    else
-                    {
-                        <td>
-                            <img src="~/fonts/glyphicons_192_circle_remove.png" />
-                        </td>
-                    }
+                @if (item.Value.IsAdmin)
+                {
+                    <td>
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </td>
+                }
 
-                    @if (item.Value.IsManager)
-                    {
-                        <td>
-                            <img src="~/fonts/glyphicons_193_circle_ok.png" />
-                        </td>
-                    }
-                    else
-                    {
-                        <td>
-                            <img src="~/fonts/glyphicons_192_circle_remove.png" />
-                        </td>
-                    }
+                @if (item.Value.IsManager)
+                {
+                    <td>
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </td>
+                }
 
-                    @if (item.Value.IsModerator)
-                    {
-                        <td>
-                            <img src="~/fonts/glyphicons_193_circle_ok.png" />
-                        </td>
-                    }
-                    else
-                    {
-                        <td>
-                            <img src="~/fonts/glyphicons_192_circle_remove.png" />
-                        </td>
-                    }
+                @if (item.Value.IsModerator)
+                {
+                    <td>
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </td>
+                }
 
             </tr>
         }
@@ -80,7 +80,7 @@
         <div class="col-md-offset-5 col-md-7">
             <nav>
                 <ul class="pagination">
-                    @Html.Partial("~/Views/Shared/_PagingPartial.cshtml", Model);
+                    @Html.Partial("~/Views/Shared/_PagingPartial.cshtml", Model)
                 </ul>
             </nav>
         </div>
