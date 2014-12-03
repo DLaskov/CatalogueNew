@@ -62,9 +62,9 @@ namespace CatalogueNew.Web.Controllers
                 LastName = user.LastName,
                 BirthDate = user.BirthDate,
                 Gender = user.Gender,
-                isAdmin = userRoles.IsAdmin,
-                isManager = userRoles.IsManager,
-                isModerator = userRoles.IsModerator
+                IsAdmin = userRoles.IsAdmin,
+                IsManager = userRoles.IsManager,
+                IsModerator = userRoles.IsModerator
             };
 
             return View(userViewModel);
@@ -171,22 +171,22 @@ namespace CatalogueNew.Web.Controllers
         {
             var model = new UserViewModels()
             {
-                isAdmin = false,
-                isManager = false,
-                isModerator = false
+                IsAdmin = false,
+                IsManager = false,
+                IsModerator = false
             };
 
             if (adminServices.IsInRole(id, "Admin"))
             {
-                model.isAdmin = true;
+                model.IsAdmin = true;
             }
             if (adminServices.IsInRole(id, "Manager"))
             {
-                model.isManager = true;
+                model.IsManager = true;
             }
             if (adminServices.IsInRole(id, "Moderator"))
             {
-                model.isModerator = true;
+                model.IsModerator = true;
             }
 
             return PartialView("_IsInRolePartial", model);

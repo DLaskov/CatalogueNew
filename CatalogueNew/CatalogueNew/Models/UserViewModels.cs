@@ -22,10 +22,10 @@ namespace CatalogueNew.Web.Models
 
         public GenderType? Gender { get; set; }
 
-        public bool isAdmin { get; set; }
+        public bool IsAdmin { get; set; }
 
-        public bool isManager { get; set; }
+        public bool IsManager { get; set; }
 
-        public bool isModerator { get; set; }
+        public bool IsModerator { get; set; }
     }
 }
