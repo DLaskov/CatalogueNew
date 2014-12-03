@@ -22,14 +22,12 @@ namespace CatalogueNew.Models.Services
 
         void AddUserRole(IdentityUserRole userRole);
 
-        bool IsInRole(string userId, string role);
-
         User Find(string id);
-
-        PagedList<User> GetUsers(int page);
 
         IEnumerable<User> GetAll();
 
-        UserRole GetUserRoles(User user);
+        PagedList<User> GetUsersWhitRoles(int page);
+
+        Dictionary<User, UserRole> GetUserWhitRoles(string userId);
     }
 }

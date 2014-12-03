@@ -25,13 +25,13 @@ namespace CatalogueNew.Web.Controllers
 
         public ActionResult Users(int? page)
         {
-            PagedList<User> userPages = adminServices.GetUsers(page.GetValueOrDefault(1));
+            PagedList<User> userPages = adminServices.GetUsersWhitRoles(page.GetValueOrDefault(1));
 
             var usersListViewModels = new UsersListViewModels()
             {
-                Users = userPages.Items.ToList(),
                 Count = userPages.PageCount,
-                Page = userPages.CurrentPage
+                Page = userPages.CurrentPage,
+                UsersRoles = userPages.UsersRoles
             };
 
             return View(usersListViewModels);
@@ -39,32 +39,12 @@ namespace CatalogueNew.Web.Controllers
 
         public ActionResult EditUser(string id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            User user = adminServices.Find(id);
-
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-
-            UserRole userRoles = adminServices.GetUserRoles(user);
+            var user = adminServices.GetUserWhitRoles(id).FirstOrDefault();
 
             var userViewModel = new UserViewModels()
             {
-                UserID = user.Id,
-                UserName = user.UserName,
-                Email = user.Email,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                BirthDate = user.BirthDate,
-                Gender = user.Gender,
-                IsAdmin = userRoles.IsAdmin,
-                IsManager = userRoles.IsManager,
-                IsModerator = userRoles.IsModerator
+                User = user.Key,
+                UserRole = user.Value
             };
 
             return View(userViewModel);
@@ -72,21 +52,13 @@ namespace CatalogueNew.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditUser(UserViewModels userViewModel, FormCollection form)
+        public ActionResult EditUser(UserViewModels userViewModel)
         {
-            UserRole userRoles = GetUserRoles(form);
+            UserRole userRoles = GetUserRoles(userViewModel);
 
             if (ModelState.IsValid)
             {
-                var user = new User()
-                {
-                    Id = userViewModel.UserID,
-                    UserName = userViewModel.UserName,
-                    FirstName = userViewModel.FirstName,
-                    LastName = userViewModel.LastName,
-                    Email = userViewModel.Email,
-                    Gender = userViewModel.Gender,
-                };
+                User user = userViewModel.User;
 
                 adminServices.Modify(user);
                 adminServices.ModifyUserRoles(user, userRoles);
@@ -97,23 +69,23 @@ namespace CatalogueNew.Web.Controllers
             return View(userViewModel);
         }
 
-        private static UserRole GetUserRoles(FormCollection form)
+        private static UserRole GetUserRoles(UserViewModels userViewModel)
         {
             var isAdmin = false;
             var isManager = false;
             var isModerator = false;
 
-            if (form["admin"] != null)
+            if (userViewModel.Admin != null)
             {
                 isAdmin = true;
             }
 
-            if (form["manager"] != null)
+            if (userViewModel.Manager != null)
             {
                 isManager = true;
             }
 
-            if (form["moderator"] != null)
+            if (userViewModel.Moderator != null)
             {
                 isModerator = true;
             }
@@ -130,27 +102,12 @@ namespace CatalogueNew.Web.Controllers
 
         public ActionResult DeleteUser(string id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            User user = adminServices.Find(id);
-
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
+            var user = adminServices.GetUserWhitRoles(id).FirstOrDefault();
 
             var userViewModels = new UserViewModels()
             {
-                UserID = user.Id,
-                UserName = user.UserName,
-                Email = user.Email,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                BirthDate = user.BirthDate,
-                Gender = user.Gender
+                User = user.Key,
+                UserRole = user.Value
             };
 
             return View(userViewModels);
@@ -164,32 +121,6 @@ namespace CatalogueNew.Web.Controllers
             adminServices.Remove(user);
 
             return RedirectToAction(RedirectToUsers);
-        }
-
-        [ChildActionOnly]
-        public ActionResult UserRole(string id)
-        {
-            var model = new UserViewModels()
-            {
-                IsAdmin = false,
-                IsManager = false,
-                IsModerator = false
-            };
-
-            if (adminServices.IsInRole(id, "Admin"))
-            {
-                model.IsAdmin = true;
-            }
-            if (adminServices.IsInRole(id, "Manager"))
-            {
-                model.IsManager = true;
-            }
-            if (adminServices.IsInRole(id, "Moderator"))
-            {
-                model.IsModerator = true;
-            }
-
-            return PartialView("_IsInRolePartial", model);
         }
     }
 }

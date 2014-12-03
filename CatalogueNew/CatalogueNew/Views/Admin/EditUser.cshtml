@@ -13,56 +13,56 @@
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true)
-        @Html.HiddenFor(model => model.UserID)
+        @Html.HiddenFor(model => model.User.Id)
 
         <div class="form-group">
-            @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+            @Html.LabelFor(m => m.User.UserName, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.User.UserName, new { @class = "form-control" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+            @Html.LabelFor(m => m.User.Email, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.User.Email, new { @class = "form-control" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+            @Html.LabelFor(m => m.User.FirstName, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.FirstName)
+                @Html.TextBoxFor(m => m.User.FirstName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.User.FirstName)
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+            @Html.LabelFor(m => m.User.LastName, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.User.LastName, new { @class = "form-control" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(m => m.Gender, new { @class = "col-md-2 control-label" })
+            @Html.LabelFor(m => m.User.Gender, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
                 <div class="editor-field">
-                    @Html.RadioButtonFor(m => m.Gender, "Male", new { @id = "male" })
+                    @Html.RadioButtonFor(m => m.User.Gender, "Male", new { @id = "male" })
                     @Html.Label("Male", new { @for = "male" }) &nbsp;
-                    @Html.RadioButtonFor(m => m.Gender, "Female", new { @id = "female" })
+                    @Html.RadioButtonFor(m => m.User.Gender, "Female", new { @id = "female" })
                     @Html.Label("Female", new { @for = "female" })
-                    @Html.ValidationMessageFor(m => m.Gender)
+                    @Html.ValidationMessageFor(m => m.User.Gender)
                 </div>
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(m => m.BirthDate, new { @class = "col-md-2 control-label" })
+            @Html.LabelFor(m => m.User.BirthDate, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
                 <div class="form-group input-group-sm">
-                    @Html.TextBoxFor(model => model.BirthDate, new { @class = "form-control datepicker", placeholder = "Enter Drop-off date here..." })
-                    @Html.ValidationMessageFor(model => model.BirthDate)
+                    @Html.TextBoxFor(model => model.User.BirthDate, new { @class = "form-control datepicker", placeholder = "Enter Drop-off date here..." })
+                    @Html.ValidationMessageFor(model => model.User.BirthDate)
                 </div>
             </div>
         </div>
@@ -73,7 +73,7 @@
                 <div class="checkbox">
                     @Html.Label("Admin", new { @for = "admin" })
 
-                    @if (@Model.isAdmin == true)
+                    @if (@Model.UserRole.IsAdmin)
                     {
                         <input type="checkbox" class="role" name="admin" id="admin" checked="checked" />
                     }
@@ -86,7 +86,7 @@
                 <div class="checkbox">
                     @Html.Label("Manager", new { @for = "manager" })
 
-                    @if (@Model.isManager == true)
+                    @if (@Model.UserRole.IsManager)
                     {
                         <input type="checkbox" class="role" name="manager" id="manager" checked="checked" />
                     }
@@ -99,7 +99,7 @@
                 <div class="checkbox">
                     @Html.Label("Moderator", new { @for = "moderator" })
 
-                    @if (@Model.isModerator == true)
+                    @if (@Model.UserRole.IsModerator)
                     {
                         <input type="checkbox" class="role" name="moderator" id="moderator" checked="checked" />
                     }
