@@ -8,24 +8,12 @@ namespace CatalogueNew.Web.Models
 {
     public class UserViewModels
     {
-        public string UserID { get; set; }
+        public User User { get; set; }
 
-        public string UserName { get; set; }
+        public UserRole UserRole { get; set; }
 
-        public string Email { get; set; }
-
-        public string FirstName { get; set; }
-
-        public string LastName { get; set; }
-
-        public DateTime? BirthDate { get; set; }
-
-        public GenderType? Gender { get; set; }
-
-        public bool IsAdmin { get; set; }
-
-        public bool IsManager { get; set; }
-
-        public bool IsModerator { get; set; }
+        public string Admin { get; set; }
+        public string Manager { get; set; }
+        public string Moderator { get; set; }
     }
 }

@@ -17,19 +17,58 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Users)
+        @foreach (var item in Model.UsersRoles)
         {
             <tr>
                 <td>
-                    @item.UserName
+                    @item.Key.UserName
                 </td>
                 <td>
-                    <a href="edituser/@item.Id"><img src="~/fonts/glyphicons_030_pencil.png" /></a>
+                    <a href="edituser/@item.Key.Id"><img src="~/fonts/glyphicons_030_pencil.png" /></a>
                 </td>
                 <td>
-                    <a href="deleteuser/@item.Id"><img src="~/fonts/glyphicons_016_bin.png" /></a>
+                    <a href="deleteuser/@item.Key.Id"><img src="~/fonts/glyphicons_016_bin.png" /></a>
                 </td>
-                    @Html.Action("UserRole", "Admin", new { id = @item.Id })
+
+                @if (item.Value.IsAdmin)
+                {
+                    <td>
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </td>
+                }
+
+                @if (item.Value.IsManager)
+                {
+                    <td>
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </td>
+                }
+
+                @if (item.Value.IsModerator)
+                {
+                    <td>
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </td>
+                }
+
             </tr>
         }
     </tbody>
@@ -41,15 +80,7 @@
         <div class="col-md-offset-5 col-md-7">
             <nav>
                 <ul class="pagination">
-                    @{
-                        PagingViewModel pageModel = new PagingViewModel
-                        {
-                            Count = Model.Count,
-                            Page = (int)Model.Page
-                        };                     
-                    }
-
-                    @Html.Partial("~/Views/Shared/_PagingPartial.cshtml", pageModel);
+                    @Html.Partial("~/Views/Shared/_PagingPartial.cshtml", Model)
                 </ul>
             </nav>
         </div>
