@@ -19,5 +19,8 @@ namespace CatalogueNew.Web.Models
             CategoryID = category.CategoryID;
             Name = category.Name;
         }
+
+        public CategoryViewModel()
+        {}
     }
 }

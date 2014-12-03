@@ -18,13 +18,15 @@ namespace CatalogueNew.Web.Models
         [Required]
         public string Description { get; set; }
 
-        private Manufacturer manufacturer;
-
         public ManufacturerViewModel(Manufacturer manufacturer)
         {
             ManufacturerID = manufacturer.ManufacturerID;
             Name = manufacturer.Name;
             Description = manufacturer.Description;
+        }
+
+        public ManufacturerViewModel()
+        {
         }
     }
 }

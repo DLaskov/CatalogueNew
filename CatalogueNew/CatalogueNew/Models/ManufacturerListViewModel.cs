@@ -21,5 +21,10 @@ namespace CatalogueNew.Web.Models
             Count = pageItems.PageCount;
             Page = pageItems.CurrentPage;
         }
+
+        public ManufacturerListViewModel()
+        {
+
+        }
     }
 }
