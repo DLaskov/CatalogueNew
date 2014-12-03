@@ -38,7 +38,7 @@
 <div class="row">
     <nav>
         <ul class="pagination">
-            @Html.GetPages(Model.Count, Model.Page)
+            @Html.Partial("~/Views/Shared/_PagingPartial.cshtml", Model);
         </ul>
     </nav>
 </div>
