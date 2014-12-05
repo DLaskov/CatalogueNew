@@ -13,7 +13,7 @@ using Microsoft.AspNet.Identity;
 namespace CatalogueNew.Models.Services
 {
     public class AdminService : BaseService, IAdminService
-    {   //RoleManager
+    {
         private const int pageSize = 10;
         private UserManager<User> userManager;
 
