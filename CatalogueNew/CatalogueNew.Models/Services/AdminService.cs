@@ -15,12 +15,10 @@ namespace CatalogueNew.Models.Services
     public class AdminService : BaseService, IAdminService
     {
         private const int pageSize = 10;
-        private UserManager<User> userManager;
 
-        public AdminService(ICatalogueContext context, UserManager<User> userManager)
+        public AdminService(ICatalogueContext context)
             : base(context)
         {
-            this.userManager = userManager;
         }
 
         public IEnumerable<User> GetAll()

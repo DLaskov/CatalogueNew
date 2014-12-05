@@ -58,7 +58,18 @@ namespace CatalogueNew.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                User user = userViewModel.User;
+                User user = new User()
+                {
+                    Id = userViewModel.User.Id,
+                    UserName = userViewModel.User.UserName,
+                    Email = userViewModel.User.Email,
+                    FirstName = userViewModel.User.FirstName,
+                    LastName = userViewModel.User.LastName,
+                    Gender = userViewModel.User.Gender,
+                    BirthDate = userViewModel.User.BirthDate,
+                    PasswordHash = userViewModel.User.PasswordHash,
+                    SecurityStamp = userViewModel.User.SecurityStamp
+                };
 
                 adminServices.Modify(user);
                 adminServices.ModifyUserRoles(user, userRoles);
