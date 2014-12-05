@@ -1,11 +1,9 @@
-﻿@model PagingViewModel
-
-<ul class="pagination">
-    @for (int i = 1; i <= @Model.Count; i++)
+﻿<ul class="pagination">
+    @for (int i = 1; i <= (int)@ViewData["Count"]; i++)
     {
         string path =  HttpContext.Current.Request.Url.Segments[HttpContext.Current.Request.Url.Segments.Length-1]; //Gets current path
         
-        if (@Model.Page == i)
+        if ((int)@ViewData["Page"] == i)
         {
             <li class="active"><a href="@Url.Action(path, new { page = i })">@i</a></li>
         }
