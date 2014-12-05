@@ -39,14 +39,10 @@
     <nav>
         <ul class="pagination">
             @{
-                PagingViewModel pageModel = new PagingViewModel
-                {
-                    Count = Model.Count,
-                    Page = Model.Page
-                };
+                ViewData["Count"] = Model.Count;
+                ViewData["Page"] = Model.Page;
             }
-
-            @Html.Partial("~/Views/Shared/_PagingPartial.cshtml", pageModel);
+            @Html.Partial("~/Views/Shared/_PagingPartial.cshtml", ViewData)
 
         </ul>
     </nav>
