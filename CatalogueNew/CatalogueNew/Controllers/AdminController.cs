@@ -16,7 +16,7 @@ namespace CatalogueNew.Web.Controllers
     public class AdminController : Controller
     {
         private IAdminService adminServices;
-        private const string RedirectToUsers = "Users";
+        private const string RedirectURL = "Users";
 
         public AdminController(IAdminService adminServices)
         {
@@ -63,7 +63,7 @@ namespace CatalogueNew.Web.Controllers
                 adminServices.Modify(user);
                 adminServices.ModifyUserRoles(user, userRoles);
 
-                return RedirectToAction(RedirectToUsers);
+                return RedirectToAction(RedirectURL);
             }
 
             return View(userViewModel);
@@ -120,7 +120,7 @@ namespace CatalogueNew.Web.Controllers
             User user = adminServices.Find(id);
             adminServices.Remove(user);
 
-            return RedirectToAction(RedirectToUsers);
+            return RedirectToAction(RedirectURL);
         }
     }
 }

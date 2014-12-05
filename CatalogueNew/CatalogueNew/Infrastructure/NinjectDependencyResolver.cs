@@ -39,7 +39,7 @@ namespace CatalogueNew.Web.Infrastructure
         private void AddBindings()
         {
             kernel.Bind<ILog>().ToMethod(x => LogManager.GetLogger("CatalogueLogger"));
-            kernel.Bind<ICatalogueContext>().To<CatalogueContext>()
+            kernel.Bind<ICatalogueContext, DbContext>().To<CatalogueContext>()
                 .InRequestScope();
             kernel.Bind<IProductService>().To<ProductService>();
             kernel.Bind<IManufacturerService>().To<ManufacturerService>();

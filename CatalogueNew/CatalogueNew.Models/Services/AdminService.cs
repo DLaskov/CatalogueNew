@@ -13,12 +13,14 @@ using Microsoft.AspNet.Identity;
 namespace CatalogueNew.Models.Services
 {
     public class AdminService : BaseService, IAdminService
-    {
+    {   //RoleManager
         private const int pageSize = 10;
+        private UserManager<User> userManager;
 
-        public AdminService(ICatalogueContext context)
+        public AdminService(ICatalogueContext context, UserManager<User> userManager)
             : base(context)
         {
+            this.userManager = userManager;
         }
 
         public IEnumerable<User> GetAll()
@@ -91,29 +93,44 @@ namespace CatalogueNew.Models.Services
         {
             var userRoles = this.Context.UserRoles.Where(x => x.UserId == user.Id);
 
-            if (userRoles != null)
+            foreach (var role in userRoles)
             {
-                foreach (var role in userRoles)
-                {
-                    this.Context.UserRoles.Remove(role);
-                }
-                this.Context.SaveChanges();
+                this.Context.UserRoles.Remove(role);
             }
+            this.Context.SaveChanges();
         }
 
         public PagedList<User> GetUsersWhitRoles(int page)
         {
             var pagedList = new PagedList<User>(this.Context.Users.OrderBy(c => c.UserName), page, pageSize);
-            var userManager = new UserManager<User>(new UserStore<User>(new CatalogueContext()));
-            var usersRoles = new Dictionary<User, UserRole>();
-            UserRole userRole;
+
+            var usersRoles = (from us in pagedList.Items
+                              join ur in this.Context.UserRoles
+                              on us.Id equals ur.UserId
+                              select ur).ToList();
+
+            var usersWhitRoles = new Dictionary<User, UserRole>();
 
             foreach (var user in pagedList.Items)
             {
-                userRole = CheckRoles(user, userManager);
+                UserRole userRole = new UserRole()
+                {
+                    IsAdmin = false,
+                    IsManager = false,
+                    IsModerator = false
+                };
 
-                usersRoles.Add(user, userRole);
-                pagedList.UsersRoles = usersRoles;
+                foreach (var item in usersRoles)
+                {
+
+                    if (item.UserId == user.Id)
+                    {
+                        CheckForRoles(userRole, item);
+                    }
+                }
+
+                usersWhitRoles.Add(user, userRole);
+                pagedList.UsersRoles = usersWhitRoles;
             }
 
             return pagedList;
@@ -121,47 +138,46 @@ namespace CatalogueNew.Models.Services
 
         public Dictionary<User, UserRole> GetUserWhitRoles(string userId)
         {
-            var user = this.Context.Users.Where(x => x.Id == userId).FirstOrDefault();
-            var userManager = new UserManager<User>(new UserStore<User>(new CatalogueContext()));
+            var user = this.Context.Users.Where(x => x.Id == userId);
+
+            var userRoles = (from us in user
+                             join ur in this.Context.UserRoles
+                             on us.Id equals ur.UserId
+                             select ur).ToList();
+
             var usersRoles = new Dictionary<User, UserRole>();
-            var userRole = CheckRoles(user, userManager);
 
-            usersRoles.Add(user, userRole);
-
-            return usersRoles;
-        }
-
-        private static UserRole CheckRoles(User user, UserManager<User> userManager)
-        {
-
-            var userRole = new UserRole()
+            UserRole userRole = new UserRole()
             {
                 IsAdmin = false,
                 IsManager = false,
                 IsModerator = false
             };
 
-            List<string> roles = userManager.GetRoles(user.Id).ToList();
-
-            if (roles.Count != 0)
+            foreach (var item in userRoles)
             {
-                foreach (var role in roles)
-                {
-                    if (role == "Admin")
-                    {
-                        userRole.IsAdmin = true;
-                    }
-                    else if (role == "Manager")
-                    {
-                        userRole.IsManager = true;
-                    }
-                    else if (role == "Moderator")
-                    {
-                        userRole.IsModerator = true;
-                    }
-                }
+                CheckForRoles(userRole, item);
             }
-            return userRole;
+
+            usersRoles.Add(user.FirstOrDefault(), userRole);
+
+            return usersRoles;
+        }
+
+        private static void CheckForRoles(UserRole userRole, IdentityUserRole item)
+        {
+            if (item.RoleId == "1") //check for Admin
+            {
+                userRole.IsAdmin = true;
+            }
+            else if (item.RoleId == "2") //check for Manager
+            {
+                userRole.IsManager = true;
+            }
+            else if (item.RoleId == "3") //check for Moderator
+            {
+                userRole.IsModerator = true;
+            }
         }
     }
 }
