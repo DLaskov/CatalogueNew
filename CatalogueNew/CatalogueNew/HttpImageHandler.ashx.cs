@@ -4,36 +4,35 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace CatalogueNew.Web
 {
-    public class HttpImageHandler : IHttpAsyncHandler
-
+    public class HttpImageHandler : HttpTaskAsyncHandler
     {
         private ICatalogueContext dbContext = DependencyResolver.Current.GetService<ICatalogueContext>();
 
-        Action<HttpContext> asyncProcessRequest;
-
-        public bool IsReusable
+        public override bool IsReusable
         {
             get { return false; }
         }
-
-        public void ProcessRequest(HttpContext context)
+       
+        public override async Task ProcessRequestAsync(HttpContext context)
         {
             int ID;
             if (int.TryParse(context.Request.QueryString["id"], out ID))
             {
-                var query = dbContext.Images.Where(n => n.ImageID == ID).Select(n => new
-                {
-                    ImageID = n.ImageID,
-                    LastUpdated = n.LastUpdated,
-                    MimeType = n.MimeType
-                }).FirstOrDefault();
+                var imageMetaData = await dbContext.Images.Where(n => n.ImageID == ID).Select(n => new
+                    {
+                        ImageID = n.ImageID,
+                        LastUpdated = n.LastUpdated,
+                        MimeType = n.MimeType
+                    }).FirstOrDefaultAsync();
 
-                if (query == null)
+                if (imageMetaData == null)
                 {
                     context.Response.StatusCode = 404;
                     return;
@@ -45,19 +44,20 @@ namespace CatalogueNew.Web
                     DateTime lastMod = DateTime.ParseExact(context.Request.Headers["If-Modified-Since"],
                         "r", provider).ToLocalTime();
 
-                    if (query.LastUpdated.Equals(lastMod))
+                    if (imageMetaData.LastUpdated.Equals(lastMod))
                     {
                         context.Response.StatusCode = 304;
                         context.Response.StatusDescription = "Not Modified";
                         return;
-                    }                    
+                    }
                 }
 
-                byte[] imageData = dbContext.Images.Where(x => x.ImageID == ID).Single().Value;
-                context.Response.ContentType = query.MimeType;
-                context.Response.OutputStream.Write(imageData, 0, imageData.Length);
+                byte[] imageData = await dbContext.Images.Where(x => x.ImageID == ID)
+                            .Select(x => x.Value).SingleAsync();
+                context.Response.ContentType = imageMetaData.MimeType;
                 context.Response.Cache.SetCacheability(HttpCacheability.Public);
-                context.Response.Cache.SetLastModified(query.LastUpdated);
+                context.Response.Cache.SetLastModified(imageMetaData.LastUpdated);
+                await context.Response.OutputStream.WriteAsync(imageData, 0, imageData.Length);
             }
             else
             {
@@ -66,15 +66,5 @@ namespace CatalogueNew.Web
 
         }
 
-        public IAsyncResult BeginProcessRequest(HttpContext context, AsyncCallback cb, object extraData)
-        {
-            asyncProcessRequest = new Action<HttpContext>(ProcessRequest);
-            return asyncProcessRequest.BeginInvoke(context, cb, extraData);
-        }
-
-        public void EndProcessRequest(IAsyncResult result)
-        {
-            asyncProcessRequest.EndInvoke(result);
-        }
     }
 }
