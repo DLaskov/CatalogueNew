@@ -15,10 +15,12 @@ namespace CatalogueNew.Models.Services
     public class AdminService : BaseService, IAdminService
     {
         private const int pageSize = 10;
+        UserManager<User> userManager;
 
-        public AdminService(ICatalogueContext context)
+        public AdminService(ICatalogueContext context, UserManager<User> userManager)
             : base(context)
         {
+            this.userManager = userManager;
         }
 
         public IEnumerable<User> GetAll()
@@ -103,8 +105,9 @@ namespace CatalogueNew.Models.Services
 
         public PagedList<User> GetUsersWhitRoles(int page)
         {
-            var pagedList = new PagedList<User>(this.Context.Users.OrderBy(c => c.UserName), page, pageSize);
-            var userManager = new UserManager<User>(new UserStore<User>(new CatalogueContext()));
+            var users = this.Context.Users.OrderBy(c => c.UserName);
+            var pagedList = new PagedList<User>(users, page, pageSize);
+            //var userManager = new UserManager<User>(new UserStore<User>(new CatalogueContext()));
             var usersRoles = new Dictionary<User, UserRole>();
             UserRole userRole;
 

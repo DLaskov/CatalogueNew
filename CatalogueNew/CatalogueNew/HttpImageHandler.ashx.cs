@@ -9,9 +9,12 @@ using System.Web.Mvc;
 
 namespace CatalogueNew.Web
 {
-    public class HttpImageHandler : IHttpHandler
+    public class HttpImageHandler : IHttpAsyncHandler
+
     {
         private ICatalogueContext dbContext = DependencyResolver.Current.GetService<ICatalogueContext>();
+
+        Action<HttpContext> asyncProcessRequest;
 
         public bool IsReusable
         {
@@ -61,6 +64,17 @@ namespace CatalogueNew.Web
                 context.Response.StatusCode = 404;
             }
 
+        }
+
+        public IAsyncResult BeginProcessRequest(HttpContext context, AsyncCallback cb, object extraData)
+        {
+            asyncProcessRequest = new Action<HttpContext>(ProcessRequest);
+            return asyncProcessRequest.BeginInvoke(context, cb, extraData);
+        }
+
+        public void EndProcessRequest(IAsyncResult result)
+        {
+            asyncProcessRequest.EndInvoke(result);
         }
     }
 }

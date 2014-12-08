@@ -39,15 +39,15 @@ namespace CatalogueNew.Web.Infrastructure
         private void AddBindings()
         {
             kernel.Bind<ILog>().ToMethod(x => LogManager.GetLogger("CatalogueLogger"));
-            kernel.Bind<ICatalogueContext>().To<CatalogueContext>()
+            kernel.Bind<ICatalogueContext, DbContext>().To<CatalogueContext>()
                 .InRequestScope();
             kernel.Bind<IProductService>().To<ProductService>();
             kernel.Bind<IManufacturerService>().To<ManufacturerService>();
             kernel.Bind<ICategoryService>().To<CategoryService>();
             kernel.Bind<IAdminService>().To<AdminService>();
             kernel.Bind<IUserStore<User>>().To<UserStore<User>>()
-                .InRequestScope()
-                .WithConstructorArgument("context", kernel.Get<ICatalogueContext>());
+                .InRequestScope();
+                //.WithConstructorArgument("context", kernel.Get<ICatalogueContext>());
             kernel.Bind<UserManager<User>>().ToSelf();
         }
     }

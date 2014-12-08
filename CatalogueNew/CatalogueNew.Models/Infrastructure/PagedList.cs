@@ -23,7 +23,7 @@ namespace CatalogueNew.Models.Infrastructure
         {
             CurrentPage = page;
             PageCount = ((int)(Math.Ceiling((double)source.Count() / pageSize)));
-            Items = source.Skip((CurrentPage - 1) * pageSize).Take(pageSize);
+            Items = source.Skip((CurrentPage - 1) * pageSize).Take(pageSize).ToList();
         }
 
         public PagedList(IQueryable<T> source, int page, int pageSize, Dictionary<User, UserRole> usersRoles)
