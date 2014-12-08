@@ -17,59 +17,62 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.UsersRoles)
+        @if (Model.UsersRoles != null)
         {
-            <tr>
-                <td>
-                    @item.Key.UserName
-                </td>
-                <td>
-                    <a href="edituser/@item.Key.Id"><img src="~/fonts/glyphicons_030_pencil.png" /></a>
-                </td>
-                <td>
-                    <a href="deleteuser/@item.Key.Id"><img src="~/fonts/glyphicons_016_bin.png" /></a>
-                </td>
+            foreach (var item in Model.UsersRoles)
+            {
+                <tr>
+                    <td>
+                        @item.Key.UserName
+                    </td>
+                    <td>
+                        <a href="edituser/@item.Key.Id"><img src="~/fonts/glyphicons_030_pencil.png" /></a>
+                    </td>
+                    <td>
+                        <a href="deleteuser/@item.Key.Id"><img src="~/fonts/glyphicons_016_bin.png" /></a>
+                    </td>
 
-                @if (item.Value.IsAdmin)
-                {
-                    <td>
-                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                    </td>
-                }
-                else
-                {
-                    <td>
-                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                    </td>
-                }
+                    @if (item.Value.IsAdmin)
+                    {
+                        <td>
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </td>
+                    }
 
-                @if (item.Value.IsManager)
-                {
-                    <td>
-                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                    </td>
-                }
-                else
-                {
-                    <td>
-                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                    </td>
-                }
+                    @if (item.Value.IsManager)
+                    {
+                        <td>
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </td>
+                    }
 
-                @if (item.Value.IsModerator)
-                {
-                    <td>
-                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                    </td>
-                }
-                else
-                {
-                    <td>
-                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                    </td>
-                }
+                    @if (item.Value.IsModerator)
+                    {
+                        <td>
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </td>
+                    }
 
-            </tr>
+                </tr>
+            }
         }
     </tbody>
 </table>

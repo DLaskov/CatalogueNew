@@ -16,7 +16,7 @@ namespace CatalogueNew.Web.Controllers
     public class AdminController : Controller
     {
         private IAdminService adminServices;
-        private const string RedirectToUsers = "Users";
+        private const string RedirectURL = "Users";
 
         public AdminController(IAdminService adminServices)
         {
@@ -58,12 +58,23 @@ namespace CatalogueNew.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                User user = userViewModel.User;
+                User user = new User()
+                {
+                    Id = userViewModel.User.Id,
+                    UserName = userViewModel.User.UserName,
+                    Email = userViewModel.User.Email,
+                    FirstName = userViewModel.User.FirstName,
+                    LastName = userViewModel.User.LastName,
+                    Gender = userViewModel.User.Gender,
+                    BirthDate = userViewModel.User.BirthDate,
+                    PasswordHash = userViewModel.User.PasswordHash,
+                    SecurityStamp = userViewModel.User.SecurityStamp
+                };
 
                 adminServices.Modify(user);
                 adminServices.ModifyUserRoles(user, userRoles);
 
-                return RedirectToAction(RedirectToUsers);
+                return RedirectToAction(RedirectURL);
             }
 
             return View(userViewModel);
@@ -120,7 +131,7 @@ namespace CatalogueNew.Web.Controllers
             User user = adminServices.Find(id);
             adminServices.Remove(user);
 
-            return RedirectToAction(RedirectToUsers);
+            return RedirectToAction(RedirectURL);
         }
     }
 }

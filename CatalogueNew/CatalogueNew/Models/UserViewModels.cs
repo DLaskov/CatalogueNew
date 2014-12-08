@@ -13,7 +13,9 @@ namespace CatalogueNew.Web.Models
         public UserRole UserRole { get; set; }
 
         public string Admin { get; set; }
+
         public string Manager { get; set; }
+
         public string Moderator { get; set; }
     }
 }
