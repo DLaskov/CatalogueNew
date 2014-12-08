@@ -23,9 +23,9 @@
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.min.css",
                 //"~/Content/bootstrap.readable.min.css",
-                      "~/Content/Site.css",
                       "~/Content/bootstrap-theme.min.css",
-                      "~/Content/catalogue.css"));
+                      "~/Content/catalogue.css",
+                      "~/Content/Site.css"));
         }
     }
 }

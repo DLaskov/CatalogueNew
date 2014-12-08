@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using Microsoft.AspNet.Identity;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 
 namespace CatalogueNew.Models.Services
 {
@@ -33,8 +35,8 @@ namespace CatalogueNew.Models.Services
 
         public void Modify(User user)
         {
-            this.Context.Entry(user).State = EntityState.Modified;
-            this.Context.SaveChanges();
+                this.Context.Entry(user).State = EntityState.Modified;
+                this.Context.SaveChanges();
         }
 
         public void ModifyUserRoles(User user, UserRole userRole)
