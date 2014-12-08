@@ -4,25 +4,27 @@
 }
 
 <h2>Log In</h2>
-
+<hr />
 @Html.ValidationSummary(true)
 
 @using (Html.BeginForm("LogIn", "Auth", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
-    <div class="form-group">
-        <label for="@Html.IdFor(x => x.UserName)">Username or email</label>
-        <input type="text" class="form-control" id="@Html.IdFor(x => x.UserName)" name="@Html.IdFor(x => x.UserName)"
-               placeholder="Enter username or email" required="required" />
-    </div>
-    <div class="form-group">
-        <label for="@Html.IdFor(x => x.Password)">Password</label>
-        <input type="password" class="form-control" id="@Html.IdFor(x => x.Password)" name="@Html.IdFor(x => x.Password)"
-               placeholder="Enter password" required="required" />
-    </div>
-    <div class="form-group">
-        <p>
-            <button type="submit" value="LogIn" class="btn-default btn">Log In</button>
-        </p>
-        <p> Or <a href=@Url.Action("register", "auth")>Register</a> right now!</p>
+    <div class="col-md-offset-4">
+        <div class="form-group">
+            <label for="@Html.IdFor(x => x.UserName)">Username or email</label>
+            <input type="text" class="form-control" id="@Html.IdFor(x => x.UserName)" name="@Html.IdFor(x => x.UserName)"
+                   placeholder="Enter username or email" required="required" />
+        </div>
+        <div class="form-group">
+            <label for="@Html.IdFor(x => x.Password)">Password</label>
+            <input type="password" class="form-control" id="@Html.IdFor(x => x.Password)" name="@Html.IdFor(x => x.Password)"
+                   placeholder="Enter password" required="required" />
+        </div>
+        <div class="form-group">
+            <p>
+                <button type="submit" value="LogIn" class="btn-success btn">Log In</button>
+            </p>
+            <p> Or <a href=@Url.Action("register", "auth")>Register</a> right now!</p>
+        </div>
     </div>
 }
