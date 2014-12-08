@@ -157,9 +157,9 @@ namespace CatalogueNew.Web.Controllers
             var user = authService.GetUserById(userId);
 
             var model = new ManageUserViewModel()
-                {
-                    User = user
-                };
+            {
+                User = user
+            };
 
             return PartialView("_ChangePasswordPartial", model);
         }
@@ -294,6 +294,5 @@ namespace CatalogueNew.Web.Controllers
             RemoveLoginSuccess,
             Error
         }
-
     }
 }

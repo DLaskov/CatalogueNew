@@ -316,10 +316,10 @@
     <Content Include="Views\Manufacturer\Index.cshtml" />
     <Content Include="Views\Image\Index.cshtml" />
     <Content Include="Views\Shared\_PagingPartial.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Auth\Manage.cshtml" />
     <Content Include="Views\Shared\_ChangePasswordPartial.cshtml" />
     <Content Include="Views\Shared\_SetPasswordPartial.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
