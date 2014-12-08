@@ -1,4 +1,5 @@
 ﻿using CatalogueNew.Models.Entities;
+using CatalogueNew.Models.Services;
 using CatalogueNew.Web.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -17,11 +18,13 @@ namespace CatalogueNew.Web.Controllers
     [AllowAnonymous]
     public class AuthController : Controller
     {
-        private readonly UserManager<User> userManager;
+        private UserManager<User> userManager;
+        private IAuthService authService;
 
-        public AuthController(UserManager<User> userManager)
+        public AuthController(UserManager<User> userManager, IAuthService authService)
         {
             this.userManager = userManager;
+            this.authService = authService;
         }
 
         [HttpGet]
@@ -44,7 +47,7 @@ namespace CatalogueNew.Web.Controllers
                 return View();
             }
 
-            User user = await userManager.FindAsync(model.UserName , model.Password);
+            User user = await userManager.FindAsync(model.UserName, model.Password);
 
             if (user == null)
             {
@@ -129,7 +132,7 @@ namespace CatalogueNew.Web.Controllers
 
         private async Task SignIn(User user)
         {
-            var identity = await userManager.CreateIdentityAsync(user, 
+            var identity = await userManager.CreateIdentityAsync(user,
                 DefaultAuthenticationTypes.ApplicationCookie);
             GetAuthenticationManager().SignIn(identity);
         }
@@ -148,5 +151,148 @@ namespace CatalogueNew.Web.Controllers
             };
         }
 
+        public ActionResult ChangePassword()
+        {
+            var userId = User.Identity.GetUserId();
+            var user = authService.GetUserById(userId);
+
+            var model = new ManageUserViewModel()
+            {
+                User = user
+            };
+
+            return PartialView("_ChangePasswordPartial", model);
+        }
+
+        public ActionResult Manage(ManageMessageId? message)
+        {
+            ViewBag.StatusMessage =
+                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
+                : message == ManageMessageId.Success ? "Well done!"
+                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
+                : message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
+                : message == ManageMessageId.Error ? "An error has occurred."
+                : "";
+            ViewBag.HasLocalPassword = HasPassword();
+            ViewBag.ReturnUrl = Url.Action("Manage");
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Manage(ManageUserViewModel model)
+        {
+            bool hasPassword = HasPassword();
+            ViewBag.HasLocalPassword = hasPassword;
+            ViewBag.ReturnUrl = Url.Action("Manage");
+
+            if (model.OldPassword == null || model.NewPassword == null || model.ConfirmPassword == null)
+            {
+                ModifyUserData(model);
+
+                return RedirectToAction("Manage", new { Message = ManageMessageId.Success });
+            }
+
+            if (hasPassword)
+            {
+                if (ModelState.IsValid)
+                {
+                    IdentityResult result = await userManager.ChangePasswordAsync(model.User.Id, model.OldPassword, model.NewPassword);
+
+                    if (result.Succeeded)
+                    {
+                        ModifyUserData(model);
+
+                        return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
+                    }
+                    else
+                    {
+                        return RedirectToAction("Manage", new { Message = ManageMessageId.Error });
+                    }
+                }
+            }
+            else
+            {
+                ModelState state = ModelState["OldPassword"];
+
+                if (state != null)
+                {
+                    state.Errors.Clear();
+                }
+
+                if (ModelState.IsValid)
+                {
+                    IdentityResult result = await userManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Manage", new { Message = ManageMessageId.SetPasswordSuccess });
+                    }
+                    else
+                    {
+                        AddErrors(result);
+                    }
+                }
+            }
+
+            return View(model);
+        }
+
+        private void ModifyUserData(ManageUserViewModel model)
+        {
+            var user = new User()
+            {
+                Id = model.User.Id,
+                UserName = model.User.UserName,
+                Email = model.User.Email,
+                FirstName = model.User.FirstName,
+                LastName = model.User.LastName,
+                Gender = model.User.Gender,
+                BirthDate = model.User.BirthDate,
+                PasswordHash = model.User.PasswordHash,
+                SecurityStamp = model.User.SecurityStamp,
+            };
+
+            authService.ModifyUser(user);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && userManager != null)
+            {
+                userManager.Dispose();
+                userManager = null;
+            }
+            base.Dispose(disposing);
+        }
+
+        private void AddErrors(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+        }
+
+        private bool HasPassword()
+        {
+            var user = userManager.FindById(User.Identity.GetUserId());
+
+            if (user != null)
+            {
+                return user.PasswordHash != null;
+            }
+
+            return false;
+        }
+
+        public enum ManageMessageId
+        {
+            Success,
+            ChangePasswordSuccess,
+            SetPasswordSuccess,
+            RemoveLoginSuccess,
+            Error
+        }
     }
 }

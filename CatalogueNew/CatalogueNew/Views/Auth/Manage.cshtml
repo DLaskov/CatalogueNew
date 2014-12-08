@@ -1,0 +1,38 @@
+﻿@using CatalogueNew.Web.Models;
+@using Microsoft.AspNet.Identity;
+
+@{
+    ViewBag.Title = "Manage Account";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+@if (@ViewBag.StatusMessage != String.Empty)
+{
+    <div class="row">
+        <div class="alert alert-success alert-dismissible fade in" role="alert" style="text-align: center;">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+            <p class="text-success">@ViewBag.StatusMessage</p>
+        </div>
+    </div>
+
+}
+
+<div class="row">
+    <div class="col-md-12">
+
+        @if (ViewBag.HasLocalPassword)
+        {
+            @Html.Action("ChangePassword", "Auth")
+        }
+        else
+        {
+            @Html.Partial("_SetPasswordPartial")
+        }
+
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
