@@ -7,12 +7,14 @@ using CatalogueNew.Models.Entities;
 using CatalogueNew.Web.Models;
 using CatalogueNew.Models.Services;
 using CatalogueNew.Models.Infrastructure;
+using System.Data.Entity;
 
 namespace CatalogueNew.Web.Controllers
 {
     public class CategoryController : Controller
     {
         private ICategoryService categoryServices;
+ 
 
         public CategoryController(ICategoryService categoryServices)
         {
