@@ -10,5 +10,11 @@ namespace CatalogueNew.Web.Models
         public int Count { get; set; }
 
         public int Page { get; set; }
+
+        public PagingViewModel(int count, int page)
+        {
+            this.Count = count;
+            this.Page = page;
+        }
     }
 }
