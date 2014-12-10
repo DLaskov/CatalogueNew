@@ -10,7 +10,7 @@ namespace CatalogueNew.Web.Models
     {
         public int Count { get; set; }
 
-        public int? Page { get; set; }
+        public int Page { get; set; }
 
         public Dictionary<User, UserRole> UsersRoles { get; set; }
     }
