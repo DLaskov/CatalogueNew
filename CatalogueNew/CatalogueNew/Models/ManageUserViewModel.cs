@@ -25,5 +25,6 @@ namespace CatalogueNew.Web.Models
 
         public User User { get; set; }
 
+        public string ManageMessage { get; set; }
     }
 }

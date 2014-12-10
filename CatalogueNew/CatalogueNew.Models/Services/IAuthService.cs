@@ -12,7 +12,5 @@ namespace CatalogueNew.Models.Services
         void ModifyUser(User user);
 
         User GetUserById(string id);
-
-        void SaveChanges();
     }
 }
