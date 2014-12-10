@@ -40,3 +40,7 @@ footer {
 .dropdown:hover .dropdown-menu {
     display: block;
 }
+
+.field-validation-error > span{
+    color: red;
+}
