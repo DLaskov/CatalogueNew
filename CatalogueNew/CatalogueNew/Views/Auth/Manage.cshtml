@@ -31,76 +31,77 @@
             <div class="col-md-offset-4">
                 <div class="form-group">
                     <p>You're logged in as <strong>@User.Identity.GetUserName()</strong>.</p>
-                    @Html.ValidationSummary()
                 </div>
             </div>
 
-            @Html.HiddenFor(model => model.User.Id)
-            @Html.HiddenFor(model => model.User.UserName)
-            @Html.HiddenFor(model => model.User.PasswordHash)
-            @Html.HiddenFor(model => model.User.SecurityStamp)
+            @Html.HiddenFor(model => model.UserId)
 
             <div class="col-md-offset-2">
                 <div class="form-group">
                     @Html.LabelFor(m => m.OldPassword, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
                         @Html.PasswordFor(m => m.OldPassword, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.OldPassword)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.NewPassword, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
                         @Html.PasswordFor(m => m.NewPassword, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.NewPassword)
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
                         @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.ConfirmPassword)
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.User.Email, new { @class = "col-md-2 control-label" })
+                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.User.Email, new { @class = "form-control" })
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Email)
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.User.FirstName, new { @class = "col-md-2 control-label" })
+                    @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.User.FirstName, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.User.FirstName)
+                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.FirstName)
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.User.LastName, new { @class = "col-md-2 control-label" })
+                    @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.User.LastName, new { @class = "form-control" })
+                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.LastName)
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.User.Gender, new { @class = "col-md-2 control-label" })
+                    @Html.LabelFor(m => m.Gender, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
                         <div class="editor-field">
-                            @Html.RadioButtonFor(m => m.User.Gender, "Male", new { @id = "male" })
+                            @Html.RadioButtonFor(m => m.Gender, "Male", new { @id = "male" })
                             @Html.Label("Male", new { @for = "male" }) &nbsp;
-                            @Html.RadioButtonFor(m => m.User.Gender, "Female", new { @id = "female" })
+                            @Html.RadioButtonFor(m => m.Gender, "Female", new { @id = "female" })
                             @Html.Label("Female", new { @for = "female" })
-                            @Html.ValidationMessageFor(m => m.User.Gender)
+                            @Html.ValidationMessageFor(m => m.Gender)
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.User.BirthDate, new { @class = "col-md-2 control-label" })
+                    @Html.LabelFor(m => m.BirthDate, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
                         <div class="form-group input-group-sm">
-                            @Html.TextBoxFor(model => model.User.BirthDate, new { @class = "form-control datepicker", placeholder = "Enter Drop-off date here..." })
-                            @Html.ValidationMessageFor(model => model.User.BirthDate)
+                            @Html.TextBoxFor(model => model.BirthDate, new { @class = "form-control datepicker", placeholder = "Enter Drop-off date here..." })
+                            @Html.ValidationMessageFor(model => model.BirthDate)
                         </div>
                     </div>
                 </div>

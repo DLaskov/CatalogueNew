@@ -22,7 +22,7 @@ namespace CatalogueNew.Web.Controllers
         private IAuthService authService;
         private readonly string ChangePasswordSuccess = "Your profile has been updated and password has been changed.";
         private readonly string ModifyUserSuccess = "Your profile has been updated.";
-        private readonly string Error = "Sorry, nothing happened.";
+        private readonly string WrongPassword = "Wrong password.";
 
         public AuthController(UserManager<User> userManager, IAuthService authService)
         {
@@ -67,7 +67,6 @@ namespace CatalogueNew.Web.Controllers
                 return Redirect(GetRedirectUrl(model.ReturnUrl));
             }
 
-            // user authN failed
             ModelState.AddModelError("", "Invalid username or password");
             return View();
         }
@@ -158,11 +157,7 @@ namespace CatalogueNew.Web.Controllers
         {
             var user = authService.GetUserById(User.Identity.GetUserId());
 
-            var model = new ManageUserViewModel()
-            {
-                User = user,
-                ManageMessage = message
-            };
+            var model = new ManageUserViewModel(user, message);
 
             return View(model);
         }
@@ -171,7 +166,13 @@ namespace CatalogueNew.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Manage(ManageUserViewModel model)
         {
-            User user = model.User;
+            var user = authService.GetUserById(model.UserId);
+
+            user.Email = model.Email;
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.BirthDate = model.BirthDate;
+            user.Gender = model.Gender;
 
             if (ModelState.IsValid)
             {
@@ -182,7 +183,7 @@ namespace CatalogueNew.Web.Controllers
                     return RedirectToAction("Manage", new { Message = ModifyUserSuccess });
                 }
 
-                IdentityResult result = await userManager.ChangePasswordAsync(model.User.Id, model.OldPassword, model.NewPassword);
+                IdentityResult result = await userManager.ChangePasswordAsync(model.UserId, model.OldPassword, model.NewPassword);
                 var passHash = userManager.PasswordHasher.HashPassword(model.NewPassword);
 
                 if (result.Succeeded)
@@ -195,7 +196,7 @@ namespace CatalogueNew.Web.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Manage", new { Message = Error });
+                    return RedirectToAction("Manage", new { Message = WrongPassword });
                 }
             }
 
