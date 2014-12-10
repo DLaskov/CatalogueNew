@@ -199,16 +199,19 @@ namespace CatalogueNew.Web.Controllers
                 if (ModelState.IsValid)
                 {
                     IdentityResult result = await userManager.ChangePasswordAsync(model.User.Id, model.OldPassword, model.NewPassword);
+                    var passHash = userManager.PasswordHasher.HashPassword(model.NewPassword);
 
                     if (result.Succeeded)
                     {
+                        model.User.PasswordHash = passHash;
                         ModifyUserData(model);
 
                         return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
                     }
                     else
                     {
-                        return RedirectToAction("Manage", new { Message = ManageMessageId.Error });
+                        AddErrors(result);
+                        //return RedirectToAction("Manage", new { Message = ManageMessageId.Error });
                     }
                 }
             }

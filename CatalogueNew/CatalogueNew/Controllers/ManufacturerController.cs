@@ -23,9 +23,9 @@ namespace CatalogueNew.Web.Controllers
         public ActionResult Index(int page = 1)
         {
             PagedList<Manufacturer> pageItems = manufacturerServices.GetManufacturers(page);
-            var categoryListViewModel = new ManufacturerListViewModel(pageItems);
+            var manufacturerListViewModel = new ManufacturerListViewModel(pageItems);
 
-            return View(categoryListViewModel);
+            return View(manufacturerListViewModel);
         }
 
         public ActionResult Details(int id)
