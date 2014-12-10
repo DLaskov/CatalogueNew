@@ -256,16 +256,6 @@ namespace CatalogueNew.Web.Controllers
             authService.ModifyUser(user);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && userManager != null)
-            {
-                userManager.Dispose();
-                userManager = null;
-            }
-            base.Dispose(disposing);
-        }
-
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
