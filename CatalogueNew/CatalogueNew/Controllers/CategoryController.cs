@@ -25,9 +25,15 @@ namespace CatalogueNew.Web.Controllers
         public ActionResult Index(int page = 1)
         {
             PagedList<Category> pageItems = categoryServices.GetCategories(page);
-            var categoryListViewModel = new CategoryListViewModel(pageItems);
+            var pagingViewModel = new PagingViewModel(pageItems.PageCount, pageItems.CurrentPage, "Index");
 
-            return View(categoryListViewModel);
+            var categoryListViewModels = new CategoryListViewModel()
+            {
+                Categories = pageItems.Items.ToList(),
+                PagingViewModel = pagingViewModel
+            };
+
+            return View(categoryListViewModels);
         }
 
         public ActionResult CategoriesSelectList()

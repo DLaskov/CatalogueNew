@@ -27,11 +27,12 @@ namespace CatalogueNew.Web.Controllers
         public ActionResult Users(int page = 1)
         {
             PagedList<User> userPages = adminServices.GetUsersWithRoles(page);
+            var pagingViewModel = new PagingViewModel(userPages.PageCount, userPages.CurrentPage, "Users");
 
             var usersListViewModels = new UsersListViewModels()
             {
-                Count = userPages.PageCount,
-                Page = userPages.CurrentPage,
+                Users = userPages.Items.ToList(),
+                PagingViewModel = pagingViewModel,
                 UsersRoles = userPages.UsersRoles
             };
 

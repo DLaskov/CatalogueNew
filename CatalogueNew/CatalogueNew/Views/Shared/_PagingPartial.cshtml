@@ -12,22 +12,35 @@
 
             @{
 
-                int pagesDisplayed = 3;
-                if (Model.Count <= pagesDisplayed)
+                int pagesDisplayed = 4;
+                int firstPage;
+
+                if (pagesDisplayed < Model.Count)
                 {
-                    pagesDisplayed = 0;
+                    firstPage = Model.Page - pagesDisplayed / 2;
+
+                    if (firstPage < 1)
+                    {
+                        firstPage = 1;
+                    }
+                    if (Model.Page + 1 >= Model.Count)
+                    {
+                        firstPage = Model.Count - pagesDisplayed;
+                    }
                 }
-                int firstPage = Model.Page - pagesDisplayed / 2;
-                if (firstPage < 1)
+                else
                 {
+                    pagesDisplayed = Model.Count - 1;
                     firstPage = 1;
                 }
-                if (Model.Page >= Model.Count - 2)
+
+                if (Model.Count <= 1)
                 {
-                    firstPage = Model.Count - pagesDisplayed;
+                    pagesDisplayed = 0;
+                    firstPage = 1;
                 }
             }
-
+            
             @for (int i = firstPage; i <= (firstPage + pagesDisplayed); i++)
             {
                 if (Model.Page == i)
@@ -47,7 +60,6 @@
             }
 
         </ul>
-
         <h6 class="text-muted">Showing @Model.Page of @Model.Count</h6>
     </nav>
 </div>

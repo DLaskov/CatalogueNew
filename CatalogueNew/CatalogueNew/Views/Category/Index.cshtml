@@ -11,9 +11,7 @@
 </p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
+        <th>Categories</th>
     </tr>
 
     @foreach (var item in @Model.Categories)
@@ -35,4 +33,4 @@
 
 </table>
 
-@Html.Partial("~/Views/Shared/_PagingPartial.cshtml", new PagingViewModel(Model.Count, Model.Page, "Index"))
+@Html.Partial("~/Views/Shared/_PagingPartial.cshtml", Model.PagingViewModel)

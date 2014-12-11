@@ -8,10 +8,8 @@ namespace CatalogueNew.Web.Models
 {
     public class UsersListViewModels
     {
-        public int Count { get; set; }
-
-        public int Page { get; set; }
-
+        public List<User> Users { get; set; }
+        public PagingViewModel PagingViewModel { get; set; }
         public Dictionary<User, UserRole> UsersRoles { get; set; }
     }
 }

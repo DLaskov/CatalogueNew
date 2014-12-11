@@ -77,4 +77,4 @@
     </tbody>
 </table>
 
-@Html.Partial("~/Views/Shared/_PagingPartial.cshtml", new PagingViewModel(Model.Count, Model.Page, "Users"))
+@Html.Partial("~/Views/Shared/_PagingPartial.cshtml", Model.PagingViewModel)

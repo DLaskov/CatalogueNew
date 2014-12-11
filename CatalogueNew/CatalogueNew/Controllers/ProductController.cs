@@ -49,7 +49,7 @@ namespace CatalogueNew.Web.Controllers
         public ActionResult Index(int page = 1)
         {
             var pageItems = productService.GetProducts(page);
-            var pagingViewModel = new PagingViewModel(pageItems.PageCount, pageItems.CurrentPage);
+            var pagingViewModel = new PagingViewModel(pageItems.PageCount, pageItems.CurrentPage, "Index");
 
             var productListViewModels = new ProductListViewModels()
             {
@@ -63,7 +63,7 @@ namespace CatalogueNew.Web.Controllers
         public ActionResult ProductsByManufacturer(int manufacturerID, int page = 1)
         {
             var pageItems = productService.GetProductsByManufacturer(page, manufacturerID);
-            var pagingViewModel = new PagingViewModel(pageItems.PageCount, pageItems.CurrentPage);
+            var pagingViewModel = new PagingViewModel(pageItems.PageCount, pageItems.CurrentPage, "ProductsByManufacturer");
 
             var productListViewModels = new ProductListViewModels()
             {
