@@ -26,7 +26,7 @@ namespace CatalogueNew.Models.Services
 
         IEnumerable<User> GetAll();
 
-        PagedList<User> GetUsersWhitRoles(int page);
+        PagedList<User> GetUsersWithRoles(int page);
 
         Dictionary<User, UserRole> GetUserWhitRoles(string userId);
     }

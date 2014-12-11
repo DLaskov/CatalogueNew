@@ -57,5 +57,10 @@ namespace CatalogueNew.Models.Services
             var pagedList = new PagedList<Category>(this.Context.Categories.OrderBy(c => c.Name), page, pageSize);
             return pagedList;
         }
+
+        public IEnumerable<Category> GetAll()
+        {
+            return this.Context.Categories.ToList();
+        }
     }
 }

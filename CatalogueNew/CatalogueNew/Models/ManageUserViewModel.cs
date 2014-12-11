@@ -9,6 +9,26 @@ namespace CatalogueNew.Web.Models
 {
     public class ManageUserViewModel
     {
+        private User user;
+
+        public ManageUserViewModel()
+        {
+        }
+
+        public ManageUserViewModel(User user, string manageMessage)
+        {
+            this.user = user;
+            this.Email = user.Email;
+            this.FirstName = user.FirstName;
+            this.LastName = user.LastName;
+            this.BirthDate = user.BirthDate;
+            this.Gender = user.Gender;
+            this.ManageMessage = manageMessage;
+            this.UserId = user.Id;
+        }
+
+        public string UserId { get; set; }
+
         [DataType(DataType.Password)]
         [Display(Name = "Current password")]
         public string OldPassword { get; set; }
@@ -23,7 +43,23 @@ namespace CatalogueNew.Web.Models
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
-        public User User { get; set; }
+        [MaxLength(30)]
+        [Display(Name = "Email address")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "E-mail is not valid")]
+        [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "E-mail is not valid")]
+        public string Email { get; set; }
 
+        [StringLength(30)]
+        public string FirstName { get; set; }
+
+        [StringLength(30)]
+        public string LastName { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime? BirthDate { get; set; }
+
+        public GenderType? Gender { get; set; }
+
+        public string ManageMessage { get; set; }
     }
 }

@@ -1,0 +1,8 @@
+﻿@model CategorySelectListViewModels
+
+<div class="form-group">
+    <div class="col-md-10">
+        @Html.DropDownListFor(x => x.Name, @Model.SelectListItems, "Categories", new { @class = "form-control categories-dd" })
+    </div>
+    <br />
+</div>

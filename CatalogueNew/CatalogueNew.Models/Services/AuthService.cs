@@ -28,10 +28,5 @@ namespace CatalogueNew.Models.Services
 
             return user;
         }
-
-        public void SaveChanges()
-        {
-            this.Context.SaveChanges();
-        }
     }
 }

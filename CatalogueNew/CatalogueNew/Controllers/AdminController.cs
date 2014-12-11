@@ -13,7 +13,7 @@ using System.Web.Mvc;
 
 namespace CatalogueNew.Web.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private IAdminService adminServices;
@@ -24,9 +24,9 @@ namespace CatalogueNew.Web.Controllers
             this.adminServices = adminServices;
         }
 
-        public ActionResult Users(int page=1)
+        public ActionResult Users(int page = 1)
         {
-            PagedList<User> userPages = adminServices.GetUsersWhitRoles(page);
+            PagedList<User> userPages = adminServices.GetUsersWithRoles(page);
 
             var usersListViewModels = new UsersListViewModels()
             {
