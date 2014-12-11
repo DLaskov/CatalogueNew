@@ -28,6 +28,13 @@ namespace CatalogueNew.Web.Controllers
             return View(manufacturerListViewModel);
         }
 
+        public ActionResult LayoutManufacturers()
+        {
+            var manufacturers = manufacturerServices.GetAll();
+
+            return PartialView("_LayoutManufacturersPartial", manufacturers);
+        }
+
         public ActionResult Details(int id)
         {
             Manufacturer manufacturer = manufacturerServices.Find(id);

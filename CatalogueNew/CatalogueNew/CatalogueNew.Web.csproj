@@ -318,6 +318,7 @@
     <Content Include="Views\Shared\_PagingPartial.cshtml" />
     <Content Include="Views\Auth\Manage.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\_LayoutManufacturersPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

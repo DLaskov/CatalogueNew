@@ -1,0 +1,11 @@
+﻿@model IEnumerable<Manufacturer>
+
+<li class="dropdown dropdown-manufacturer">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Manufacturers<b class="caret"></b></a>
+    <ul class="dropdown-menu dropdown-menu-manu">
+        @foreach (var manufacturer in Model)
+        {
+            <li>@Html.ActionLink(manufacturer.Name, "ProductsByManufacturerList", "Product", new { manufacturerID = manufacturer.ManufacturerID }, null)</li>
+        }
+    </ul>
+</li>
