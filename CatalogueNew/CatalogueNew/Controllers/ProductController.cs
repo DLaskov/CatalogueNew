@@ -15,7 +15,7 @@ namespace CatalogueNew.Web.Controllers
         private IManufacturerService manufacturerService;
         private IProductService productService;
 
-        public ProductController(ICategoryService categoryService, 
+        public ProductController(ICategoryService categoryService,
             IManufacturerService manufacturerService, IProductService productService)
         {
             this.categoryService = categoryService;
@@ -44,6 +44,34 @@ namespace CatalogueNew.Web.Controllers
             };
             productService.Add(product);
             return View();
+        }
+
+        public ActionResult Index(int page = 1)
+        {
+            var pageItems = productService.GetProducts(page);
+            var pagingViewModel = new PagingViewModel(pageItems.PageCount, pageItems.CurrentPage);
+
+            var productListViewModels = new ProductListViewModels()
+            {
+                Products = pageItems.Items.ToList(),
+                PagingViewModel = pagingViewModel
+            };
+
+            return View(productListViewModels);
+        }
+
+        public ActionResult ProductsByManufacturer(int manufacturerID, int page = 1)
+        {
+            var pageItems = productService.GetProductsByManufacturer(page, manufacturerID);
+            var pagingViewModel = new PagingViewModel(pageItems.PageCount, pageItems.CurrentPage);
+
+            var productListViewModels = new ProductListViewModels()
+            {
+                Products = pageItems.Items.ToList(),
+                PagingViewModel = pagingViewModel
+            };
+
+            return View(productListViewModels);
         }
     }
 }

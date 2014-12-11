@@ -17,21 +17,22 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Web Catalogue", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Web Catalogue", "Index", "Product", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @*<li>@Html.ActionLink("Products", "Index", "Product")</li>*@
-                    @*<li>@Html.Action("LayoutManufacturers", "Manufacturer")</li>*@
+                    <li>@Html.ActionLink("Products", "Index", "Product")</li>
+                    <li>@Html.Action("LayoutManufacturers", "Manufacturer")</li>
 
                     @if (User.IsInRole("Admin"))
                     {
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration <b class="caret"></b></a>
                             <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Create Product", "Create", "Product")</li>
                                 <li>@Html.ActionLink("Categories", "Index", "Category")</li>
-                                <li>@Html.ActionLink("Users", "Users", "Admin")</li>
                                 <li>@Html.ActionLink("Manufacturers", "Index", "Manufacturer")</li>
+                                <li>@Html.ActionLink("Users", "Users", "Admin")</li>
                                 <li>@Html.ActionLink("Upload image", "Index", "Image")</li>
                             </ul>
                         </li>

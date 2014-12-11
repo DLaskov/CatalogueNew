@@ -5,7 +5,7 @@
     <ul class="dropdown-menu dropdown-menu-manu">
         @foreach (var manufacturer in Model)
         {
-            <li>@Html.ActionLink(manufacturer.Name, "ProductsByManufacturerList", "Product", new { manufacturerID = manufacturer.ManufacturerID }, null)</li>
+            <li>@Html.ActionLink(manufacturer.Name, "ProductsByManufacturer", "Product", new { manufacturerID = manufacturer.ManufacturerID }, null)</li>
         }
     </ul>
 </li>
