@@ -35,7 +35,8 @@
 <div class="row">
     <nav>
         <ul class="pagination">
-            @Html.Partial("~/Views/Shared/_PagingPartial.cshtml", new PagingViewModel(Model.Count, Model.Page))
-        </ul>
-    </nav>
-</div>
+
+            @Html.Partial("~/Views/Shared/_PagingPartial.cshtml", new PagingViewModel(Model.Count, Model.Page, "Index"))
+            </ul>
+        </nav>
+    </div>
