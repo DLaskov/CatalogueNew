@@ -17,5 +17,7 @@ namespace CatalogueNew.Models.Services
         void Remove(Category category);
 
         void Remove(int id);
+
+        IEnumerable<Category> GetAll();
     }
 }

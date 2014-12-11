@@ -26,7 +26,7 @@ namespace CatalogueNew.Web.Controllers
 
         public ActionResult Users(int page = 1)
         {
-            PagedList<User> userPages = adminServices.GetUsersWhitRoles(page);
+            PagedList<User> userPages = adminServices.GetUsersWithRoles(page);
 
             var usersListViewModels = new UsersListViewModels()
             {

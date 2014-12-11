@@ -26,12 +26,14 @@ namespace CatalogueNew.Models.Entities
         public string Name { get; set; }
 
         public int ManufacturerID { get; set; }
-
+        
         public int CategoryID { get; set; }
+
         public Category Category { get; set; }
 
+        [Required]
         [DisplayName("Year of product")]
-        public int ProductYear { get; set; }
+        public int Year { get; set; }
 
         [Required]
         [MaxLength(1000)]

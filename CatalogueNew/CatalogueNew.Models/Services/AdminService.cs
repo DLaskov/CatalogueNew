@@ -100,7 +100,7 @@ namespace CatalogueNew.Models.Services
             this.Context.SaveChanges();
         }
 
-        public PagedList<User> GetUsersWhitRoles(int page)
+        public PagedList<User> GetUsersWithRoles(int page)
         {
             var pagedList = new PagedList<User>(this.Context.Users.OrderBy(c => c.UserName), page, pageSize);
 
@@ -109,7 +109,7 @@ namespace CatalogueNew.Models.Services
                               on us.Id equals ur.UserId
                               select ur).ToList();
 
-            var usersWhitRoles = new Dictionary<User, UserRole>();
+            var usersWithRoles = new Dictionary<User, UserRole>();
 
             foreach (var user in pagedList.Items)
             {
@@ -129,10 +129,9 @@ namespace CatalogueNew.Models.Services
                     }
                 }
 
-                usersWhitRoles.Add(user, userRole);
-                pagedList.UsersRoles = usersWhitRoles;
+                usersWithRoles.Add(user, userRole);                
             }
-
+            pagedList.UsersRoles = usersWithRoles;
             return pagedList;
         }
 
