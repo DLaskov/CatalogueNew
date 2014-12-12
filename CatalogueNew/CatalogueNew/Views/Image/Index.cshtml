@@ -1,14 +1,71 @@
-﻿@model CatalogueNew.Models.Entities.Image
-
-@{
+﻿@{
     ViewBag.Title = "Upload image";
 }
 
 <h2>ImageUpload</h2>
 
-@using (Html.BeginForm("Upload", "Image", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
-{ 
-    <label>Select image:</label>
-    <input type="file" name="imageUpload" id="imageUpload" />
-    <input  type="submit" value="Upload" class="btn" />
+<div class="jumbotron">
+    <form action="~/Image/SaveUploadedFile" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm">
+        <div class="fallback">
+            <input name="file" type="file" multiple />
+            <input type="submit" value="Upload" />
+        </div>
+    </form>
+    <br />
+    <button id="submit-all" class="btn btn-success">Submit all files</button>
+</div>
+<style type="text/css">
+    .dz-max-files-reached {
+        background-color: red;
+    }
+</style>
+@section scripts{
+    <script type="text/javascript">
+
+        //File Upload response from the server
+        Dropzone.options.dropzoneForm = {
+            autoProcessQueue: false,
+            maxFiles: 6,
+            init: function () {
+                this.on("maxfilesexceeded", function (data) {
+                    var res = eval('(' + data.xhr.responseText + ')');
+
+                });
+                this.on("addedfile", function (file) {
+
+                    // Create the remove button
+                    var removeButton = Dropzone.createElement("<button>Remove file</button>");
+
+                    // Capture the Dropzone instance as closure.
+                    var _this = this;
+
+                    // Listen to the click event
+                    removeButton.addEventListener("click", function (e) {
+                        // Make sure the button click doesn't submit the form:
+                        e.preventDefault();
+                        e.stopPropagation();
+                        // Remove the file preview.
+                        _this.removeFile(file);
+                        // If you want to the delete the file on the server as well,
+                        // you can do the AJAX request here.
+                    });
+
+                    var submitButton = document.querySelector("#submit-all")
+                    myDropzone = this; // closure
+
+                    submitButton.addEventListener("click", function () {
+                        myDropzone.processQueue(); // Tell Dropzone to process all queued files.
+                    });
+
+                    // You might want to show the submit button only when
+                    // files are dropped here:
+                    this.on("addedfile", function () {
+                        // Show submit button here and/or inform user to click it.
+                    });
+                    // Add the button to the file preview element.
+                    file.previewElement.appendChild(removeButton);
+                });
+            }
+        };
+    </script>
 }

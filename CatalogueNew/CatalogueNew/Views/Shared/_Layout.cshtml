@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Catalogue</title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/dropzonescss")
     @Scripts.Render("~/bundles/modernizr")
     <meta name="description" content="The description of my page" />
 </head>
@@ -60,6 +61,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/dropzonescripts")
     @RenderSection("scripts", required: false)
 </body>
 </html>
