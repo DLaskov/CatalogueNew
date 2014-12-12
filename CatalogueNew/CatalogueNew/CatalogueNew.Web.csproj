@@ -289,13 +289,14 @@
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
     <Compile Include="Models\AppUserClaims.cs" />
     <Compile Include="Models\CategoryListViewModels.cs" />
+    <Compile Include="Models\CategorySelectListViewModels.cs" />
     <Compile Include="Models\CategoryViewModels.cs" />
     <Compile Include="Models\LogInViewModel.cs" />
     <Compile Include="Models\ManageUserViewModel.cs" />
     <Compile Include="Models\ManufacturerListViewModel.cs" />
     <Compile Include="Models\ManufacturerViewModel.cs" />
     <Compile Include="Models\PagingViewModel.cs" />
-    <Compile Include="Models\ProductListViewModel.cs" />
+    <Compile Include="Models\ProductListViewModels.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\UsersListViewModels.cs" />
