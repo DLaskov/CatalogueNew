@@ -51,7 +51,7 @@ namespace CatalogueNew.Web.Controllers
             var pageItems = productService.GetProducts(page);
             var pagingViewModel = new PagingViewModel(pageItems.PageCount, pageItems.CurrentPage, "Index");
 
-            var productListViewModels = new ProductListViewModels()
+            var productListViewModels = new ProductListViewModel()
             {
                 Products = pageItems.Items.ToList(),
                 PagingViewModel = pagingViewModel
@@ -65,7 +65,7 @@ namespace CatalogueNew.Web.Controllers
             var pageItems = productService.GetProductsByManufacturer(page, manufacturerID);
             var pagingViewModel = new PagingViewModel(pageItems.PageCount, pageItems.CurrentPage, "ProductsByManufacturer");
 
-            var productListViewModels = new ProductListViewModels()
+            var productListViewModels = new ProductListViewModel()
             {
                 Products = pageItems.Items.ToList(),
                 PagingViewModel = pagingViewModel

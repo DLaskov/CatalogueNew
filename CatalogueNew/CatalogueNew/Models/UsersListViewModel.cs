@@ -6,7 +6,7 @@ using System.Web;
 
 namespace CatalogueNew.Web.Models
 {
-    public class UsersListViewModels
+    public class UsersListViewModel
     {
         public List<User> Users { get; set; }
         public PagingViewModel PagingViewModel { get; set; }
