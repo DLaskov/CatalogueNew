@@ -29,7 +29,7 @@ namespace CatalogueNew.Web.Controllers
             PagedList<User> userPages = adminServices.GetUsersWithRoles(page);
             var pagingViewModel = new PagingViewModel(userPages.PageCount, userPages.CurrentPage, "Users");
 
-            var usersListViewModels = new UsersListViewModels()
+            var usersListViewModels = new UsersListViewModel()
             {
                 Users = userPages.Items.ToList(),
                 PagingViewModel = pagingViewModel,

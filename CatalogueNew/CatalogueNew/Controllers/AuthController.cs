@@ -166,7 +166,7 @@ namespace CatalogueNew.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Manage(ManageUserViewModel model)
         {
-            var user = authService.GetUserById(model.UserId);
+            var user = authService.GetUserById(User.Identity.GetUserId());
 
             user.Email = model.Email;
             user.FirstName = model.FirstName;
@@ -183,7 +183,7 @@ namespace CatalogueNew.Web.Controllers
                     return RedirectToAction("Manage", new { Message = ModifyUserSuccess });
                 }
 
-                IdentityResult result = await userManager.ChangePasswordAsync(model.UserId, model.OldPassword, model.NewPassword);
+                IdentityResult result = await userManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
                 var passHash = userManager.PasswordHasher.HashPassword(model.NewPassword);
 
                 if (result.Succeeded)

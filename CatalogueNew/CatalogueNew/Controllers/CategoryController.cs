@@ -50,7 +50,7 @@ namespace CatalogueNew.Web.Controllers
                     });
             }
 
-            var selectListItems = new CategorySelectListViewModels(list);
+            var selectListItems = new CategorySelectListViewModel(list);
 
             return PartialView("_CategoriesSelectListPartial", selectListItems);
         }
