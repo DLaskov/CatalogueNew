@@ -27,7 +27,13 @@ namespace CatalogueNew.Web.Controllers
         public ActionResult ProductAdministration(int page = 1)
         {
             PagedList<Product> pageItems = productService.GetProducts(page);
-            var productListViewModel = new ProductListViewModel(pageItems);
+            var pagingViewModel = new PagingViewModel(pageItems.PageCount, pageItems.CurrentPage, "ProductAdministration");
+
+            var productListViewModel = new ProductListViewModel()
+            {
+                Products = pageItems.Items.ToList(),
+                PagingViewModel = pagingViewModel
+            };
 
             return View(productListViewModel);
         }
@@ -63,15 +69,18 @@ namespace CatalogueNew.Web.Controllers
         [HttpPost]
         public ActionResult Create(ProductViewModel model)
         {
-            Product product = new Product()
+            if (User.IsInRole("Manager"))
             {
-                Name = model.Product.Name,
-                Description = model.Product.Description,
-                CategoryID = model.Product.CategoryID,
-                ManufacturerID = model.Product.ManufacturerID,
-                Year = model.Product.Year
-            };
-            productService.Add(product);
+                Product product = new Product()
+                {
+                    Name = model.Product.Name,
+                    Description = model.Product.Description,
+                    CategoryID = model.Product.CategoryID,
+                    ManufacturerID = model.Product.ManufacturerID,
+                    Year = model.Product.Year
+                };
+                productService.Add(product);
+            }
             return RedirectToAction("Index", "Home");
         }
 
@@ -97,15 +106,17 @@ namespace CatalogueNew.Web.Controllers
         [HttpPost]
         public ActionResult Edit(int id, ProductViewModel model)
         {
-            Product product = productService.Find(id);
-            product.Name = model.Product.Name;
-            product.CategoryID = model.Product.CategoryID;
-            product.ManufacturerID = model.Product.ManufacturerID;
-            product.Year = model.Product.Year;
-            product.Description = model.Product.Description;
+            if (User.IsInRole("Manager"))
+            {
+                Product product = productService.Find(id);
+                product.Name = model.Product.Name;
+                product.CategoryID = model.Product.CategoryID;
+                product.ManufacturerID = model.Product.ManufacturerID;
+                product.Year = model.Product.Year;
+                product.Description = model.Product.Description;
 
-            productService.Modify(product);
-
+                productService.Modify(product);
+            }
             return RedirectToAction("Index", "Home");
         }
 
@@ -114,7 +125,7 @@ namespace CatalogueNew.Web.Controllers
             var pageItems = productService.GetProducts(page);
             var pagingViewModel = new PagingViewModel(pageItems.PageCount, pageItems.CurrentPage, "Index");
 
-            var productListViewModels = new ProductListViewModels()
+            var productListViewModels = new ProductListViewModel()
             {
                 Products = pageItems.Items.ToList(),
                 PagingViewModel = pagingViewModel
@@ -128,7 +139,7 @@ namespace CatalogueNew.Web.Controllers
             var pageItems = productService.GetProductsByManufacturer(page, manufacturerID);
             var pagingViewModel = new PagingViewModel(pageItems.PageCount, pageItems.CurrentPage, "ProductsByManufacturer");
 
-            var productListViewModels = new ProductListViewModels()
+            var productListViewModels = new ProductListViewModel()
             {
                 Products = pageItems.Items.ToList(),
                 PagingViewModel = pagingViewModel

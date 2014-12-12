@@ -19,15 +19,15 @@ namespace CatalogueNew.Models.Entities
         }
 
         [Key]
-        public int ProductID { get; set; }
+        public int? ProductID { get; set; }
 
         [Required]
         [StringLength(160)]
         public string Name { get; set; }
 
-        public int ManufacturerID { get; set; }
+        public int? ManufacturerID { get; set; }
         
-        public int CategoryID { get; set; }
+        public int? CategoryID { get; set; }
 
         public Category Category { get; set; }
 

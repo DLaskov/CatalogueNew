@@ -39,12 +39,15 @@ namespace CatalogueNew.Models.Services
                                     }).FirstOrDefault();
             Product prod = new Product
             {
+                ProductID = queryProduct.Product.ProductID,
+                CategoryID = queryProduct.Product.CategoryID,
+                ManufacturerID = queryProduct.Product.ManufacturerID,
                 Name = queryProduct.Product.Name,
                 Description = queryProduct.Product.Description,
                 Year = queryProduct.Product.Year,
                 Manufacturer = queryProduct.Manufacturer,
                 Category = queryProduct.Category
-            };         
+            };        
             return prod;
         }
 
