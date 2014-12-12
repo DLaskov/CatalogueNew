@@ -27,22 +27,21 @@
 
                     @if (User.IsInRole("Admin"))
                     {
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
                                 <li>@Html.ActionLink("Create Product", "Create", "Product")</li>
-                            <li>@Html.ActionLink("Categories", "Index", "Category")</li>
+                                <li>@Html.ActionLink("Categories", "Index", "Category")</li>
                                 <li>@Html.ActionLink("Manufacturers", "Index", "Manufacturer")</li>
-                            <li>@Html.ActionLink("Users", "Users", "Admin")</li>
-                            <li>@Html.ActionLink("Manufacturers", "Index", "Manufacturer")</li>
-                            @{ if (User.IsInRole("Manager"))
-                             {
-                                <li>@Html.ActionLink("Products", "ProductAdministration", "Product")</li>
-                             }
-                            }
-                            <li>@Html.ActionLink("Upload image", "Index", "Image")</li>
-                        </ul>
-                    </li>
+                                <li>@Html.ActionLink("Users", "Users", "Admin")</li>
+                                @{ if (User.IsInRole("Manager"))
+                                 {
+                                    <li>@Html.ActionLink("Products", "ProductAdministration", "Product")</li>
+                                 }
+                                }
+                                <li>@Html.ActionLink("Upload image", "Index", "Image")</li>
+                            </ul>
+                        </li>
                     }
 
                 </ul>
