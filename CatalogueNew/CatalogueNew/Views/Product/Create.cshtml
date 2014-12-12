@@ -1,64 +1,126 @@
 ﻿@model CatalogueNew.Web.Models.ProductViewModel
 
-@{
+@{if (Model.Product.ProductID == null)
+{
     ViewBag.Title = "Create product";
 }
-
-<h2>Create product</h2>
-
-@using (Html.BeginForm("Create", "Product", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+else
 {
-    <div class="col-md-offset-4">
+    ViewBag.Title = "Edit: " + Model.Product.Name;
+}
+}
 
-        <div class="form-group">
-            All fields marked with <span class="required">*</span> are required!
-        </div>
+<h2>@ViewBag.Title</h2>
+@{ if (User.IsInRole("Manager"))
+ {
+     using (Html.BeginForm(new { id = Model.Product.ProductID}))
+     {
+        <div class="col-md-offset-4 form-horizontal">
 
-        <div class="form-group">
-            <label for="@Html.IdFor(model => model.Name)">Name <span class="required">*</span></label>
-            <input type="text" id="@Html.IdFor(model => model.Name)" name="@Html.IdFor(model => model.Name)"
-                   placeholder="Enter product name" required="required" class="form-control" />
-        </div>
-            
-        <div class="form-group">
-            <label for="@Html.IdFor(model => model.CategoryID)">Category <span class="required">*</span></label>
-            <select name="@Html.IdFor(model => model.CategoryID)" class="form-control">
-                <option value="" disabled selected>Select category</option>
-                @foreach (var category in Model.Categories)
-                {
-                    <option value="@category.CategoryID">@category.Name</option>
-                }
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="@Html.IdFor(model => model.ManufactureID)">Manufacturer <span class="required">*</span></label>
-            <select name="@Html.IdFor(model => model.ManufactureID)" class="form-control">
-                <option value="" disabled selected>Select manufacturer</option>
-                @foreach (var manufacturer in Model.Manufacturers)
-                {
-                    <option value="@manufacturer.ManufacturerID">@manufacturer.Name</option>
-                }
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="@Html.IdFor(model => model.Year)">Year <span class="required">*</span></label>
-            <select name="@Html.IdFor(model => model.Year)" class="form-control">
-                <option value="" disabled selected>Select year</option>
-                @{
-                int year = DateTime.Now.Year;
-                for (int i = year + 1; i > year - 21; i--)
-                {
-                    <option value="@i">@i</option>
-                }
-                }
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="@Html.IdFor(model => model.Description)">Description <span class="required">*</span></label>
-            <textarea maxlength="1000" name="@Html.IdFor(model => model.Description)"
-                       id="@Html.IdFor(model => model.Description)" class="form-control"></textarea>
-        </div>
+            <div class="form-group">
+                All fields marked with <span class="required">*</span> are required!
+            </div>
 
-        <input type="submit" class="btn btn-success" value="Create product" />
+            <div class="form-group">
+                <label for="@Html.IdFor(model => model.Product.Name)">Name <span class="required">*</span></label>
+                <input type="text" id="@Html.IdFor(model => model.Product.Name)" name="@Html.NameFor(model => model.Product.Name)"
+                       placeholder="Enter product name" required class="form-control" value="@Model.Product.Name" />
+            </div>
+
+            <div class="form-group">
+                <label for="@Html.IdFor(model => model.Product.CategoryID)">Category <span class="required">*</span></label>
+                <select id="@Html.IdFor(model => model.Product.CategoryID)" name="@Html.NameFor(model => model.Product.CategoryID)"
+                        class="form-control" required>
+                    @{
+         if (Model.Product.CategoryID == 0)
+         {
+            <option value="" disabled selected>Select category</option>
+         }
+         foreach (var category in Model.Categories)
+         {
+             if (category.CategoryID == Model.Product.CategoryID)
+             {
+                <option value="@category.CategoryID" selected>@category.Name</option>
+             }
+             else
+             {
+                <option value="@category.CategoryID">@category.Name</option>
+             }
+         }
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="@Html.IdFor(model => model.Product.ManufacturerID)">Manufacturer <span class="required">*</span></label>
+                <select name="@Html.NameFor(model => model.Product.ManufacturerID)" class="form-control"
+                        id="@Html.IdFor(model => model.Product.ManufacturerID)" required>
+                    @{
+         if (Model.Product.ManufacturerID == 0)
+         {
+            <option value="" disabled selected>Select manufacturer</option>
+         }
+         foreach (var manufacturer in Model.Manufacturers)
+         {
+             if (manufacturer.ManufacturerID == Model.Product.ManufacturerID)
+             {
+                <option value="@manufacturer.ManufacturerID" selected>@manufacturer.Name</option>
+             }
+             else
+             {
+                <option value="@manufacturer.ManufacturerID">@manufacturer.Name</option>
+             }
+         }
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="@Html.IdFor(model => model.Product.Year)">Year <span class="required">*</span></label>
+                <select name="@Html.NameFor(model => model.Product.Year)" id="@Html.IdFor(model => model.Product.Year)"
+                        class="form-control" required>
+                    @{
+         if (Model.Product.Year == 0)
+         {
+            <option value="" disabled selected>Select year</option>
+         }
+
+         int year = DateTime.Now.Year;
+         for (int i = year + 1; i > year - 21; i--)
+         {
+             if (i == Model.Product.Year)
+             {
+                <option value="@i" selected>@i</option>
+             }
+             else
+             {
+                <option value="@i">@i</option>
+             }
+         }
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="@Html.IdFor(model => model.Product.Description)">Description <span class="required">*</span></label>
+                <textarea maxlength="1000" name="@Html.NameFor(model => model.Product.Description)"
+                          id="@Html.IdFor(model => model.Product.Description)" class="form-control" rows="5" required>@Model.Product.Description</textarea>
+            </div>
+            @{
+         if (Model.Product.ProductID == 0)
+         {
+            <input type="submit" class="btn btn-success" value="Create product"/>
+         }
+         else
+         {
+            <input type="submit" class="btn btn-success" value="Save product" />
+                @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-default" })
+         }
+            }
+        </div>
+     }
+ }
+ else
+ {
+    <div class="row alert alert-danger">
+        <p class="text-center">You are not authorized to create or edit products!</p>
     </div>
+ }
 }

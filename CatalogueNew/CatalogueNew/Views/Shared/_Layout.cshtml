@@ -29,6 +29,11 @@
                             <li>@Html.ActionLink("Categories", "Index", "Category")</li>
                             <li>@Html.ActionLink("Users", "Users", "Admin")</li>
                             <li>@Html.ActionLink("Manufacturers", "Index", "Manufacturer")</li>
+                            @{ if (User.IsInRole("Manager"))
+                             {
+                                <li>@Html.ActionLink("Products", "Index", "Product")</li>
+                             }
+                            }
                             <li>@Html.ActionLink("Upload image", "Index", "Image")</li>
                         </ul>
                     </li>
