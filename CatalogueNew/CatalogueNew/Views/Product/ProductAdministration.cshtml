@@ -12,7 +12,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.Products)
         </th>
     </tr>
 
@@ -35,7 +35,7 @@
 <div class="row">
     <nav>
         <ul class="pagination">
-            @Html.Partial("~/Views/Shared/_PagingPartial.cshtml", new PagingViewModel(Model.Count, Model.Page))
+            @Html.Partial("~/Views/Shared/_PagingPartial.cshtml", @Model.PagingViewModel)
         </ul>
     </nav>
 </div>

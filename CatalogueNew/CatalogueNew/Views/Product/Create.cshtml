@@ -32,7 +32,7 @@ else
                 <select id="@Html.IdFor(model => model.Product.CategoryID)" name="@Html.NameFor(model => model.Product.CategoryID)"
                         class="form-control" required>
                     @{
-         if (Model.Product.CategoryID == 0)
+         if (Model.Product.CategoryID == null)
          {
             <option value="" disabled selected>Select category</option>
          }
@@ -55,7 +55,7 @@ else
                 <select name="@Html.NameFor(model => model.Product.ManufacturerID)" class="form-control"
                         id="@Html.IdFor(model => model.Product.ManufacturerID)" required>
                     @{
-         if (Model.Product.ManufacturerID == 0)
+         if (Model.Product.ManufacturerID == null)
          {
             <option value="" disabled selected>Select manufacturer</option>
          }
@@ -78,7 +78,7 @@ else
                 <select name="@Html.NameFor(model => model.Product.Year)" id="@Html.IdFor(model => model.Product.Year)"
                         class="form-control" required>
                     @{
-         if (Model.Product.Year == 0)
+         if (Model.Product.Year == null)
          {
             <option value="" disabled selected>Select year</option>
          }
@@ -104,7 +104,7 @@ else
                           id="@Html.IdFor(model => model.Product.Description)" class="form-control" rows="5" required>@Model.Product.Description</textarea>
             </div>
             @{
-         if (Model.Product.ProductID == 0)
+         if (Model.Product.ProductID == null)
          {
             <input type="submit" class="btn btn-success" value="Create product"/>
          }
