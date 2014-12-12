@@ -301,9 +301,6 @@
     <Compile Include="Models\ManufacturerListViewModel.cs" />
     <Compile Include="Models\ManufacturerViewModel.cs" />
     <Compile Include="Models\PagingViewModel.cs" />
-    <Compile Include="Models\ProductListViewModel.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Models\ProductListViewModels.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
