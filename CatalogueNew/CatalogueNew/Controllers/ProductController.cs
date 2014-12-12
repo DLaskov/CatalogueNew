@@ -24,9 +24,9 @@ namespace CatalogueNew.Web.Controllers
             this.productService = productService;
         }
 
-        public ActionResult Index(int page = 1)
+        public ActionResult ProductAdministration(int page = 1)
         {
-            PagedList<Product> pageItems = productService.GetItems(page);
+            PagedList<Product> pageItems = productService.GetProducts(page);
             var productListViewModel = new ProductListViewModel(pageItems);
 
             return View(productListViewModel);
