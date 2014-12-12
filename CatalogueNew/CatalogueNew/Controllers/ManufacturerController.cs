@@ -23,9 +23,22 @@ namespace CatalogueNew.Web.Controllers
         public ActionResult Index(int page = 1)
         {
             PagedList<Manufacturer> pageItems = manufacturerServices.GetManufacturers(page);
-            var manufacturerListViewModel = new ManufacturerListViewModel(pageItems);
+            var pagingViewModel = new PagingViewModel(pageItems.PageCount, pageItems.CurrentPage, "Index");
 
-            return View(manufacturerListViewModel);
+            var manufacturerListViewModels = new ManufacturerListViewModel()
+            {
+                Manufacturers = pageItems.Items.ToList(),
+                PagingViewModel = pagingViewModel
+            };
+
+            return View(manufacturerListViewModels);
+        }
+
+        public ActionResult LayoutManufacturers()
+        {
+            var manufacturers = manufacturerServices.GetAll();
+
+            return PartialView("_LayoutManufacturersPartial", manufacturers);
         }
 
         public ActionResult Details(int id)

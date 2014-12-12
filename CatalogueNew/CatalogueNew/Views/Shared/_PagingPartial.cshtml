@@ -1,18 +1,68 @@
 ﻿@model PagingViewModel
 
-<ul class="pagination">
-    @for (int i = 1; i <= Model.Count; i++)
-    {
-        string path =  HttpContext.Current.Request.Url.Segments[HttpContext.Current.Request.Url.Segments.Length-1]; //Gets current path
-        
-        if (Model.Page == i)
-        {
-            <li class="active"><a href="@Url.Action(path, new { page = i })">@i</a></li>
-        }
-        else
-        {
-            <li><a href="@Url.Action(path, new { page = i })">@i</a></li>
-        }
-    }
-</ul>
+<div class="row">
+    <nav>
+        <ul class="pagination">
+
+            @if (Model.Page > 1)
+            {
+                <li><a href="@Url.Action(Model.Path, new { page = 1 })">First</a></li>
+                <li><a href="@Url.Action(Model.Path, new { page = Model.Page - 1 })">Previous</a></li>
+            }
+
+            @{
+
+                int pagesDisplayed = 4;
+                int firstPage;
+
+                if (pagesDisplayed < Model.Count)
+                {
+                    firstPage = Model.Page - pagesDisplayed / 2;
+
+                    if (firstPage < 1)
+                    {
+                        firstPage = 1;
+                    }
+                    if (Model.Page + 1 >= Model.Count)
+                    {
+                        firstPage = Model.Count - pagesDisplayed;
+                    }
+                }
+                else
+                {
+                    pagesDisplayed = Model.Count - 1;
+                    firstPage = 1;
+                }
+
+                if (Model.Count <= 1)
+                {
+                    pagesDisplayed = 0;
+                    firstPage = 1;
+                }
+            }
+            
+            @for (int i = firstPage; i <= (firstPage + pagesDisplayed); i++)
+            {
+                if (Model.Page == i)
+                {
+                    <li class="active"><a href="@Url.Action(Model.Path, new { page = i })">@i</a></li>
+                }
+                else
+                {
+                    <li><a href="@Url.Action(Model.Path, new { page = i })">@i</a></li>
+                }
+            }
+
+            @if (Model.Page < Model.Count)
+            {
+                <li><a href="@Url.Action(Model.Path, new { page = Model.Page + 1 })">Next</a></li>
+                <li><a href="@Url.Action(Model.Path, new { page = Model.Count })">Last</a></li>
+            }
+
+        </ul>
+        <h6 class="text-muted">Showing @Model.Page of @Model.Count</h6>
+    </nav>
+</div>
+
+
 

@@ -77,15 +77,4 @@
     </tbody>
 </table>
 
-
-<div class="row">
-    <div class="form-group">
-        <div class="col-md-offset-5 col-md-7">
-            <nav>
-                <ul class="pagination">
-                    @Html.Partial("~/Views/Shared/_PagingPartial.cshtml", new PagingViewModel(Model.Count, Model.Page))
-                </ul>
-            </nav>
-        </div>
-    </div>
-</div>
+@Html.Partial("~/Views/Shared/_PagingPartial.cshtml", Model.PagingViewModel)

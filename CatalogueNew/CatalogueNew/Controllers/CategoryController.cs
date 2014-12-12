@@ -8,13 +8,14 @@ using CatalogueNew.Web.Models;
 using CatalogueNew.Models.Services;
 using CatalogueNew.Models.Infrastructure;
 using System.Data.Entity;
+using System.Collections.Generic;
 
 namespace CatalogueNew.Web.Controllers
 {
     public class CategoryController : Controller
     {
         private ICategoryService categoryServices;
- 
+
 
         public CategoryController(ICategoryService categoryServices)
         {
@@ -24,9 +25,34 @@ namespace CatalogueNew.Web.Controllers
         public ActionResult Index(int page = 1)
         {
             PagedList<Category> pageItems = categoryServices.GetCategories(page);
-            var categoryListViewModel = new CategoryListViewModel(pageItems);
+            var pagingViewModel = new PagingViewModel(pageItems.PageCount, pageItems.CurrentPage, "Index");
 
-            return View(categoryListViewModel);
+            var categoryListViewModels = new CategoryListViewModel()
+            {
+                Categories = pageItems.Items.ToList(),
+                PagingViewModel = pagingViewModel
+            };
+
+            return View(categoryListViewModels);
+        }
+
+        public ActionResult CategoriesSelectList()
+        {
+            List<SelectListItem> list = new List<SelectListItem>();
+            var categories = categoryServices.GetAll();
+
+            foreach (var category in categories)
+            {
+                list.Add(new SelectListItem()
+                    {
+                        Text = category.Name,
+                        Value = category.CategoryID.ToString()
+                    });
+            }
+
+            var selectListItems = new CategorySelectListViewModels(list);
+
+            return PartialView("_CategoriesSelectListPartial", selectListItems);
         }
 
         public ActionResult Details(int id)
@@ -56,6 +82,7 @@ namespace CatalogueNew.Web.Controllers
                 {
                     Name = model.Name
                 };
+
                 categoryServices.Add(category);
                 return RedirectToAction("Index");
             }
@@ -87,6 +114,7 @@ namespace CatalogueNew.Web.Controllers
                     CategoryID = model.CategoryID,
                     Name = model.Name
                 };
+
                 categoryServices.Modify(category);
                 return RedirectToAction("Index");
             }

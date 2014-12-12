@@ -10,10 +10,6 @@ namespace CatalogueNew.Models.Services
 {
     public interface IProductService
     {
-        PagedList<Product> GetItems(int page);
-
-        Product Find(int id);
-
         void Add(Product category);
 
         void Modify(Product category);
@@ -21,5 +17,11 @@ namespace CatalogueNew.Models.Services
         void Remove(Product category);
 
         void Remove(int id);
+
+        Product Find(int id);
+
+        PagedList<Product> GetProducts(int page);
+
+        PagedList<Product> GetProductsByManufacturer(int page, int manufacturerID);
     }
 }

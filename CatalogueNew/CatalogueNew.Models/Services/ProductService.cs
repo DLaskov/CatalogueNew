@@ -11,7 +11,7 @@ namespace CatalogueNew.Models.Services
 {
     public class ProductService : BaseService<Product>, IProductService
     {
-        private const int pageSize = 3;
+        private const int pageSize = 9;
 
         public ProductService(ICatalogueContext context)
             : base(context)
@@ -73,9 +73,19 @@ namespace CatalogueNew.Models.Services
             this.Context.SaveChanges();
         }
 
-        public PagedList<Product> GetItems(int page)
+        public PagedList<Product> GetProducts(int page)
         {
             var pagedList = new PagedList<Product>(this.Context.Products.OrderBy(c => c.Name), page, pageSize);
+            return pagedList;
+        }
+
+        public PagedList<Product> GetProductsByManufacturer(int page, int manufacturerID)
+        {
+            var pagedList = new PagedList<Product>(this.Context
+                .Products
+                .Where(mn => mn.ManufacturerID == manufacturerID)
+                .OrderBy(c => c.Name), page, pageSize);
+
             return pagedList;
         }
     }
