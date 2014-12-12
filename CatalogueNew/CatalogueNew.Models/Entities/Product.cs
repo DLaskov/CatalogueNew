@@ -33,7 +33,7 @@ namespace CatalogueNew.Models.Entities
 
         [Required]
         [DisplayName("Year of product")]
-        public int Year { get; set; }
+        public int? Year { get; set; }
 
         [Required]
         [MaxLength(1000)]
@@ -46,7 +46,7 @@ namespace CatalogueNew.Models.Entities
 
         public virtual ICollection<LikeDislike> LikesDislikes { get; set; }
 
-        public virtual Manufacturer Manufacturers { get; set; }
+        public virtual Manufacturer Manufacturer { get; set; }
 
         public virtual ICollection<ProductTag> ProductsTags { get; set; }
 

@@ -1,4 +1,5 @@
 ﻿using CatalogueNew.Models.Entities;
+using CatalogueNew.Models.Infrastructure;
 using CatalogueNew.Models.Services;
 using CatalogueNew.Web.Models;
 using System;
@@ -23,11 +24,39 @@ namespace CatalogueNew.Web.Controllers
             this.productService = productService;
         }
 
+        public ActionResult Index(int page = 1)
+        {
+            PagedList<Product> pageItems = productService.GetItems(page);
+            var productListViewModel = new ProductListViewModel(pageItems);
+
+            return View(productListViewModel);
+        }
+
+        public ActionResult Details(int id)
+        {
+            Product product;
+
+            product = productService.Find(id);
+            if (product == null)
+            {
+                HttpContext.Response.StatusCode = 404;
+                return View("_NotFound");
+            }
+
+            ProductViewModel model = new ProductViewModel()
+            {
+                Product = product
+            };
+
+            return View(model);
+        }
+
         public ActionResult Create()
         {
             ProductViewModel model = new ProductViewModel();
             model.Categories = categoryService.GetAll();
             model.Manufacturers = manufacturerService.GetAll();
+            model.Product = new Product();
             return View(model);
         }
 
@@ -36,14 +65,48 @@ namespace CatalogueNew.Web.Controllers
         {
             Product product = new Product()
             {
-                Name = model.Name,
-                Description = model.Description,
-                CategoryID = model.CategoryID,
-                ManufacturerID = model.ManufactureID,
-                Year = model.Year
+                Name = model.Product.Name,
+                Description = model.Product.Description,
+                CategoryID = model.Product.CategoryID,
+                ManufacturerID = model.Product.ManufacturerID,
+                Year = model.Product.Year
             };
             productService.Add(product);
-            return View();
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult Edit(int id)
+        {
+            Product product = productService.Find(id);
+            if (product == null)
+            {
+                HttpContext.Response.StatusCode = 404;
+                return View("_NotFound");
+            }
+
+            ProductViewModel model = new ProductViewModel()
+            {
+                Product = product,
+                Categories = categoryService.GetAll(),
+                Manufacturers = manufacturerService.GetAll()
+            };
+
+            return View("Create", model);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(int id, ProductViewModel model)
+        {
+            Product product = productService.Find(id);
+            product.Name = model.Product.Name;
+            product.CategoryID = model.Product.CategoryID;
+            product.ManufacturerID = model.Product.ManufacturerID;
+            product.Year = model.Product.Year;
+            product.Description = model.Product.Description;
+
+            productService.Modify(product);
+
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Index(int page = 1)
