@@ -24,24 +24,44 @@ namespace CatalogueNew.Web.Controllers
             return View();
         }
 
-        [HttpPost]
-        public ActionResult Upload(HttpPostedFileBase imageUpload)
+        public ActionResult SaveUploadedFile()
         {
-            byte[] binaryData;
-            using (BinaryReader reader = new BinaryReader(imageUpload.InputStream))
+            bool isSavedSuccessfully = true;
+            string fName = "";
+            foreach (string fileName in Request.Files)
             {
-                binaryData = reader.ReadBytes((int)imageUpload.InputStream.Length);
-            }
-            Image image = new Image
-            {
-                MimeType = imageUpload.ContentType,
-                LastUpdated = DateTime.Now,
-                Value = binaryData
-            };
-            context.Images.Add(image);
-            context.SaveChanges();
+                HttpPostedFileBase file = Request.Files[fileName];
+                //Save file content goes here
+                fName = file.FileName;
+                if (file != null && file.ContentLength > 0)
+                {
+                    byte[] binaryData;
 
-            return View("Index");
+                    using (BinaryReader reader = new BinaryReader(file.InputStream))
+                    {
+                        binaryData = reader.ReadBytes((int)file.InputStream.Length);
+                    }
+
+                    Image image = new Image
+                    {
+                        MimeType = file.ContentType,
+                        LastUpdated = DateTime.Now,
+                        Value = binaryData
+                    };
+
+                    context.Images.Add(image);
+                    context.SaveChanges();
+                }
+            }
+
+            if (isSavedSuccessfully)
+            {
+                return Json(new { Message = fName });
+            }
+            else
+            {
+                return Json(new { Message = "Error in saving file" });
+            }
         }
     }
 }

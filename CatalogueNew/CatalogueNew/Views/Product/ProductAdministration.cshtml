@@ -1,0 +1,41 @@
+﻿@model CatalogueNew.Web.Models.ProductListViewModel
+
+@{
+    ViewBag.Title = "Products";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create",null, new { @class = "btn btn-default" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Products)
+        </th>
+    </tr>
+
+    @foreach (var item in @Model.Products)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ProductID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ProductID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ProductID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div class="row">
+    <nav>
+        <ul class="pagination">
+            @Html.Partial("~/Views/Shared/_PagingPartial.cshtml", @Model.PagingViewModel)
+        </ul>
+    </nav>
+</div>

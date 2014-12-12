@@ -25,7 +25,11 @@ namespace CatalogueNew.Models.Services
 
         public Product Find(int id)
         {
-            return this.Context.Products.Find(id);
+            Product product = (from prod in this.Context.Products
+                                where prod.ProductID == id
+                                select prod).Include(x => x.Category)
+                                .Include(x => x.Manufacturer).FirstOrDefault();    
+            return product;
         }
 
         public void Add(Product product)
