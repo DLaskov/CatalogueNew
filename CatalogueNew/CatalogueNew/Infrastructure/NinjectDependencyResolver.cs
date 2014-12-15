@@ -46,6 +46,7 @@ namespace CatalogueNew.Web.Infrastructure
             kernel.Bind<ICategoryService>().To<CategoryService>();
             kernel.Bind<IAdminService>().To<AdminService>();
             kernel.Bind<IAuthService>().To<AuthService>();
+            kernel.Bind<IImageService>().To<ImageService>();
             kernel.Bind<IUserStore<User>>().To<UserStore<User>>()
                 .InRequestScope()
                 .WithConstructorArgument("context", kernel.Get<ICatalogueContext>());

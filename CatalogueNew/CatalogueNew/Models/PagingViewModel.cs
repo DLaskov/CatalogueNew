@@ -13,11 +13,48 @@ namespace CatalogueNew.Web.Models
 
         public string Path { get; set; }
 
+        public int PagesDisplayed { get; private set; }
+
+        public int FirstPage { get; private set; }
+
         public PagingViewModel(int count, int page, string path)
         {
             this.Count = count;
             this.Page = page;
             this.Path = path;
+
+            CalculatePages();
+        }
+
+        private void CalculatePages()
+        {
+            PagesDisplayed = 4;
+
+            if (PagesDisplayed < Count)
+            {
+                FirstPage = Page - PagesDisplayed / 2;
+
+                if (FirstPage < 1)
+                {
+                    FirstPage = 1;
+                }
+
+                if (Page + 1 >= Count)
+                {
+                    FirstPage = Count - PagesDisplayed;
+                }
+            }
+            else
+            {
+                PagesDisplayed = Count - 1;
+                FirstPage = 1;
+            }
+
+            if (Count <= 1)
+            {
+                PagesDisplayed = 0;
+                FirstPage = 1;
+            }
         }
     }
 }

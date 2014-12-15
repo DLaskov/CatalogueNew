@@ -345,6 +345,7 @@
     <Content Include="Views\Product\Details.cshtml" />
     <Content Include="Views\Shared\_NotFound.cshtml" />
     <Content Include="Views\Product\ProductAdministration.cshtml" />
+    <Content Include="Views\Shared\_ImageUploadPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

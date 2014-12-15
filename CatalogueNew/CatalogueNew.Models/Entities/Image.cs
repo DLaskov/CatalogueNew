@@ -24,8 +24,8 @@ namespace CatalogueNew.Models.Entities
         [Required]
         public DateTime LastUpdated { get; set; }
 
-        //public int ProductID { get; set; }
+        public int ProductID { get; set; }
 
-        //public virtual Product Products { get; set; }
+        public virtual Product Products { get; set; }
     }
 }

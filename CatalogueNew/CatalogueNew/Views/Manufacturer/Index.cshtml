@@ -30,11 +30,4 @@
 
 </table>
 
-<div class="row">
-    <nav>
-        <ul class="pagination">
-
-            @Html.Partial("~/Views/Shared/_PagingPartial.cshtml", Model.PagingViewModel)
-            </ul>
-        </nav>
-    </div>
+@Html.Partial("~/Views/Shared/_PagingPartial.cshtml", Model.PagingViewModel)
