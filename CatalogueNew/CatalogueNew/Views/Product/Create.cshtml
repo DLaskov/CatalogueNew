@@ -103,6 +103,7 @@ else
                 <textarea maxlength="1000" name="@Html.NameFor(model => model.Product.Description)"
                           id="@Html.IdFor(model => model.Product.Description)" class="form-control" rows="5" required>@Model.Product.Description</textarea>
             </div>
+
             @{
          if (Model.Product.ProductID == null)
          {
@@ -116,11 +117,13 @@ else
             }
         </div>
      }
+
  }
- else
- {
+   else
+   {
     <div class="row alert alert-danger">
         <p class="text-center">You are not authorized to create or edit products!</p>
     </div>
- }
+   }
+@Html.Partial("_ImageUploadPartial")
 }

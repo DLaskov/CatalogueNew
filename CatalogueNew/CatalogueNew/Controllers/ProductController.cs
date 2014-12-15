@@ -4,6 +4,7 @@ using CatalogueNew.Models.Services;
 using CatalogueNew.Web.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -15,13 +16,15 @@ namespace CatalogueNew.Web.Controllers
         private ICategoryService categoryService;
         private IManufacturerService manufacturerService;
         private IProductService productService;
+        private IImageService imageService;
 
         public ProductController(ICategoryService categoryService,
-            IManufacturerService manufacturerService, IProductService productService)
+            IManufacturerService manufacturerService, IProductService productService, IImageService imageService)
         {
             this.categoryService = categoryService;
             this.manufacturerService = manufacturerService;
             this.productService = productService;
+            this.imageService = imageService;
         }
 
         public ActionResult ProductAdministration(int page = 1)
@@ -80,6 +83,7 @@ namespace CatalogueNew.Web.Controllers
                     Year = model.Product.Year
                 };
                 productService.Add(product);
+                SaveUploadedFile(product);
             }
             return RedirectToAction("Index", "Home");
         }
@@ -146,6 +150,45 @@ namespace CatalogueNew.Web.Controllers
             };
 
             return View(productListViewModels);
+        }
+
+        public ActionResult SaveUploadedFile(Product product)
+        {
+            bool isSavedSuccessfully = true;
+            string fName = "";
+            foreach (string fileName in Request.Files)
+            {
+                HttpPostedFileBase file = Request.Files[fileName];
+                //Save file content goes here
+                fName = file.FileName;
+                if (file != null && file.ContentLength > 0)
+                {
+                    byte[] binaryData;
+
+                    using (BinaryReader reader = new BinaryReader(file.InputStream))
+                    {
+                        binaryData = reader.ReadBytes((int)file.InputStream.Length);
+                    }
+
+                    Image image = new Image
+                    {
+                        MimeType = file.ContentType,
+                        LastUpdated = DateTime.Now,
+                        Value = binaryData,
+                    };
+
+                    imageService.Add(image);
+                }
+            }
+
+            if (isSavedSuccessfully)
+            {
+                return Json(new { Message = fName });
+            }
+            else
+            {
+                return Json(new { Message = "Error in saving file" });
+            }
         }
     }
 }
