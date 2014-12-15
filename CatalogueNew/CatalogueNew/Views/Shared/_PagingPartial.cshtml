@@ -4,8 +4,8 @@
     <nav>
         <ul class="pagination">
 
-            <li><a @(Model.Page > 1 ? "": "class=btn disabled") href="@Url.Action(Model.Path, new { page = 1 })">First</a></li>
-            <li><a @(Model.Page > 1 ? "" : "class=btn disabled") href="@Url.Action(Model.Path, new { page = Model.Page - 1 })">Previous</a></li>
+            <li><a @(Model.Page > 1 ? "" : "class=btn disabled") href="@Url.Action(Model.Path, new { page = 1, id = Model.Id })">First</a></li>
+            <li><a @(Model.Page > 1 ? "" : "class=btn disabled") href="@Url.Action(Model.Path, new { page = Model.Page - 1, id = Model.Id })">Previous</a></li>
 
             @for (int i = Model.FirstPage; i <= (Model.FirstPage + Model.PagesDisplayed); i++)
             {
@@ -19,8 +19,8 @@
                 }
             }
 
-            <li><a @(Model.Page < Model.Count ? "": "class=btn disabled") href="@Url.Action(Model.Path, new { page = Model.Page + 1 })">Next</a></li>
-            <li><a @(Model.Page < Model.Count ? "" : "class=btn disabled") href="@Url.Action(Model.Path, new { page = Model.Count })">Last</a></li>
+            <li><a @(Model.Page < Model.Count ? "" : "class=btn disabled") href="@Url.Action(Model.Path, new { page = Model.Page + 1, id = Model.Id })">Next</a></li>
+            <li><a @(Model.Page < Model.Count ? "" : "class=btn disabled") href="@Url.Action(Model.Path, new { page = Model.Count, id = Model.Id })">Last</a></li>
 
         </ul>
         <h6 class="text-muted">Showing @Model.Page of @Model.Count</h6>

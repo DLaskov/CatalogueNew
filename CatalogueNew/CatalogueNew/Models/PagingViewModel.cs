@@ -17,11 +17,22 @@ namespace CatalogueNew.Web.Models
 
         public int FirstPage { get; private set; }
 
+        public int Id { get; set; }
+
         public PagingViewModel(int count, int page, string path)
         {
             this.Count = count;
             this.Page = page;
             this.Path = path;
+
+
+            CalculatePages();
+        }
+
+        public PagingViewModel(int count, int page, string path, int id)
+            : this(count, page, path)
+        {
+            this.Id = id;
 
             CalculatePages();
         }

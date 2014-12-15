@@ -139,10 +139,10 @@ namespace CatalogueNew.Web.Controllers
             return View(productListViewModels);
         }
 
-        public ActionResult ProductsByManufacturer(int manufacturerID, int page = 1)
+        public ActionResult ProductsByManufacturer(int id, int page = 1)
         {
-            var pageItems = productService.GetProductsByManufacturer(page, manufacturerID);
-            var pagingViewModel = new PagingViewModel(pageItems.PageCount, pageItems.CurrentPage, "ProductsByManufacturer");
+            var pageItems = productService.GetProductsByManufacturer(page, id);
+            var pagingViewModel = new PagingViewModel(pageItems.PageCount, pageItems.CurrentPage, "ProductsByManufacturer", id);
 
             var productListViewModels = new ProductListViewModel(pageItems.Items.ToList(), pagingViewModel);
 

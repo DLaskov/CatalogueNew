@@ -16,6 +16,7 @@ namespace CatalogueNew.Web.Models
 
         public List<Product> Products { get; set; }
         public PagingViewModel PagingViewModel { get; set; }
+        public int ManufacturerID { get; set; }
 
         public ProductListViewModel()
         {
