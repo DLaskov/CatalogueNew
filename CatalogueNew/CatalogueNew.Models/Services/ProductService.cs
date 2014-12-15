@@ -32,10 +32,11 @@ namespace CatalogueNew.Models.Services
             return product;
         }
 
-        public void Add(Product product)
+        public int Add(Product product)
         {
             this.Context.Products.Add(product);
             this.Context.SaveChanges();
+            return (int)product.ProductID;
         }
 
         public void Modify(Product product)

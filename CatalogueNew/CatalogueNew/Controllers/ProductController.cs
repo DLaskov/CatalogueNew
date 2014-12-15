@@ -69,6 +69,12 @@ namespace CatalogueNew.Web.Controllers
             return View(model);
         }
 
+        public void SaveUploadedFile(HttpPostedFileBase file)
+        {
+            var path = Path.Combine("~/Content/TempImages/", Path.GetTempFileName());
+            file.SaveAs(path);
+        }
+
         [HttpPost]
         public ActionResult Create(ProductViewModel model)
         {
@@ -82,8 +88,8 @@ namespace CatalogueNew.Web.Controllers
                     ManufacturerID = model.Product.ManufacturerID,
                     Year = model.Product.Year
                 };
-                productService.Add(product);
-                SaveUploadedFile(product);
+                int productID = productService.Add(product);
+                
             }
             return RedirectToAction("Index", "Home");
         }
@@ -150,45 +156,6 @@ namespace CatalogueNew.Web.Controllers
             };
 
             return View(productListViewModels);
-        }
-
-        public ActionResult SaveUploadedFile(Product product)
-        {
-            bool isSavedSuccessfully = true;
-            string fName = "";
-            foreach (string fileName in Request.Files)
-            {
-                HttpPostedFileBase file = Request.Files[fileName];
-                //Save file content goes here
-                fName = file.FileName;
-                if (file != null && file.ContentLength > 0)
-                {
-                    byte[] binaryData;
-
-                    using (BinaryReader reader = new BinaryReader(file.InputStream))
-                    {
-                        binaryData = reader.ReadBytes((int)file.InputStream.Length);
-                    }
-
-                    Image image = new Image
-                    {
-                        MimeType = file.ContentType,
-                        LastUpdated = DateTime.Now,
-                        Value = binaryData,
-                    };
-
-                    imageService.Add(image);
-                }
-            }
-
-            if (isSavedSuccessfully)
-            {
-                return Json(new { Message = fName });
-            }
-            else
-            {
-                return Json(new { Message = "Error in saving file" });
-            }
         }
     }
 }
