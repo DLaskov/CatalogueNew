@@ -13,7 +13,7 @@ else
 <h2>@ViewBag.Title</h2>
 @{ if (User.IsInRole("Manager"))
  {
-     using (Html.BeginForm(new { id = Model.Product.ProductID}))
+     using (Html.BeginForm(new { id = Model.Product.ProductID }))
      {
         <div class="col-md-offset-4 form-horizontal">
 
@@ -23,55 +23,16 @@ else
 
             <div class="form-group">
                 <label for="@Html.IdFor(model => model.Product.Name)">Name <span class="required">*</span></label>
-                <input type="text" id="@Html.IdFor(model => model.Product.Name)" name="@Html.NameFor(model => model.Product.Name)"
-                       placeholder="Enter product name" required class="form-control" value="@Model.Product.Name" />
+                @Html.TextBoxFor(model => model.Product.Name, new { @class="form-control", placeholder="Enter product name", required="required"})
             </div>
 
             <div class="form-group">
                 <label for="@Html.IdFor(model => model.Product.CategoryID)">Category <span class="required">*</span></label>
-                <select id="@Html.IdFor(model => model.Product.CategoryID)" name="@Html.NameFor(model => model.Product.CategoryID)"
-                        class="form-control" required>
-                    @{
-         if (Model.Product.CategoryID == null)
-         {
-            <option value="" disabled selected>Select category</option>
-         }
-         foreach (var category in Model.Categories)
-         {
-             if (category.CategoryID == Model.Product.CategoryID)
-             {
-                <option value="@category.CategoryID" selected>@category.Name</option>
-             }
-             else
-             {
-                <option value="@category.CategoryID">@category.Name</option>
-             }
-         }
-                    }
-                </select>
+                @Html.DropDownListFor(model => model.Product.CategoryID, Model.Categories, "Select category", new { @class = "form-control", required = "required" })
             </div>
             <div class="form-group">
                 <label for="@Html.IdFor(model => model.Product.ManufacturerID)">Manufacturer <span class="required">*</span></label>
-                <select name="@Html.NameFor(model => model.Product.ManufacturerID)" class="form-control"
-                        id="@Html.IdFor(model => model.Product.ManufacturerID)" required>
-                    @{
-         if (Model.Product.ManufacturerID == null)
-         {
-            <option value="" disabled selected>Select manufacturer</option>
-         }
-         foreach (var manufacturer in Model.Manufacturers)
-         {
-             if (manufacturer.ManufacturerID == Model.Product.ManufacturerID)
-             {
-                <option value="@manufacturer.ManufacturerID" selected>@manufacturer.Name</option>
-             }
-             else
-             {
-                <option value="@manufacturer.ManufacturerID">@manufacturer.Name</option>
-             }
-         }
-                    }
-                </select>
+                @Html.DropDownListFor(model => model.Product.ManufacturerID, Model.Manufacturers, "Select manufacturer", new { @class = "form-control", required = "required" })
             </div>
             <div class="form-group">
                 <label for="@Html.IdFor(model => model.Product.Year)">Year <span class="required">*</span></label>
@@ -100,30 +61,26 @@ else
             </div>
             <div class="form-group">
                 <label for="@Html.IdFor(model => model.Product.Description)">Description <span class="required">*</span></label>
-                <textarea maxlength="1000" name="@Html.NameFor(model => model.Product.Description)"
-                          id="@Html.IdFor(model => model.Product.Description)" class="form-control" rows="5" required>@Model.Product.Description</textarea>
-            </div>
-
-            @{
+                @Html.TextAreaFor(model => model.Product.Description, new { @class="form-control", rows="5", required="required", maxlenght="1000"})
+                </div>
+                @{
          if (Model.Product.ProductID == null)
          {
-            <input type="submit" class="btn btn-success" value="Create product"/>
+            <input type="submit" class="btn btn-success" value="Create product" />
          }
          else
          {
             <input type="submit" class="btn btn-success" value="Save product" />
-                @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-default" })
+                    @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-default" })
          }
-            }
-        </div>
+                }
+            </div>
      }
-
  }
-   else
-   {
+ else
+ {
     <div class="row alert alert-danger">
         <p class="text-center">You are not authorized to create or edit products!</p>
     </div>
-   }
-@Html.Partial("_ImageUploadPartial")
+ }
 }

@@ -25,30 +25,11 @@ namespace CatalogueNew.Models.Services
 
         public Product Find(int id)
         {
-            var queryProduct = (from product in this.Context.Products
-                                    join category in this.Context.Categories on product.CategoryID
-                                    equals category.CategoryID
-                                    join manufacturer in this.Context.Manufacturers on product.ManufacturerID
-                                    equals manufacturer.ManufacturerID
-                                    where product.ProductID == id
-                                    select new
-                                    {
-                                        Product = product,
-                                        Category = category,
-                                        Manufacturer = manufacturer
-                                    }).FirstOrDefault();
-            Product prod = new Product
-            {
-                ProductID = queryProduct.Product.ProductID,
-                CategoryID = queryProduct.Product.CategoryID,
-                ManufacturerID = queryProduct.Product.ManufacturerID,
-                Name = queryProduct.Product.Name,
-                Description = queryProduct.Product.Description,
-                Year = queryProduct.Product.Year,
-                Manufacturer = queryProduct.Manufacturer,
-                Category = queryProduct.Category
-            };        
-            return prod;
+            Product product = (from prod in this.Context.Products
+                                where prod.ProductID == id
+                                select prod).Include(x => x.Category)
+                                .Include(x => x.Manufacturer).FirstOrDefault();    
+            return product;
         }
 
         public void Add(Product product)

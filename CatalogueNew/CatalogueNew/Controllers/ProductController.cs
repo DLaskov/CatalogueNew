@@ -63,8 +63,8 @@ namespace CatalogueNew.Web.Controllers
         public ActionResult Create()
         {
             ProductViewModel model = new ProductViewModel();
-            model.Categories = categoryService.GetAll();
-            model.Manufacturers = manufacturerService.GetAll();
+            model.Categories = new SelectList(categoryService.GetAll(), "CategoryID", "Name");
+            model.Manufacturers = new SelectList(manufacturerService.GetAll(), "ManufacturerID", "Name");
             model.Product = new Product();
             return View(model);
         }
@@ -100,8 +100,8 @@ namespace CatalogueNew.Web.Controllers
             ProductViewModel model = new ProductViewModel()
             {
                 Product = product,
-                Categories = categoryService.GetAll(),
-                Manufacturers = manufacturerService.GetAll()
+                Categories = new SelectList(categoryService.GetAll(), "CategoryID", "Name"),
+                Manufacturers = new SelectList(manufacturerService.GetAll(), "ManufacturerID", "Name")
             };
 
             return View("Create", model);

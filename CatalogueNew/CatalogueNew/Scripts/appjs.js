@@ -8,14 +8,17 @@
         products.hide();
 
         products.each(function (index) {
-            if (value === "") {
+
+            if (!value) {
                 products.show();
 
                 return false;
             }
+
             if (value === $(this).attr("id")) {
                 $(this).show();
             }
+
         });
     });
 });

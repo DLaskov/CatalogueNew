@@ -24,10 +24,7 @@ namespace CatalogueNew.Web.Models
             this.BirthDate = user.BirthDate;
             this.Gender = user.Gender;
             this.ManageMessage = manageMessage;
-            this.UserId = user.Id;
         }
-
-        public string UserId { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Current password")]

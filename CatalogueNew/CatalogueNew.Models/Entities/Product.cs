@@ -25,9 +25,9 @@ namespace CatalogueNew.Models.Entities
         [StringLength(160)]
         public string Name { get; set; }
 
-        public int? ManufacturerID { get; set; }
+        public int ManufacturerID { get; set; }
         
-        public int? CategoryID { get; set; }
+        public int CategoryID { get; set; }
 
         public Category Category { get; set; }
 
