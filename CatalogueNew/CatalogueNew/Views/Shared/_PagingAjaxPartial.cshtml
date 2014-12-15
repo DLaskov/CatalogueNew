@@ -1,8 +1,8 @@
-﻿﻿@model PagingViewModel
+﻿@model PagingViewModel
 
 <div class="row">
     <nav>
-        <ul class="pagination">
+        <ul class="pagination ajax-pagination" data-devtest-target="#documentsList">
 
             @if (Model.Page > 1)
             {
@@ -61,6 +61,11 @@
             }
 
         </ul>
+
         <h6 class="text-muted">Showing @Model.Page of @Model.Count</h6>
     </nav>
 </div>
+
+
+
+

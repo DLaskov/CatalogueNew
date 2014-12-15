@@ -304,7 +304,7 @@
     <Compile Include="Models\ProductListViewModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
-    <Compile Include="Models\UsersListViewModels.cs" />
+    <Compile Include="Models\UsersListViewModel.cs" />
     <Compile Include="Models\UserViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -345,6 +345,8 @@
     <Content Include="Views\Product\Details.cshtml" />
     <Content Include="Views\Shared\_NotFound.cshtml" />
     <Content Include="Views\Product\ProductAdministration.cshtml" />
+    <Content Include="Views\Shared\_RenderProductsPartial.cshtml" />
+    <Content Include="Views\Shared\_PagingAjaxPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

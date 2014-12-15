@@ -125,11 +125,12 @@ namespace CatalogueNew.Web.Controllers
             var pageItems = productService.GetProducts(page);
             var pagingViewModel = new PagingViewModel(pageItems.PageCount, pageItems.CurrentPage, "Index");
 
-            var productListViewModels = new ProductListViewModel()
+            var productListViewModels = new ProductListViewModel(pageItems.Items.ToList(), pagingViewModel);
+
+            if (Request.IsAjaxRequest())
             {
-                Products = pageItems.Items.ToList(),
-                PagingViewModel = pagingViewModel
-            };
+                return PartialView("_RenderProductsPartial", productListViewModels);
+            }
 
             return View(productListViewModels);
         }
@@ -139,11 +140,7 @@ namespace CatalogueNew.Web.Controllers
             var pageItems = productService.GetProductsByManufacturer(page, manufacturerID);
             var pagingViewModel = new PagingViewModel(pageItems.PageCount, pageItems.CurrentPage, "ProductsByManufacturer");
 
-            var productListViewModels = new ProductListViewModel()
-            {
-                Products = pageItems.Items.ToList(),
-                PagingViewModel = pagingViewModel
-            };
+            var productListViewModels = new ProductListViewModel(pageItems.Items.ToList(), pagingViewModel);
 
             return View(productListViewModels);
         }

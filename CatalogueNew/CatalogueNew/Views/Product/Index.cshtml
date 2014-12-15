@@ -2,43 +2,10 @@
 
 @{
     ViewBag.Title = "Products";
-    int rows;
 }
 
 <h2>Products</h2>
 
-@if (Model.Products.Count > 0)
-{
-    @Html.Action("CategoriesSelectList", "Category")<br />
-}
+@Html.Action("CategoriesSelectList", "Category")<br />
 
-@if (Model.Products.Count <= 2)
-{
-    rows = 0;
-}
-else
-{
-    rows = Model.Products.Count / 3 == 0 ? Model.Products.Count : Model.Products.Count / 3;
-}
-
-<div class="row">
-    @for (int i = 0; i <= rows; i++)
-    {
-        for (int j = 0; j < 3; j++)
-        {
-            var currentProduct = 3 * i + j;
-
-            if (currentProduct == Model.Products.Count)
-            {
-                break;
-            }
-
-            <div class="col-md-4 product" id="@Model.Products[currentProduct].CategoryID">
-                <div>Image</div>
-                <div><h3>@Model.Products[currentProduct].Name</h3></div>
-            </div>
-        }
-    }
-</div>
-
-@Html.Partial("_PagingPartial", Model.PagingViewModel)
+@Html.Partial("_RenderProductsPartial", Model)
