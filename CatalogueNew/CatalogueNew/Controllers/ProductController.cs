@@ -187,5 +187,66 @@ namespace CatalogueNew.Web.Controllers
                 return Json(new { Message = "Error in saving file" });
             }
         }
+
+        public JsonResult Save(ProductViewModel model)
+        {
+            var temp = Directory.EnumerateFiles(Server.MapPath("~/Images/imagepath"));
+            if (ModelState.IsValid)
+            {
+            }
+
+            Path.GetTempFileName();
+
+            bool isSavedSuccessfully = true;
+            string fName = "";
+            try
+            {
+                foreach (string fileName in Request.Files)
+                {
+                    HttpPostedFileBase file = Request.Files[fileName];
+                    //Save file content goes here
+                    fName = file.FileName;
+                    if (file != null && file.ContentLength > 0)
+                    {
+
+                        var originalDirectory = new DirectoryInfo(string.Format("{0}Images", Server.MapPath(@"\")));
+
+                        string pathString = Path.Combine(originalDirectory.ToString(), "imagepath");
+
+                        var fileName1 = Path.GetFileName(file.FileName);
+
+                        bool isExists = Directory.Exists(pathString);
+
+                        if (!isExists)
+                            System.IO.Directory.CreateDirectory(pathString);
+
+                        var path = string.Format("{0}\\{1}", pathString, file.FileName);
+                        file.SaveAs(path);
+
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                isSavedSuccessfully = false;
+            }
+
+            var data = new List<string>();
+
+            if (isSavedSuccessfully)
+            {
+
+                data.Add(fName);
+            }
+            else
+            {
+                return Json(new { Message = "Error in saving file" });
+            }
+
+            return Json(data, JsonRequestBehavior.AllowGet);
+            //return Json(new { Message = fName });
+        }
     }
 }
