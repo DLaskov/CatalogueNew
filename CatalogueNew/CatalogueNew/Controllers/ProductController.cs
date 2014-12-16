@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -72,20 +73,42 @@ namespace CatalogueNew.Web.Controllers
         [HttpPost]
         public ActionResult Create(ProductViewModel model)
         {
-            if (User.IsInRole("Manager"))
+            var images = new List<Image>();
+
+            var path = Server.MapPath("~/Images/imagepath");
+
+            foreach (var fileName in model.FilesName)
             {
+                var mimeType = fileName.GetMimeType();
+                var lastUpdate = DateTime.Now;
+
+                images.Add(new Image()
+                    {
+                        Value = fileName.GetFileData(path),
+                        LastUpdated = lastUpdate,
+                        MimeType = mimeType,
+                        ImageName = fileName
+                    });
+            }
+
                 Product product = new Product()
                 {
                     Name = model.Product.Name,
                     Description = model.Product.Description,
                     CategoryID = model.Product.CategoryID,
                     ManufacturerID = model.Product.ManufacturerID,
-                    Year = model.Product.Year
+                    Year = model.Product.Year,
+                    Images = images
                 };
+
+                foreach (var image in images)
+                {
+                    System.IO.File.Delete(path + "/" + image.ImageName);
+                }
+
                 productService.Add(product);
-                SaveUploadedFile(product);
-            }
-            return RedirectToAction("Index", "Home");
+
+            return RedirectToAction("Index", "Product");
         }
 
         public ActionResult Edit(int id)
@@ -121,7 +144,7 @@ namespace CatalogueNew.Web.Controllers
 
                 productService.Modify(product);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Product");
         }
 
         public ActionResult Index(int page = 1)
@@ -149,56 +172,12 @@ namespace CatalogueNew.Web.Controllers
             return View(productListViewModels);
         }
 
-        public ActionResult SaveUploadedFile(Product product)
+        public JsonResult SaveUploadedFile(ProductViewModel model)
         {
-            bool isSavedSuccessfully = true;
-            string fName = "";
-            foreach (string fileName in Request.Files)
-            {
-                HttpPostedFileBase file = Request.Files[fileName];
-                //Save file content goes here
-                fName = file.FileName;
-                if (file != null && file.ContentLength > 0)
-                {
-                    byte[] binaryData;
-
-                    using (BinaryReader reader = new BinaryReader(file.InputStream))
-                    {
-                        binaryData = reader.ReadBytes((int)file.InputStream.Length);
-                    }
-
-                    Image image = new Image
-                    {
-                        MimeType = file.ContentType,
-                        LastUpdated = DateTime.Now,
-                        Value = binaryData,
-                    };
-
-                    imageService.Add(image);
-                }
-            }
-
-            if (isSavedSuccessfully)
-            {
-                return Json(new { Message = fName });
-            }
-            else
-            {
-                return Json(new { Message = "Error in saving file" });
-            }
-        }
-
-        public JsonResult Save(ProductViewModel model)
-        {
-            var temp = Directory.EnumerateFiles(Server.MapPath("~/Images/imagepath"));
-            if (ModelState.IsValid)
-            {
-            }
-
-            Path.GetTempFileName();
+            var data = new StringBuilder();
 
             bool isSavedSuccessfully = true;
-            string fName = "";
+            string fName = String.Empty;
             try
             {
                 foreach (string fileName in Request.Files)
@@ -206,6 +185,9 @@ namespace CatalogueNew.Web.Controllers
                     HttpPostedFileBase file = Request.Files[fileName];
                     //Save file content goes here
                     fName = file.FileName;
+
+                    data.Append("<input type='hidden' name='filesName' value='" + fName + "' />");
+
                     if (file != null && file.ContentLength > 0)
                     {
 
@@ -233,20 +215,14 @@ namespace CatalogueNew.Web.Controllers
                 isSavedSuccessfully = false;
             }
 
-            var data = new List<string>();
-
             if (isSavedSuccessfully)
             {
-
-                data.Add(fName);
+                return Json(data.ToString(), JsonRequestBehavior.AllowGet);
             }
             else
             {
                 return Json(new { Message = "Error in saving file" });
             }
-
-            return Json(data, JsonRequestBehavior.AllowGet);
-            //return Json(new { Message = fName });
         }
     }
 }

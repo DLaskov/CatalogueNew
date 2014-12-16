@@ -11,150 +11,91 @@ else
 }
 
 <h2>@ViewBag.Title</h2>
-@*@{ if (User.IsInRole("Manager"))
+
+@{ if (User.IsInRole("Manager"))
+ {
+     using (Html.BeginForm("Create", "Product", null, FormMethod.Post, new { @class = "productForm", id = Model.Product.ProductID }))
      {
-        using (Html.BeginForm(new { id = Model.Product.ProductID }))
-            {
 
-               <div class="col-md-offset-4 form-horizontal">
+        <div class="col-md-offset-4 form-horizontal">
 
-                   <div class="form-group">
-                       All fields marked with <span class="required">*</span> are required!
-                   </div>
+            <div class="form-group">
+                All fields marked with <span class="required">*</span> are required!
+            </div>
 
-                   <div class="form-group">
-                       <label for="@Html.IdFor(model => model.Product.Name)">Name <span class="required">*</span></label>
-                       @Html.TextBoxFor(model => model.Product.Name, new { @class = "form-control", placeholder = "Enter product name", required = "required" })
-                   </div>
+            <div class="form-group">
+                <label for="@Html.IdFor(model => model.Product.Name)">Name <span class="required">*</span></label>
+                @Html.TextBoxFor(model => model.Product.Name, new { @class = "form-control", placeholder = "Enter product name", required = "required" })
+            </div>
 
-                   <div class="form-group">
-                       <label for="@Html.IdFor(model => model.Product.CategoryID)">Category <span class="required">*</span></label>
-                       @Html.DropDownListFor(model => model.Product.CategoryID, Model.Categories, "Select category", new { @class = "form-control", required = "required" })
-                   </div>
-                   <div class="form-group">
-                       <label for="@Html.IdFor(model => model.Product.ManufacturerID)">Manufacturer <span class="required">*</span></label>
-                       @Html.DropDownListFor(model => model.Product.ManufacturerID, Model.Manufacturers, "Select manufacturer", new { @class = "form-control", required = "required" })
-                   </div>
+            <div class="form-group">
+                <label for="@Html.IdFor(model => model.Product.CategoryID)">Category <span class="required">*</span></label>
+                @Html.DropDownListFor(model => model.Product.CategoryID, Model.Categories, "Select category", new { @class = "form-control", required = "required" })
+            </div>
+            <div class="form-group">
+                <label for="@Html.IdFor(model => model.Product.ManufacturerID)">Manufacturer <span class="required">*</span></label>
+                @Html.DropDownListFor(model => model.Product.ManufacturerID, Model.Manufacturers, "Select manufacturer", new { @class = "form-control", required = "required" })
+            </div>
 
-                   <div class="form-group">
-                       <label for="@Html.IdFor(model => model.Product.Year)">Year <span class="required">*</span></label>
-                       <select name="@Html.NameFor(model => model.Product.Year)" id="@Html.IdFor(model => model.Product.Year)"
-                               class="form-control" required>
+            <div class="form-group">
+                <label for="@Html.IdFor(model => model.Product.Year)">Year <span class="required">*</span></label>
+                <select name="@Html.NameFor(model => model.Product.Year)" id="@Html.IdFor(model => model.Product.Year)"
+                        class="form-control" required>
 
-                           @{
-                if (Model.Product.Year == null)
-                {
-                   <option value="" disabled selected>Select year</option>
-                }
+                    @{
+         if (Model.Product.Year == null)
+         {
+            <option value="" disabled selected>Select year</option>
+         }
 
-                int year = DateTime.Now.Year;
-                for (int i = year + 1; i > year - 21; i--)
-                {
-                    if (i == Model.Product.Year)
-                    {
-                       <option value="@i" selected>@i</option>
+         int year = DateTime.Now.Year;
+         for (int i = year + 1; i > year - 21; i--)
+         {
+             if (i == Model.Product.Year)
+             {
+                <option value="@i" selected>@i</option>
+             }
+             else
+             {
+                <option value="@i">@i</option>
+             }
+         }
                     }
-                    else
-                    {
-                       <option value="@i">@i</option>
-                    }
-                }
-                           }
-                       </select>
-                   </div>
-                   <div class="form-group">
-                       <label for="@Html.IdFor(model => model.Product.Description)">Description <span class="required">*</span></label>
-                       @Html.TextAreaFor(model => model.Product.Description, new { @class = "form-control", rows = "5", required = "required", maxlenght = "1000" })
-                   </div>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="@Html.IdFor(model => model.Product.Description)">Description <span class="required">*</span></label>
+                @Html.TextAreaFor(model => model.Product.Description, new { @class = "form-control", rows = "5", required = "required", maxlenght = "1000" })
+            </div>
 
-                   @{
-                if (Model.Product.ProductID == null)
-                {
-                   <input type="submit" class="btn btn-success" value="Create product" />
-                }
-                else
-                {
-                   <input type="submit" class="btn btn-success" value="Save product" />
-                       @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-default" })
-                }
-                   }
-
-               </div>
+            @{
+         if (Model.Product.ProductID == null)
+         {
+            <input type="submit" class="btn btn-success" value="Create product" />
+         }
+         else
+         {
+            <input type="submit" class="btn btn-success" value="Save product" />
+                @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-default" })
+         }
             }
-     }
-     else
-     {
-        <div class="row alert alert-danger">
-            <p class="text-center">You are not authorized to create or edit products!</p>
+
         </div>
      }
-    }*@
-<form action="~/Product/Save" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm">
+ }
+ else
+ {
+    <div class="row alert alert-danger">
+        <p class="text-center">You are not authorized to create or edit products!</p>
+    </div>
+ }
+}
+
+<hr />
+
+<form action="~/Product/SaveUploadedFile" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm">
     <div class="form-group">
         <div class="dropzone-previews"></div> <!-- this is were the previews should be shown. -->
     </div>
     <!-- Now setup your input fields -->
-
-    <div class="form-group">
-        All fields marked with <span class="required">*</span> are required!
-    </div>
-
-    <div class="form-group">
-        <label for="@Html.IdFor(model => model.Product.Name)">Name <span class="required">*</span></label>
-        @Html.TextBoxFor(model => model.Product.Name, new { @class = "form-control", placeholder = "Enter product name", required = "required" })
-    </div>
-
-    <div class="form-group">
-        <label for="@Html.IdFor(model => model.Product.CategoryID)">Category <span class="required">*</span></label>
-        @Html.DropDownListFor(model => model.Product.CategoryID, Model.Categories, "Select category", new { @class = "form-control", required = "required" })
-    </div>
-    <div class="form-group">
-        <label for="@Html.IdFor(model => model.Product.ManufacturerID)">Manufacturer <span class="required">*</span></label>
-        @Html.DropDownListFor(model => model.Product.ManufacturerID, Model.Manufacturers, "Select manufacturer", new { @class = "form-control", required = "required" })
-    </div>
-
-    <div class="form-group">
-        <label for="@Html.IdFor(model => model.Product.Year)">Year <span class="required">*</span></label>
-        <select name="@Html.NameFor(model => model.Product.Year)" id="@Html.IdFor(model => model.Product.Year)"
-                class="form-control" required>
-
-            @{
-                if (Model.Product.Year == null)
-                {
-                    <option value="" disabled selected>Select year</option>
-                }
-
-                int year = DateTime.Now.Year;
-                for (int i = year + 1; i > year - 21; i--)
-                {
-                    if (i == Model.Product.Year)
-                    {
-                        <option value="@i" selected>@i</option>
-                    }
-                    else
-                    {
-                        <option value="@i">@i</option>
-                    }
-                }
-            }
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="@Html.IdFor(model => model.Product.Description)">Description <span class="required">*</span></label>
-        @Html.TextAreaFor(model => model.Product.Description, new { @class = "form-control", rows = "5", required = "required", maxlenght = "1000" })
-    </div>
-
-    @*@{
-            if (Model.Product.ProductID == null)
-            {
-                <input type="submit" class="btn btn-success" value="Create product" />
-            }
-            else
-            {
-                <input type="submit" class="btn btn-success" value="Save product" />
-                @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-default" })
-            }
-        }*@
-
-    <button type="submit">Submit data and files!</button>
 </form>
