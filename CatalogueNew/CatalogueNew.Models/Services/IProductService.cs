@@ -10,11 +10,11 @@ namespace CatalogueNew.Models.Services
 {
     public interface IProductService
     {
-        void Add(Product category);
+        int Add(Product product);
 
-        void Modify(Product category);
+        void Modify(Product product);
 
-        void Remove(Product category);
+        void Remove(Product product);
 
         void Remove(int id);
 

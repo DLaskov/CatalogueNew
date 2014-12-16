@@ -24,44 +24,41 @@ namespace CatalogueNew.Web.Controllers
             return View();
         }
 
-        public ActionResult SaveUploadedFile()
+        public void SaveUploadedFile(ProductViewModel model, HttpPostedFileBase file)
         {
-            bool isSavedSuccessfully = true;
-            string fName = "";
-            foreach (string fileName in Request.Files)
+            var path = Path.Combine(Server.MapPath("~/Content/TempImages/"), Path.GetTempFileName());
+            file.SaveAs(path);
+            if (model.ImagePaths == null)
             {
-                HttpPostedFileBase file = Request.Files[fileName];
-                //Save file content goes here
-                fName = file.FileName;
-                if (file != null && file.ContentLength > 0)
-                {
-                    byte[] binaryData;
-
-                    using (BinaryReader reader = new BinaryReader(file.InputStream))
-                    {
-                        binaryData = reader.ReadBytes((int)file.InputStream.Length);
-                    }
-
-                    Image image = new Image
-                    {
-                        MimeType = file.ContentType,
-                        LastUpdated = DateTime.Now,
-                        Value = binaryData
-                    };
-
-                    context.Images.Add(image);
-                    context.SaveChanges();
-                }
+                model.ImagePaths = new List<string>();
             }
+            model.ImagePaths.Add(path);
+            UpdateModel<ProductViewModel>(model);
+            //        using (BinaryReader reader = new BinaryReader(file.InputStream))
+            //        {
+            //            binaryData = reader.ReadBytes((int)file.InputStream.Length);
+            //        }
 
-            if (isSavedSuccessfully)
-            {
-                return Json(new { Message = fName });
-            }
-            else
-            {
-                return Json(new { Message = "Error in saving file" });
-            }
+            //        Image image = new Image
+            //        {
+            //            MimeType = file.ContentType,
+            //            LastUpdated = DateTime.Now,
+            //            Value = binaryData
+            //        };
+
+            //        context.Images.Add(image);
+            //        context.SaveChanges();
+            //    }
+            //}
+
+            //if (isSavedSuccessfully)
+            //{
+            //    return Json(new { Message = fName });
+            //}
+            //else
+            //{
+            //    return Json(new { Message = "Error in saving file" });
+            //}
         }
     }
 }

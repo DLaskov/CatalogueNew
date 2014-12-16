@@ -15,5 +15,7 @@ namespace CatalogueNew.Web.Models
         public SelectList Categories { get; set; }
 
         public SelectList Manufacturers { get; set; }
+
+        public List<String> ImagePaths = new List<string>();
     }
 }
