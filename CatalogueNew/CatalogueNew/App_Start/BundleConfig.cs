@@ -29,7 +29,7 @@
                       "~/Content/Site.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/dropzonescripts").Include(
-                     "~/Scripts/dropzone/dropzone.min.js"));
+                     "~/Scripts/dropzone/dropzone.js"));
 
             bundles.Add(new StyleBundle("~/Content/dropzonescss").Include(
                      "~/Scripts/dropzone/css/basic.css",

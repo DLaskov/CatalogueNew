@@ -69,10 +69,23 @@ namespace CatalogueNew.Web.Controllers
             return View(model);
         }
 
-        public void SaveUploadedFile(HttpPostedFileBase file)
+        public JsonResult SaveUploadedFile(HttpPostedFileBase file)
         {
             var path = Path.Combine("~/Content/TempImages/", Path.GetTempFileName());
-            file.SaveAs(path);
+            if (file != null)
+            {
+                file.SaveAs(path);
+            }
+            return new JsonResult()
+            {
+                Data = new
+                {
+                    imgPath = path,
+                    imgName = file.FileName,
+                    MimeType = file.ContentType
+                },
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
         }
 
         [HttpPost]
@@ -89,7 +102,7 @@ namespace CatalogueNew.Web.Controllers
                     Year = model.Product.Year
                 };
                 int productID = productService.Add(product);
-                
+
             }
             return RedirectToAction("Index", "Home");
         }
