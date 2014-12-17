@@ -16,6 +16,11 @@ namespace CatalogueNew.Web.Models
 
         public SelectList Manufacturers { get; set; }
 
-        public List<String> ImagePaths = new List<string>();
+        public string hidden1 { get; set; }
+        public string hidden2 { get; set; }
+        public string hidden3 { get; set; }
+        public string hidden4 { get; set; }
+        public string hidden5 { get; set; }
+        public string hidden6 { get; set; }
     }
 }

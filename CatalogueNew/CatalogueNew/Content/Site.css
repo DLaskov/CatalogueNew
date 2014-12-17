@@ -44,3 +44,12 @@ footer {
 .field-validation-error > span{
     color: red;
 }
+
+#dropZone {
+        background: gray;
+        border: black dashed 3px;
+        width: 200px;
+        padding: 50px;
+        text-align: center;
+        color: white;
+    }

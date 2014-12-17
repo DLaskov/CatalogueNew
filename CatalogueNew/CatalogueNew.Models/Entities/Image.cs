@@ -15,8 +15,8 @@ namespace CatalogueNew.Models.Entities
         [DataType("varbinary(MAX)")]
         public byte[] Value { get; set; }
 
-        //[StringLength(100)]
-        //public string ImageName { get; set; }
+        [StringLength(100)]
+        public string ImageName { get; set; }
 
         [Required]
         public string MimeType { get; set; }
