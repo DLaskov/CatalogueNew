@@ -26,15 +26,18 @@ else
             <div class="form-group">
                 <label for="@Html.IdFor(model => model.Product.Name)">Name <span class="required">*</span></label>
                 @Html.TextBoxFor(model => model.Product.Name, new { @class = "form-control", placeholder = "Enter product name", required = "required" })
+                @Html.ValidationMessageFor(model => model.Product.Name)
             </div>
 
             <div class="form-group">
                 <label for="@Html.IdFor(model => model.Product.CategoryID)">Category <span class="required">*</span></label>
                 @Html.DropDownListFor(model => model.Product.CategoryID, Model.Categories, "Select category", new { @class = "form-control", required = "required" })
+                @Html.ValidationMessageFor(model => model.Product.CategoryID)
             </div>
             <div class="form-group">
                 <label for="@Html.IdFor(model => model.Product.ManufacturerID)">Manufacturer <span class="required">*</span></label>
                 @Html.DropDownListFor(model => model.Product.ManufacturerID, Model.Manufacturers, "Select manufacturer", new { @class = "form-control", required = "required" })
+                @Html.ValidationMessageFor(model => model.Product.ManufacturerID)
             </div>
 
             <div class="form-group">
@@ -62,10 +65,12 @@ else
          }
                     }
                 </select>
+                @Html.ValidationMessageFor(model => model.Product.Year)
             </div>
             <div class="form-group">
                 <label for="@Html.IdFor(model => model.Product.Description)">Description <span class="required">*</span></label>
                 @Html.TextAreaFor(model => model.Product.Description, new { @class = "form-control", rows = "5", required = "required", maxlenght = "1000" })
+                @Html.ValidationMessageFor(model => model.Product.Description)
             </div>
 
             @{
@@ -92,6 +97,10 @@ else
 }
 
 <hr />
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
 
 <form action="~/Product/SaveUploadedFile" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm">
     <div class="form-group">
