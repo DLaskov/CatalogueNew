@@ -75,38 +75,38 @@ namespace CatalogueNew.Web.Controllers
         {
             var images = new List<Image>();
 
-            var path = Server.MapPath("~/Images/imagepath");
+            var path = Server.MapPath("~/Images/TempImages/");
 
-            foreach (var fileName in model.FilesName)
+            if (model.FilesName != null)
             {
-                var mimeType = fileName.GetMimeType();
-                var lastUpdate = DateTime.Now;
+                foreach (var fileName in model.FilesName)
+                {
+                    var mimeType = fileName.GetMimeType();
+                    var lastUpdate = DateTime.UtcNow;
 
-                images.Add(new Image()
+                    images.Add(new Image()
                     {
                         Value = fileName.GetFileData(path),
                         LastUpdated = lastUpdate,
                         MimeType = mimeType,
                         ImageName = fileName
                     });
+                }
             }
 
-                Product product = new Product()
-                {
-                    Name = model.Product.Name,
-                    Description = model.Product.Description,
-                    CategoryID = model.Product.CategoryID,
-                    ManufacturerID = model.Product.ManufacturerID,
-                    Year = model.Product.Year,
-                    Images = images
-                };
+            foreach (var image in images)
+            {
+                image.ResizeImage();
+            }
 
-                foreach (var image in images)
-                {
-                    System.IO.File.Delete(path + "/" + image.ImageName);
-                }
+            model.Product.Images = images;
 
-                productService.Add(product);
+            foreach (var image in images)
+            {
+                System.IO.File.Delete(path + image.ImageName);
+            }
+
+            productService.Add(model.Product);
 
             return RedirectToAction("Index", "Product");
         }
@@ -172,56 +172,58 @@ namespace CatalogueNew.Web.Controllers
             return View(productListViewModels);
         }
 
-        public JsonResult SaveUploadedFile(ProductViewModel model)
+        public JsonResult SaveUploadedFile()
         {
-            var data = new StringBuilder();
-
             bool isSavedSuccessfully = true;
             string fName = String.Empty;
+
             try
             {
                 foreach (string fileName in Request.Files)
                 {
                     HttpPostedFileBase file = Request.Files[fileName];
-                    //Save file content goes here
                     fName = file.FileName;
-
-                    data.Append("<input type='hidden' name='filesName' value='" + fName + "' />");
 
                     if (file != null && file.ContentLength > 0)
                     {
-
-                        var originalDirectory = new DirectoryInfo(string.Format("{0}Images", Server.MapPath(@"\")));
-
-                        string pathString = Path.Combine(originalDirectory.ToString(), "imagepath");
-
-                        var fileName1 = Path.GetFileName(file.FileName);
-
+                        var originalDirectory = new DirectoryInfo(string.Format("{0}Images/TempImages", Server.MapPath(@"\")));
+                        string pathString = originalDirectory.ToString();
                         bool isExists = Directory.Exists(pathString);
 
                         if (!isExists)
+                        {
                             System.IO.Directory.CreateDirectory(pathString);
+                        }
 
-                        var path = string.Format("{0}\\{1}", pathString, file.FileName);
+                        var path = string.Format("{0}\\{1}", pathString, fName);
+
                         file.SaveAs(path);
-
                     }
-
                 }
-
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 isSavedSuccessfully = false;
             }
 
             if (isSavedSuccessfully)
             {
-                return Json(data.ToString(), JsonRequestBehavior.AllowGet);
+                return Json(fName, JsonRequestBehavior.AllowGet);
             }
             else
             {
                 return Json(new { Message = "Error in saving file" });
+            }
+        }
+
+        [HttpPost]
+        public void RemoveImage(string value)
+        {
+            if (value != null)
+            {
+                var path = Server.MapPath("~/Images/TempImages/");
+
+                System.IO.File.Delete(path + value);
             }
         }
     }
