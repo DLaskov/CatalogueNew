@@ -25,7 +25,6 @@ namespace CatalogueNew.Web.Models
             this.Page = page;
             this.Path = path;
 
-
             CalculatePages();
         }
 
