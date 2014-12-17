@@ -9,12 +9,14 @@ else
     ViewBag.Title = "Edit: " + Model.Product.Name;
 }
 }
+
 <h2>@ViewBag.Title</h2>
+
 @{ if (User.IsInRole("Manager"))
  {
-    @Html.ValidationSummary(false)
-     using (Html.BeginForm())
+     using (Html.BeginForm("Create", "Product", null, FormMethod.Post, new { @class = "productForm", id = Model.Product.ProductID }))
      {
+
         <div class="col-md-offset-4 form-horizontal">
 
             <div class="form-group">
@@ -34,10 +36,12 @@ else
                 <label for="@Html.IdFor(model => model.Product.ManufacturerID)">Manufacturer <span class="required">*</span></label>
                 @Html.DropDownListFor(model => model.Product.ManufacturerID, Model.Manufacturers, "Select manufacturer", new { @class = "form-control", required = "required" })
             </div>
+
             <div class="form-group">
                 <label for="@Html.IdFor(model => model.Product.Year)">Year <span class="required">*</span></label>
                 <select name="@Html.NameFor(model => model.Product.Year)" id="@Html.IdFor(model => model.Product.Year)"
                         class="form-control" required>
+
                     @{
          if (Model.Product.Year == null)
          {
@@ -63,6 +67,7 @@ else
                 <label for="@Html.IdFor(model => model.Product.Description)">Description <span class="required">*</span></label>
                 @Html.TextAreaFor(model => model.Product.Description, new { @class = "form-control", rows = "5", required = "required", maxlenght = "1000" })
             </div>
+
             @{
          if (Model.Product.ProductID == null)
          {
@@ -77,77 +82,6 @@ else
 
         </div>
      }
-     <div class="jumbotron">
-        <form action="~/Product/SaveUploadedFile" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm">
-            <div class="fallback">
-                <input name="file" type="file" multiple />
-                <input type="submit" value="Upload" />
-            </div>
-        </form>
-    </div>
-    <style type="text/css">
-        .dz-max-files-reached {
-            background-color: red;
-        }
-    </style>
-    @section scripts{
-        <script type="text/javascript">
-            Dropzone.autoDiscover = true;
-            Dropzone.options.dropzoneForm = {
-                autoProcessQueue: true,
-                maxFiles: 6,
-                init: function () {
-                    dropzoneForm = this;
-                    this.on("maxfilesexceeded", function (data) {
-                        var res = eval('(' + data.xhr.responseText + ')');
-
-                    });
-                    this.on("addedfile", function (file) {
-
-                        // Create the remove button
-                        var removeButton = Dropzone.createElement("<button>Remove file</button>");
-
-                        // Capture the Dropzone instance as closure.
-                        var _this = this;
-
-                        // Listen to the click event
-                        removeButton.addEventListener("click", function (e) {
-                            // Make sure the button click doesn't submit the form:
-                            e.preventDefault();
-                            e.stopPropagation();
-                            // Remove the file preview.
-                            _this.removeFile(file);
-                            //$.ajax({
-                            //    type: "POST",
-                            //    url: "RemoveImage",
-                            //    contentType: "application/json; utf-8",
-                            //    data: document.getElementById(file.name).value ,
-                            //    dataType: "json"
-                            //});
-                            $.post("RemoveImage", { value: document.getElementById(file.name).value });
-                            document.getElementById(file.name).remove();
-                            --numberHiddens;
-                            // If you want to the delete the file on the server as well,
-                            // you can do the AJAX request here.
-                        });
-                        // You might want to show the submit button only when
-                        // files are dropped here:
-                        this.on("addedfile", function () {
-                        });
-                        // Add the button to the file preview element.
-                        file.previewElement.appendChild(removeButton);
-                        var numberHiddens = 0;
-                        this.on("success", function (file, json) {
-                            var innerHtml = "<input type='hidden' name='hidden" + ++numberHiddens + "' id='" + file.name + "' value='" + json.imgPath + "," + json.imgName + "," + json.MimeType + "' />";
-                            if (document.getElementById(file.name) == undefined) {
-                                $(".form-horizontal").append(innerHtml);
-                            }
-                        });
-                    });
-                }
-            };
-        </script>
-    }
  }
  else
  {
@@ -156,3 +90,12 @@ else
     </div>
  }
 }
+
+<hr />
+
+<form action="~/Product/SaveUploadedFile" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm">
+    <div class="form-group">
+        <div class="dropzone-previews"></div> <!-- this is were the previews should be shown. -->
+    </div>
+    <!-- Now setup your input fields -->
+</form>

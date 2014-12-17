@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -70,34 +70,26 @@ namespace CatalogueNew.Web.Controllers
             return View(model);
         }
 
-        public JsonResult SaveUploadedFile(HttpPostedFileBase file)
-        {
-            var path = Path.Combine("~/Content/TempImages/", Path.GetTempFileName());
-            if (file != null)
-            {
-                file.SaveAs(path);
-            }
-            return new JsonResult()
-            {
-                Data = new
-                {
-                    imgPath = path,
-                    imgName = file.FileName,
-                    MimeType = file.ContentType
-                },
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            };
-        }
-
         [HttpPost]
         public ActionResult Create(ProductViewModel model)
         {
-            if (User.IsInRole("Manager"))
+            var images = new List<Image>();
+
+            var path = Server.MapPath("~/Images/imagepath");
+
+            foreach (var fileName in model.FilesName)
             {
-                if (!ModelState.IsValid)
-                {
-                    return View("Create");
-                }
+                var mimeType = fileName.GetMimeType();
+                var lastUpdate = DateTime.Now;
+
+                images.Add(new Image()
+                    {
+                        Value = fileName.GetFileData(path),
+                        LastUpdated = lastUpdate,
+                        MimeType = mimeType,
+                        ImageName = fileName
+                    });
+            }
 
                 Product product = new Product()
                 {
@@ -105,41 +97,18 @@ namespace CatalogueNew.Web.Controllers
                     Description = model.Product.Description,
                     CategoryID = model.Product.CategoryID,
                     ManufacturerID = model.Product.ManufacturerID,
-                    Year = model.Product.Year
+                    Year = model.Product.Year,
+                    Images = images
                 };
-                int productID = productService.Add(product);
 
-                string[] imgAtributes = new String[3];
-                for (int i = 1; i < 7; i++)
+                foreach (var image in images)
                 {
-                    PropertyInfo property = model.GetType().GetProperty("hidden" + i);
-                    if (property.GetValue(model) != null)
-                    {
-                        imgAtributes = property.GetValue(model).ToString().Split(',');
-                        byte[] imgValue = System.IO.File.ReadAllBytes(imgAtributes[0]);
-
-                        Image productImage = new Image()
-                        {
-                            ProductID = productID,
-                            Value = imgValue,
-                            LastUpdated = DateTime.Now,
-                            MimeType = imgAtributes[2],
-                            ImageName = imgAtributes[1]
-                        };
-                        imageService.Add(productImage);
-                        System.IO.File.Delete(imgAtributes[0]);
-                    }
+                    System.IO.File.Delete(path + "/" + image.ImageName);
                 }
-            }
-            return RedirectToAction("Index", "Home");
-        }
 
-        [HttpPost]
-        [ActionName("RemoveImage")]
-        public void RemoveImage(string value)
-        {
-            string[] imgAtributes = value.Split(',');
-            System.IO.File.Delete(imgAtributes[0]);
+                productService.Add(product);
+
+            return RedirectToAction("Index", "Product");
         }
 
         public ActionResult Edit(int id)
@@ -175,7 +144,7 @@ namespace CatalogueNew.Web.Controllers
 
                 productService.Modify(product);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Product");
         }
 
         public ActionResult Index(int page = 1)
@@ -201,6 +170,59 @@ namespace CatalogueNew.Web.Controllers
             var productListViewModels = new ProductListViewModel(pageItems.Items.ToList(), pagingViewModel);
 
             return View(productListViewModels);
+        }
+
+        public JsonResult SaveUploadedFile(ProductViewModel model)
+        {
+            var data = new StringBuilder();
+
+            bool isSavedSuccessfully = true;
+            string fName = String.Empty;
+            try
+            {
+                foreach (string fileName in Request.Files)
+                {
+                    HttpPostedFileBase file = Request.Files[fileName];
+                    //Save file content goes here
+                    fName = file.FileName;
+
+                    data.Append("<input type='hidden' name='filesName' value='" + fName + "' />");
+
+                    if (file != null && file.ContentLength > 0)
+                    {
+
+                        var originalDirectory = new DirectoryInfo(string.Format("{0}Images", Server.MapPath(@"\")));
+
+                        string pathString = Path.Combine(originalDirectory.ToString(), "imagepath");
+
+                        var fileName1 = Path.GetFileName(file.FileName);
+
+                        bool isExists = Directory.Exists(pathString);
+
+                        if (!isExists)
+                            System.IO.Directory.CreateDirectory(pathString);
+
+                        var path = string.Format("{0}\\{1}", pathString, file.FileName);
+                        file.SaveAs(path);
+
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                isSavedSuccessfully = false;
+            }
+
+            if (isSavedSuccessfully)
+            {
+                return Json(data.ToString(), JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { Message = "Error in saving file" });
+            }
         }
     }
 }
