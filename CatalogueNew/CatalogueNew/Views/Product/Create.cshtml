@@ -9,10 +9,10 @@ else
     ViewBag.Title = "Edit: " + Model.Product.Name;
 }
 }
-@Scripts.Render("~/bundles/dropzonescripts");
 <h2>@ViewBag.Title</h2>
 @{ if (User.IsInRole("Manager"))
  {
+    @Html.ValidationSummary(false)
      using (Html.BeginForm())
      {
         <div class="col-md-offset-4 form-horizontal">
@@ -77,15 +77,13 @@ else
 
         </div>
      }
-    <div class="jumbotron">
+     <div class="jumbotron">
         <form action="~/Product/SaveUploadedFile" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm">
             <div class="fallback">
                 <input name="file" type="file" multiple />
                 <input type="submit" value="Upload" />
             </div>
         </form>
-        <br />
-        <button id="submit-all" class="btn btn-success">Submit all files</button>
     </div>
     <style type="text/css">
         .dz-max-files-reached {
@@ -94,100 +92,60 @@ else
     </style>
     @section scripts{
         <script type="text/javascript">
-
-            //File Upload response from the server
-            //Dropzone.options.dropzoneForm = {
-            //    autoProcessQueue: true,
-            //    maxFiles: 6,
-            //    init: function () {
-            //        this.on("maxfilesexceeded", function (data) {
-            //            var res = eval('(' + data.xhr.responseText + ')');
-
-            //        });
-            //        this.on("addedfile", function (file) {
-
-            //            // Create the remove button
-            //            var removeButton = Dropzone.createElement("<button>Remove file</button>");
-
-            //            // Capture the Dropzone instance as closure.
-            //            var _this = this;
-
-            //            // Listen to the click event
-            //            removeButton.addEventListener("click", function (e) {
-            //                // Make sure the button click doesn't submit the form:
-            //                e.preventDefault();
-            //                e.stopPropagation();
-            //                // Remove the file preview.
-            //                _this.removeFile(file);
-            //                // If you want to the delete the file on the server as well,
-            //                // you can do the AJAX request here.
-            //            });
-
-            //            var submitButton = document.querySelector("#submit-all")
-            //            myDropzone = this; // closure
-
-            //            submitButton.addEventListener("click", function () {
-            //                myDropzone.processQueue(); // Tell Dropzone to process all queued files.
-            //            });
-
-            //            // You might want to show the submit button only when
-            //            // files are dropped here:
-            //            this.on("addedfile", function () {
-            //            });
-            //            // Add the button to the file preview element.
-            //            file.previewElement.appendChild(removeButton);
-                        
-            //        });
-            //        this.on("success", function (Data) {
-            //            //var innerHtml = "<input type='hidden' value='" + Data.imgPath + "," + Data.imgName + "," + Data.MimeType + " />";
-            //            //$(".form-horizontal").append(innerHtml);
-            //            alert("test");
-            //        });
-            //    }
-            //};
-            Dropzone.options.dropzoneForm = { // The camelized version of the ID of the form element
-
-                // The configuration we've talked about above
+            Dropzone.autoDiscover = true;
+            Dropzone.options.dropzoneForm = {
                 autoProcessQueue: true,
-                uploadMultiple: true,
-                parallelUploads: 100,
-                maxFiles: 100,
-
-                // The setting up of the dropzone
+                maxFiles: 6,
                 init: function () {
-                    var myDropzone = this;
+                    dropzoneForm = this;
+                    this.on("maxfilesexceeded", function (data) {
+                        var res = eval('(' + data.xhr.responseText + ')');
 
-                    // First change the button to actually tell Dropzone to process the queue.
-                    this.element.querySelector("button[type=submit]").addEventListener("click", function (e) {
-                        // Make sure that the form isn't actually being sent.
-                        e.preventDefault();
-                        e.stopPropagation();
-                        myDropzone.processQueue();
                     });
+                    this.on("addedfile", function (file) {
 
-                    // Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
-                    // of the sending event because uploadMultiple is set to true.
-                    this.on("sendingmultiple", function () {
-                        // Gets triggered when the form is actually being sent.
-                        // Hide the success button or the complete form.
-                        alert('sendingmultiple');
+                        // Create the remove button
+                        var removeButton = Dropzone.createElement("<button>Remove file</button>");
+
+                        // Capture the Dropzone instance as closure.
+                        var _this = this;
+
+                        // Listen to the click event
+                        removeButton.addEventListener("click", function (e) {
+                            // Make sure the button click doesn't submit the form:
+                            e.preventDefault();
+                            e.stopPropagation();
+                            // Remove the file preview.
+                            _this.removeFile(file);
+                            //$.ajax({
+                            //    type: "POST",
+                            //    url: "RemoveImage",
+                            //    contentType: "application/json; utf-8",
+                            //    data: document.getElementById(file.name).value ,
+                            //    dataType: "json"
+                            //});
+                            $.post("RemoveImage", { value: document.getElementById(file.name).value });
+                            document.getElementById(file.name).remove();
+                            --numberHiddens;
+                            // If you want to the delete the file on the server as well,
+                            // you can do the AJAX request here.
+                        });
+                        // You might want to show the submit button only when
+                        // files are dropped here:
+                        this.on("addedfile", function () {
+                        });
+                        // Add the button to the file preview element.
+                        file.previewElement.appendChild(removeButton);
+                        var numberHiddens = 0;
+                        this.on("success", function (file, json) {
+                            var innerHtml = "<input type='hidden' name='hidden" + ++numberHiddens + "' id='" + file.name + "' value='" + json.imgPath + "," + json.imgName + "," + json.MimeType + "' />";
+                            if (document.getElementById(file.name) == undefined) {
+                                $(".form-horizontal").append(innerHtml);
+                            }
+                        });
                     });
-                    this.on("successmultiple", function (files, response) {
-                        // Gets triggered when the files have successfully been sent.
-                        // Redirect user or notify of success.
-                        alert('successmultiple');
-                    });
-                    this.on("errormultiple", function (files, response) {
-                        // Gets triggered when there was an error sending the files.
-                        // Maybe show form again, and notify user of error
-                        alert('errormultiple');
-                    });
-                    this.on("success", function () {
-                        alert("success");
-                    })
                 }
-
-            }
+            };
         </script>
     }
  }

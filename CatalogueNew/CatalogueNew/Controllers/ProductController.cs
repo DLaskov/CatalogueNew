@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 
@@ -93,6 +94,11 @@ namespace CatalogueNew.Web.Controllers
         {
             if (User.IsInRole("Manager"))
             {
+                if (!ModelState.IsValid)
+                {
+                    return View("Create");
+                }
+
                 Product product = new Product()
                 {
                     Name = model.Product.Name,
@@ -103,8 +109,37 @@ namespace CatalogueNew.Web.Controllers
                 };
                 int productID = productService.Add(product);
 
+                string[] imgAtributes = new String[3];
+                for (int i = 1; i < 7; i++)
+                {
+                    PropertyInfo property = model.GetType().GetProperty("hidden" + i);
+                    if (property.GetValue(model) != null)
+                    {
+                        imgAtributes = property.GetValue(model).ToString().Split(',');
+                        byte[] imgValue = System.IO.File.ReadAllBytes(imgAtributes[0]);
+
+                        Image productImage = new Image()
+                        {
+                            ProductID = productID,
+                            Value = imgValue,
+                            LastUpdated = DateTime.Now,
+                            MimeType = imgAtributes[2],
+                            ImageName = imgAtributes[1]
+                        };
+                        imageService.Add(productImage);
+                        System.IO.File.Delete(imgAtributes[0]);
+                    }
+                }
             }
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        [ActionName("RemoveImage")]
+        public void RemoveImage(string value)
+        {
+            string[] imgAtributes = value.Split(',');
+            System.IO.File.Delete(imgAtributes[0]);
         }
 
         public ActionResult Edit(int id)

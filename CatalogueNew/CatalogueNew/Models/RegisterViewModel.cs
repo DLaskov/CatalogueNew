@@ -14,6 +14,7 @@ namespace CatalogueNew.Web.Models
         public string UserName { get; set; }
 
         [Required]
+        [EmailAddress]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 

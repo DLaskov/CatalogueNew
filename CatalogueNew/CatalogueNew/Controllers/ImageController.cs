@@ -23,42 +23,5 @@ namespace CatalogueNew.Web.Controllers
         {
             return View();
         }
-
-        public void SaveUploadedFile(ProductViewModel model, HttpPostedFileBase file)
-        {
-            var path = Path.Combine(Server.MapPath("~/Content/TempImages/"), Path.GetTempFileName());
-            file.SaveAs(path);
-            if (model.ImagePaths == null)
-            {
-                model.ImagePaths = new List<string>();
-            }
-            model.ImagePaths.Add(path);
-            UpdateModel<ProductViewModel>(model);
-            //        using (BinaryReader reader = new BinaryReader(file.InputStream))
-            //        {
-            //            binaryData = reader.ReadBytes((int)file.InputStream.Length);
-            //        }
-
-            //        Image image = new Image
-            //        {
-            //            MimeType = file.ContentType,
-            //            LastUpdated = DateTime.Now,
-            //            Value = binaryData
-            //        };
-
-            //        context.Images.Add(image);
-            //        context.SaveChanges();
-            //    }
-            //}
-
-            //if (isSavedSuccessfully)
-            //{
-            //    return Json(new { Message = fName });
-            //}
-            //else
-            //{
-            //    return Json(new { Message = "Error in saving file" });
-            //}
-        }
     }
 }

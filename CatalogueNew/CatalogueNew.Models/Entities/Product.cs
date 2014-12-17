@@ -22,7 +22,8 @@ namespace CatalogueNew.Models.Entities
         public int? ProductID { get; set; }
 
         [Required]
-        [StringLength(160)]
+        [MinLength(4)]
+        [MaxLength(160)]
         public string Name { get; set; }
 
         public int ManufacturerID { get; set; }
@@ -36,6 +37,7 @@ namespace CatalogueNew.Models.Entities
         public int? Year { get; set; }
 
         [Required]
+        [MinLength(10)]
         [MaxLength(1000)]
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }

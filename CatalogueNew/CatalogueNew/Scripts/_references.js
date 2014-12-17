@@ -60,5 +60,6 @@
 /// <reference path="locales/bootstrap-datepicker.vi.js" />
 /// <reference path="locales/bootstrap-datepicker.zh-cn.js" />
 /// <reference path="locales/bootstrap-datepicker.zh-tw.js" />
-/// <reference path="dropzone/dropzone-amd-module.min.js" />
 /// <reference path="dropzone/dropzone.min.js" />
+/// <reference path="dropzone/dropzone.js" />
+/// <reference path="dropzone/dropzone-amd-module.min.js" />
