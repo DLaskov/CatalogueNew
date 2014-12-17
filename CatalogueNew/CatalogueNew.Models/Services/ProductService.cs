@@ -26,9 +26,9 @@ namespace CatalogueNew.Models.Services
         public Product Find(int id)
         {
             Product product = (from prod in this.Context.Products
-                                where prod.ProductID == id
-                                select prod).Include(x => x.Category)
-                                .Include(x => x.Manufacturer).FirstOrDefault();    
+                               where prod.ProductID == id
+                               select prod).Include(x => x.Category)
+                                .Include(x => x.Manufacturer).FirstOrDefault();
             return product;
         }
 
@@ -58,12 +58,6 @@ namespace CatalogueNew.Models.Services
             this.Context.SaveChanges();
         }
 
-        public PagedList<Product> GetProducts(int page)
-        {
-            var pagedList = new PagedList<Product>(this.Context.Products.OrderBy(c => c.Name), page, pageSize);
-            return pagedList;
-        }
-
         public PagedList<Product> GetProductsByManufacturer(int page, int manufacturerID)
         {
             var pagedList = new PagedList<Product>(this.Context
@@ -71,6 +65,15 @@ namespace CatalogueNew.Models.Services
                 .Where(mn => mn.ManufacturerID == manufacturerID)
                 .OrderBy(c => c.Name), page, pageSize);
 
+            return pagedList;
+        }
+
+        public PagedList<Product> GetProducts(int page)
+        {
+
+            var products = this.Context.Products.OrderBy(c => c.Name).Include("Images");
+
+            var pagedList = new PagedList<Product>(products, page, pageSize);
             return pagedList;
         }
     }

@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -70,76 +70,45 @@ namespace CatalogueNew.Web.Controllers
             return View(model);
         }
 
-        public JsonResult SaveUploadedFile(HttpPostedFileBase file)
-        {
-            var path = Path.Combine("~/Content/TempImages/", Path.GetTempFileName());
-            if (file != null)
-            {
-                file.SaveAs(path);
-            }
-            return new JsonResult()
-            {
-                Data = new
-                {
-                    imgPath = path,
-                    imgName = file.FileName,
-                    MimeType = file.ContentType
-                },
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            };
-        }
-
         [HttpPost]
         public ActionResult Create(ProductViewModel model)
         {
-            if (User.IsInRole("Manager"))
+            var images = new List<Image>();
+
+            var path = Server.MapPath("~/Images/TempImages/");
+
+            if (model.FilesName != null)
             {
-                if (!ModelState.IsValid)
+                foreach (var fileName in model.FilesName)
                 {
-                    return View("Create");
-                }
+                    var mimeType = fileName.GetMimeType();
+                    var lastUpdate = DateTime.UtcNow;
 
-                Product product = new Product()
-                {
-                    Name = model.Product.Name,
-                    Description = model.Product.Description,
-                    CategoryID = model.Product.CategoryID,
-                    ManufacturerID = model.Product.ManufacturerID,
-                    Year = model.Product.Year
-                };
-                int productID = productService.Add(product);
-
-                string[] imgAtributes = new String[3];
-                for (int i = 1; i < 7; i++)
-                {
-                    PropertyInfo property = model.GetType().GetProperty("hidden" + i);
-                    if (property.GetValue(model) != null)
+                    images.Add(new Image()
                     {
-                        imgAtributes = property.GetValue(model).ToString().Split(',');
-                        byte[] imgValue = System.IO.File.ReadAllBytes(imgAtributes[0]);
-
-                        Image productImage = new Image()
-                        {
-                            ProductID = productID,
-                            Value = imgValue,
-                            LastUpdated = DateTime.Now,
-                            MimeType = imgAtributes[2],
-                            ImageName = imgAtributes[1]
-                        };
-                        imageService.Add(productImage);
-                        System.IO.File.Delete(imgAtributes[0]);
-                    }
+                        Value = fileName.GetFileData(path),
+                        LastUpdated = lastUpdate,
+                        MimeType = mimeType,
+                        ImageName = fileName
+                    });
                 }
             }
-            return RedirectToAction("Index", "Home");
-        }
 
-        [HttpPost]
-        [ActionName("RemoveImage")]
-        public void RemoveImage(string value)
-        {
-            string[] imgAtributes = value.Split(',');
-            System.IO.File.Delete(imgAtributes[0]);
+            foreach (var image in images)
+            {
+                image.ResizeImage();
+            }
+
+            model.Product.Images = images;
+
+            foreach (var image in images)
+            {
+                System.IO.File.Delete(path + image.ImageName);
+            }
+
+            productService.Add(model.Product);
+
+            return RedirectToAction("Index", "Product");
         }
 
         public ActionResult Edit(int id)
@@ -175,7 +144,7 @@ namespace CatalogueNew.Web.Controllers
 
                 productService.Modify(product);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Product");
         }
 
         public ActionResult Index(int page = 1)
@@ -201,6 +170,61 @@ namespace CatalogueNew.Web.Controllers
             var productListViewModels = new ProductListViewModel(pageItems.Items.ToList(), pagingViewModel);
 
             return View(productListViewModels);
+        }
+
+        public JsonResult SaveUploadedFile()
+        {
+            bool isSavedSuccessfully = true;
+            string fName = String.Empty;
+
+            try
+            {
+                foreach (string fileName in Request.Files)
+                {
+                    HttpPostedFileBase file = Request.Files[fileName];
+                    fName = file.FileName;
+
+                    if (file != null && file.ContentLength > 0)
+                    {
+                        var originalDirectory = new DirectoryInfo(string.Format("{0}Images/TempImages", Server.MapPath(@"\")));
+                        string pathString = originalDirectory.ToString();
+                        bool isExists = Directory.Exists(pathString);
+
+                        if (!isExists)
+                        {
+                            System.IO.Directory.CreateDirectory(pathString);
+                        }
+
+                        var path = string.Format("{0}\\{1}", pathString, fName);
+
+                        file.SaveAs(path);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                isSavedSuccessfully = false;
+            }
+
+            if (isSavedSuccessfully)
+            {
+                return Json(fName, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { Message = "Error in saving file" });
+            }
+        }
+
+        [HttpPost]
+        public void RemoveImage(string value)
+        {
+            if (value != null)
+            {
+                var path = Server.MapPath("~/Images/TempImages/");
+
+                System.IO.File.Delete(path + value);
+            }
         }
     }
 }

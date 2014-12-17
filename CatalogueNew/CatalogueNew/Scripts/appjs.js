@@ -41,90 +41,75 @@
 
     $(".body-content").on("click", ".ajax-pagination a", getPage);
 
-    //Dropzone.options.dropzoneForm = { // The camelized version of the ID of the form element
+    Dropzone.options.dropzoneForm = { // The camelized version of the ID of the form element
 
-    //    // The configuration we've talked about above
-    //    autoProcessQueue: true,
-    //    uploadMultiple: true,
-    //    parallelUploads: 100,
-    //    maxFiles: 100,
+        // The configuration we've talked about above
+        autoProcessQueue: true,
+        uploadMultiple: false,
+        parallelUploads: 100,
+        maxFiles: 4,
 
-    //    // The setting up of the dropzone
-    //    init: function () {
-    //        var myDropzone = this;
+        // The setting up of the dropzone
+        init: function () {
+            var myDropzone = this;
+            this.on("maxfilesexceeded", function (data) {
+                var res = eval('(' + data.xhr.responseText + ')');
 
-    //        // First change the button to actually tell Dropzone to process the queue.
-    //        //this.element.querySelector("button[type=submit]").addEventListener("click", function (e) {
-    //        //    // Make sure that the form isn't actually being sent.
-    //        //    e.preventDefault();
-    //        //    e.stopPropagation();
-    //        //    myDropzone.processQueue();
-    //        //});
+            });
 
-    //        // Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
-    //        // of the sending event because uploadMultiple is set to true.
-    //        this.on("sendingmultiple", function () {
-    //            // Gets triggered when the form is actually being sent.
-    //            // Hide the success button or the complete form.
-    //        });
-    //        this.on("successmultiple", function (files, response) {
-    //            // Gets triggered when the files have successfully been sent.
-    //            // Redirect user or notify of success.
-    //        });
-    //        this.on("errormultiple", function (files, response) {
-    //            // Gets triggered when there was an error sending the files.
-    //            // Maybe show form again, and notify user of error
-    //            alert('errormultiple');
-    //        });
-    //        this.on("success", function (file, data) {
-    //            alert(data);
-    //        });
-    //    }
-    //}
+            this.on("addedfile", function (file) {
 
-    ////File Upload response from the server
-    //Dropzone.options.dropzoneForm = {
-    //    autoProcessQueue: false,
-    //    maxFiles: 6,
-    //    init: function () {
-    //        this.on("maxfilesexceeded", function (data) {
-    //            var res = eval('(' + data.xhr.responseText + ')');
+                // Create the remove button
+                var removeButton = Dropzone.createElement("<button>Remove file</button>");
 
-    //        });
-    //        this.on("addedfile", function (file) {
+                // Capture the Dropzone instance as closure.
+                var _this = this;
 
-    //            // Create the remove button
-    //            var removeButton = Dropzone.createElement("<button>Remove file</button>");
+                // Listen to the click event
+                removeButton.addEventListener("click", function (e) {
+                    // Make sure the button click doesn't submit the form:
+                    e.preventDefault();
+                    e.stopPropagation();
 
-    //            // Capture the Dropzone instance as closure.
-    //            var _this = this;
+                    // Remove the file preview.
+                    _this.removeFile(file);
 
-    //            // Listen to the click event
-    //            removeButton.addEventListener("click", function (e) {
-    //                // Make sure the button click doesn't submit the form:
-    //                e.preventDefault();
-    //                e.stopPropagation();
-    //                // Remove the file preview.
-    //                _this.removeFile(file);
-    //                // If you want to the delete the file on the server as well,
-    //                // you can do the AJAX request here.
-    //            });
+                    // AJAX request here.
+                    $.ajax({
+                        type: "post",
+                        url: "removeimage",
+                        contenttype: "application/json; utf-8",
+                        data: document.getElementById(file.name).value,
+                        datatype: "json"
+                    });
 
-    //            var submitButton = document.querySelector("#submit-all")
-    //            myDropzone = this; // closure
+                    $.post("RemoveImage", { value: document.getElementById(file.name).value });
+                    document.getElementById(file.name).remove();
+                });
 
-    //            submitButton.addEventListener("click", function () {
-    //                myDropzone.processQueue(); // Tell Dropzone to process all queued files.
-    //            });
+                // Add the button to the file preview element.
+                file.previewElement.appendChild(removeButton);
+            });
 
-    //            // You might want to show the submit button only when
-    //            // files are dropped here:
-    //            this.on("addedfile", function () {
-    //                // Show submit button here and/or inform user to click it.
-    //            });
-    //            // Add the button to the file preview element.
-    //            file.previewElement.appendChild(removeButton);
-    //        });
-    //    }
-    //};
+            // Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
+            // of the sending event because uploadMultiple is set to true.
+            this.on("sendingmultiple", function () {
+                // Gets triggered when the form is actually being sent.
+                // Hide the success button or the complete form.
+            });
+            this.on("successmultiple", function (files, response) {
+                // Gets triggered when the files have successfully been sent.
+                // Redirect user or notify of success.
+            });
+            this.on("errormultiple", function (files, response) {
+                // Gets triggered when there was an error sending the files.
+                // Maybe show form again, and notify user of error
+                alert('Maximum files: 4');
+            });
+            this.on("success", function (file, data) {
+                var innerHtml = "<input type='hidden' name='filesName' id='" + data + "' value='" + data + "' />"
+                $("div .form-horizontal").prepend(innerHtml);
+            });
+        }
+    }
 });

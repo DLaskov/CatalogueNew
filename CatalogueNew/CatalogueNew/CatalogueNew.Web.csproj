@@ -92,6 +92,9 @@
     <Reference Include="Ninject.Web.Mvc">
       <HintPath>..\packages\Ninject.MVC5.3.2.1.0\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="Omu.Drawing">
+      <HintPath>..\packages\omu.drawing.1.0.0\lib\net35\Omu.Drawing.dll</HintPath>
+    </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
@@ -186,6 +189,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Images\no_pic_small.gif" />
     <Content Include="Scripts\appjs.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -296,6 +300,7 @@
     <Compile Include="Models\CategoryListViewModel.cs" />
     <Compile Include="Models\CategorySelectListViewModel.cs" />
     <Compile Include="Models\CategoryViewModel.cs" />
+    <Compile Include="Models\ImageExtensionMethod.cs" />
     <Compile Include="Models\LogInViewModel.cs" />
     <Compile Include="Models\ManageUserViewModel.cs" />
     <Compile Include="Models\ManufacturerListViewModel.cs" />
@@ -357,7 +362,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Images\" />
+    <Folder Include="Images\TempImages\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CatalogueNew.Models\CatalogueNew.Models.csproj">
