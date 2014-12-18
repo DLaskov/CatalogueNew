@@ -1,13 +1,19 @@
-﻿using System;
+﻿using CatalogueNew.Models.Entities;
+using Omu.Drawing;
+using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Web;
 
 namespace CatalogueNew.Web.Models
 {
-    public static class ExtensionMethod
+    public static class ImageExtensionMethod
     {
+        private const int ImgMaxWidth = 125;
+        private const int ImgMaxHeight = 125;
+
         public static byte[] GetFileData(this string fileName, string filePath)
         {
             var fullFilePath = string.Format("{0}/{1}", filePath, fileName);
@@ -27,6 +33,23 @@ namespace CatalogueNew.Web.Models
             if (regKey != null && regKey.GetValue("Content Type") != null)
                 mimeType = regKey.GetValue("Content Type").ToString();
             return mimeType;
+        }
+
+        public static Image ResizeImage(this Image image)
+        {
+            var ms = new MemoryStream(image.Value);
+            var source = Imager.Resize(System.Drawing.Image.FromStream(ms), ImgMaxWidth, ImgMaxHeight, false);
+            var fileResize = new MemoryStream();
+
+            source.Save(fileResize, ImageFormat.Png);
+
+            var resizedImage = new Image()
+            {
+                ImageName = image.ImageName,
+                Value = fileResize.ToArray()
+            };
+
+            return resizedImage;
         }
     }
 }

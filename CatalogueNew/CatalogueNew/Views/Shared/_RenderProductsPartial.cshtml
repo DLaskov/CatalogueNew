@@ -13,9 +13,20 @@
                     break;
                 }
 
-                <div class="col-md-4 product" id="@Model.Products[currentProduct].CategoryID">
-                    <div>Image</div>
-                    <div><h3>@Model.Products[currentProduct].Name</h3></div>
+                var product = @Model.Products[currentProduct];
+
+                <div class="col-md-4 product" id="@product.CategoryID">
+
+                    @if (product.Images.Count > 0)
+                    {
+                        <img src="data:image;base64,@System.Convert.ToBase64String(@product.Images.FirstOrDefault().Value)" />
+                    }
+                    else
+                    {
+                        <img src="~/Images/no_pic_small.gif" />
+                    }
+
+                    <div><h3>@product.Name</h3></div>
                 </div>
             }
         }

@@ -46,13 +46,51 @@
 
         // The configuration we've talked about above
         autoProcessQueue: true,
-        uploadMultiple: true,
+        uploadMultiple: false,
         parallelUploads: 100,
         maxFiles: 4,
 
         // The setting up of the dropzone
         init: function () {
             var myDropzone = this;
+            this.on("maxfilesexceeded", function (data) {
+                var res = eval('(' + data.xhr.responseText + ')');
+
+            });
+
+            this.on("addedfile", function (file) {
+
+                // Create the remove button
+                var removeButton = Dropzone.createElement("<button>Remove file</button>");
+
+                // Capture the Dropzone instance as closure.
+                var _this = this;
+
+                // Listen to the click event
+                removeButton.addEventListener("click", function (e) {
+                    // Make sure the button click doesn't submit the form:
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    // Remove the file preview.
+                    _this.removeFile(file);
+
+                    // AJAX request here.
+                    $.ajax({
+                        type: "post",
+                        url: "removeimage",
+                        contenttype: "application/json; utf-8",
+                        data: document.getElementById(file.name).value,
+                        datatype: "json"
+                    });
+
+                    $.post("RemoveImage", { value: document.getElementById(file.name).value });
+                    document.getElementById(file.name).remove();
+                });
+
+                // Add the button to the file preview element.
+                file.previewElement.appendChild(removeButton);
+            });
 
             // Listen to the sendingmultiple event. In this case, it's the sendingmultiple event instead
             // of the sending event because uploadMultiple is set to true.
@@ -70,9 +108,8 @@
                 alert('Maximum files: 4');
             });
             this.on("success", function (file, data) {
-                if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
-                    $("div .form-horizontal").prepend(data);
-                }
+                var innerHtml = "<input type='hidden' name='filesName' id='" + data + "' value='" + data + "' />"
+                $("div .form-horizontal").prepend(innerHtml);
             });
         }
     }

@@ -41,15 +41,20 @@ footer {
     display: block;
 }
 
-.field-validation-error > span{
+.field-validation-error > span {
     color: red;
 }
 
 #dropZone {
-        background: gray;
-        border: black dashed 3px;
-        width: 200px;
-        padding: 50px;
-        text-align: center;
-        color: white;
-    }
+    background: gray;
+    border: black dashed 3px;
+    width: 200px;
+    padding: 50px;
+    text-align: center;
+    color: white;
+}
+
+img {
+    width: 100%;
+    height: 150px;
+}
