@@ -1,0 +1,18 @@
+﻿@model SelectListViewModel
+
+<div class="form-group">
+    <div class="col-md-10">
+        @using (Ajax.BeginForm("Index", "Product", new AjaxOptions()
+        {
+            HttpMethod = "Post",
+            InsertionMode = InsertionMode.Replace,
+            UpdateTargetId = "documentsList"
+        }))
+        {
+            @Html.DropDownList("manufacturer", @Model.SelectListManufacturers, "Manufacturers", new { @class = "form-control", @onchange = "$(this.form).submit();" })
+            @Html.DropDownList("category", @Model.SelectListCategories, "Categories", new { @class = "form-control", @onchange = "$(this.form).submit();" })
+        }
+    </div>
+    <br />
+    <br />
+</div>

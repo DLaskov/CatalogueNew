@@ -6,7 +6,9 @@
 
 <h2>Products</h2>
 
-@Html.Action("CategoriesSelectList", "Category")<br />
+@*@Html.Action("CategoriesSelectList", "Category")
+    @Html.Action("ManufacturersSelectList", "Product")<br />*@
+@Html.Action("ManufacturersCategoriesSelectList", "Product")<br />
 
 
 @Html.Partial("_RenderProductsPartial", Model)

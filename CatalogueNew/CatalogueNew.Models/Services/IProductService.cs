@@ -23,5 +23,7 @@ namespace CatalogueNew.Models.Services
         PagedList<Product> GetProducts(int page);
 
         PagedList<Product> GetProductsByManufacturer(int page, int manufacturerID);
+
+        PagedList<Product> GetProducts(int page, int? categoryId, int? manufacturerId);
     }
 }

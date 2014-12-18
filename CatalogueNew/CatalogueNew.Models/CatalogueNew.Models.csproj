@@ -79,12 +79,14 @@
     </Compile>
     <Compile Include="Services\Base\BaseService.cs" />
     <Compile Include="Services\CategoryService.cs" />
+    <Compile Include="Services\CommentService.cs" />
     <Compile Include="Services\IAdminService.cs" />
     <Compile Include="Services\IAuthService.cs" />
     <Compile Include="Services\IBaseService.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Services\ICategoryService.cs" />
+    <Compile Include="Services\ICommentService.cs" />
     <Compile Include="Services\IImageService.cs" />
     <Compile Include="Services\ImageService.cs" />
     <Compile Include="Services\IManufacturerService.cs" />

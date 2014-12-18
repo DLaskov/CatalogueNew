@@ -1,5 +1,6 @@
 ﻿@model ProductListViewModel
 
+<br />
 <div id="documentsList">
     <div class="row">
         @for (int i = 0; i <= @Model.Rows; i++)
@@ -19,14 +20,18 @@
 
                     @if (product.Images.Count > 0)
                     {
-                        <img src="data:image;base64,@System.Convert.ToBase64String(@product.Images.FirstOrDefault().Value)" />
+                        <a href="~/Product/Details?id=@product.ProductID">
+                            <img src="@Url.Content("~/HttpImageHandler.ashx?id=" + product.Images.FirstOrDefault().ImageID)" class="img-rounded" />
+                        </a>
                     }
                     else
                     {
-                        <img src="~/Images/no_pic_small.gif" />
+                        <a href="~/Product/Details?id=@product.ProductID">
+                            <img src="~/Images/no_pic_small.gif" class="img-rounded" />
+                        </a>
                     }
 
-                    <div><h3>@product.Name</h3></div>
+                    <div><h3><a href="~/Product/Details?id=@product.ProductID">@product.Name</a></h3></div>
                 </div>
             }
         }

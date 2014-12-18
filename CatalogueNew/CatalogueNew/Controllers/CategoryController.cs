@@ -36,25 +36,6 @@ namespace CatalogueNew.Web.Controllers
             return View(categoryListViewModels);
         }
 
-        public ActionResult CategoriesSelectList()
-        {
-            List<SelectListItem> list = new List<SelectListItem>();
-            var categories = categoryServices.GetAll();
-
-            foreach (var category in categories)
-            {
-                list.Add(new SelectListItem()
-                    {
-                        Text = category.Name,
-                        Value = category.CategoryID.ToString()
-                    });
-            }
-
-            var selectListItems = new CategorySelectListViewModel(list);
-
-            return PartialView("_CategoriesSelectListPartial", selectListItems);
-        }
-
         public ActionResult Details(int id)
         {
             Category category = categoryServices.Find(id);
