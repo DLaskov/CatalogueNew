@@ -14,6 +14,7 @@
             var target = a.parents(".ajax-pagination").attr("data-devtest-target");
             $(target).replaceWith(data);
             products = $('.product');
+            window.location.hash = options.url;
         });
         return false;
     }
