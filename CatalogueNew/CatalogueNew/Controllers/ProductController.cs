@@ -77,20 +77,27 @@ namespace CatalogueNew.Web.Controllers
 
             var path = Server.MapPath("~/Images/TempImages/");
 
-            if (model.FilesName != null)
+            if (model.FileAttributesCollection != null)
             {
-                foreach (var fileName in model.FilesName)
+                foreach (var attributes in model.FileAttributesCollection)
                 {
-                    var mimeType = fileName.GetMimeType();
-                    var lastUpdate = DateTime.UtcNow;
+                    string[] FileAttributes = attributes.Split('/');
 
                     images.Add(new Image()
                     {
-                        Value = fileName.GetFileData(path),
-                        LastUpdated = lastUpdate,
-                        MimeType = mimeType,
-                        ImageName = fileName
+                        Value = FileAttributes[0].GetFileData(path),
+                        LastUpdated = DateTime.UtcNow,
+                        ImageName = FileAttributes[1],
+                        MimeType = FileAttributes[2]                    
                     });
+                    try
+                    {
+                        System.IO.File.Delete(path + FileAttributes[0]);
+                    }
+                    catch
+                    {
+                        System.IO.File.Delete(path + FileAttributes[0]);
+                    }
                 }
             }
 
@@ -100,11 +107,6 @@ namespace CatalogueNew.Web.Controllers
             }
 
             model.Product.Images = images;
-
-            foreach (var image in images)
-            {
-                System.IO.File.Delete(path + image.ImageName);
-            }
 
             productService.Add(model.Product);
 
@@ -135,6 +137,7 @@ namespace CatalogueNew.Web.Controllers
         {
             if (User.IsInRole("Manager"))
             {
+
                 Product product = productService.Find(id);
                 product.Name = model.Product.Name;
                 product.CategoryID = model.Product.CategoryID;
@@ -172,33 +175,27 @@ namespace CatalogueNew.Web.Controllers
             return View(productListViewModels);
         }
 
-        public JsonResult SaveUploadedFile()
+        public JsonResult SaveUploadedFile(HttpPostedFileBase file)
         {
             bool isSavedSuccessfully = true;
-            string fName = String.Empty;
+            string uniqueFileName = String.Empty;
 
             try
             {
-                foreach (string fileName in Request.Files)
+                if (file != null && file.ContentLength > 0)
                 {
-                    HttpPostedFileBase file = Request.Files[fileName];
-                    fName = file.FileName;
+                    var originalDirectory = new DirectoryInfo(string.Format("{0}Images\\TempImages", Server.MapPath(@"\")));
+                    string pathString = originalDirectory.ToString();
+                    bool isExists = Directory.Exists(pathString);
 
-                    if (file != null && file.ContentLength > 0)
+                    if (!isExists)
                     {
-                        var originalDirectory = new DirectoryInfo(string.Format("{0}Images/TempImages", Server.MapPath(@"\")));
-                        string pathString = originalDirectory.ToString();
-                        bool isExists = Directory.Exists(pathString);
-
-                        if (!isExists)
-                        {
-                            System.IO.Directory.CreateDirectory(pathString);
-                        }
-
-                        var path = string.Format("{0}\\{1}", pathString, fName);
-
-                        file.SaveAs(path);
+                        System.IO.Directory.CreateDirectory(pathString);
                     }
+                    uniqueFileName = Guid.NewGuid().ToString();
+                    var path = string.Format("{0}\\{1}", pathString, uniqueFileName);
+
+                    file.SaveAs(path);
                 }
             }
             catch (Exception)
@@ -208,7 +205,16 @@ namespace CatalogueNew.Web.Controllers
 
             if (isSavedSuccessfully)
             {
-                return Json(fName, JsonRequestBehavior.AllowGet);
+                return new JsonResult()
+                {
+                    Data = new
+                    {
+                        UniqueName = uniqueFileName,
+                        ImgName = file.FileName,
+                        MimeType = file.ContentType
+                    },
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
             }
             else
             {
@@ -219,11 +225,15 @@ namespace CatalogueNew.Web.Controllers
         [HttpPost]
         public void RemoveImage(string value)
         {
-            if (value != null)
+            string[] FileAttributes = value.Split('/');
+            var path = Server.MapPath("~/Images/TempImages/");
+            try
             {
-                var path = Server.MapPath("~/Images/TempImages/");
-
-                System.IO.File.Delete(path + value);
+                System.IO.File.Delete(path + FileAttributes[0]);
+            }
+            catch
+            {
+                System.IO.File.Delete(path + FileAttributes[0]);
             }
         }
     }

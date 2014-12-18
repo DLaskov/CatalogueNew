@@ -76,16 +76,9 @@
                     _this.removeFile(file);
 
                     // AJAX request here.
-                    $.ajax({
-                        type: "post",
-                        url: "removeimage",
-                        contenttype: "application/json; utf-8",
-                        data: document.getElementById(file.name).value,
-                        datatype: "json"
-                    });
 
-                    $.post("RemoveImage", { value: document.getElementById(file.name).value });
-                    document.getElementById(file.name).remove();
+                    $.post("RemoveImage", { value: document.getElementById(file.UniqueName).value });
+                    document.getElementById(file.UniqueName).remove();
                 });
 
                 // Add the button to the file preview element.
@@ -108,7 +101,9 @@
                 alert('Maximum files: 4');
             });
             this.on("success", function (file, data) {
-                var innerHtml = "<input type='hidden' name='filesName' id='" + data + "' value='" + data + "' />"
+                file.UniqueName = data.UniqueName;
+                var innerHtml = "<input type='hidden' name='FileAttributesCollection' id='" + data.UniqueName +
+                    "' value='" + data.UniqueName + "/" + data.ImgName + "/" + data.MimeType + "' />"
                 $("div .form-horizontal").prepend(innerHtml);
             });
         }
