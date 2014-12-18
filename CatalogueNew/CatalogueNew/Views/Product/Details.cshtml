@@ -1,42 +1,63 @@
-﻿@model CatalogueNew.Web.Models.ProductViewModel
+﻿@model ProductViewModel
 @{
-    ViewBag.Title = @Model.Product.Name;
+    var product = @Model.Product;
 }
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <h2>@product.Name</h2>
 
-<h2>@ViewBag.Title</h2>
-<dl class="dl-horizontal">
-    <dt>
-        @Html.DisplayNameFor(model => model.Product.Name)
-    </dt>
-    <dt>
-        @Html.DisplayNameFor(model => model.Product.Category)
-    </dt>
-    <dt>
-        @Html.DisplayNameFor(model => model.Product.Manufacturer)
-    </dt>
-    <dt>
-        @Html.DisplayNameFor(model => model.Product.Year)
-    </dt>
-    <dt>
-        @Html.DisplayNameFor(model => model.Product.Description)
-    </dt>
+            @if (product.Images.Count == 0)
+            {
+                <img src="~/Images/no_pic_small.gif" />
+            }
+            else if (product.Images.Count == 1)
+            {
+                <img src="@Url.Content("~/HttpImageHandler.ashx?id=" + product.Images.FirstOrDefault().ImageID)" class="img-rounded" />
+            }
+            else
+            {
+                <img src="@Url.Content("~/HttpImageHandler.ashx?id=" + product.Images.FirstOrDefault().ImageID)" class="img-rounded" />
+                <br /><br />
+                <div class="row">
+                    @foreach (var image in product.Images.Skip(1))
+                    {
+                        <div class="col-md-3">
+                            <img src="@Url.Content("~/HttpImageHandler.ashx?id=" + image.ImageID)" class="without-first img-rounded" />
+                        </div>
+                    }
+                </div>
+            }
 
-    <dd>
-        @Html.DisplayFor(model => model.Product.Name)
-    </dd>
-    <dd>
-        @Html.DisplayFor(model => model.Product.Category.Name)
-    </dd>
-    <dd>
-        @Html.DisplayFor(model => model.Product.Manufacturer.Name)
-    </dd>
-    <dd>
-        @Html.DisplayFor(model => model.Product.Year)
-    </dd>
-    <dd>
-        @Html.DisplayFor(model => model.Product.Description)
-    </dd>
-</dl>
+        </div>
+        <div class="col-md-8">
+            <br />
+            <div><strong>Category: </strong>@product.Category.Name</div>
+            <div><strong>Year: </strong>@product.Year.Value</div>
+            <div><strong>Description: </strong>@product.Description</div>
+            <div><strong>Raiting: </strong></div>
+            <div><strong>Tags: </strong></div>
+            <div><strong>Like Dislike Wishlist </strong></div>
+        </div>
+    </div>
+
+    <div class="row">
+        @if (User.Identity.IsAuthenticated)
+        {
+            using (Ajax.BeginForm("SaveComment", "Comment", new AjaxOptions() { HttpMethod = "Post", InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = "comments" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="panel-body">
+                    <form accept-charset="UTF-8" action="" method="POST">
+                        <textarea id="comment" class="form-control counted" name="comment" placeholder="Add comment about the product:" rows="5" style="margin-bottom:10px;"></textarea>
+                        <button class="btn btn-info" type="submit">Post New Message</button>
+                    </form>
+                </div>
+            }
+        }
+    </div>
+</div>
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Product.ProductID }) |
     @Html.ActionLink("Back to List", "Index")

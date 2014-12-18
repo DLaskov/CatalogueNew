@@ -284,6 +284,7 @@
     <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\ManufacturerController.cs" />
@@ -343,16 +344,15 @@
     <Content Include="Views\Auth\Manage.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Product\Create.cshtml" />
-    <Content Include="Views\Shared\_LayoutManufacturersPartial.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Product\ProductsByManufacturer.cshtml" />
-    <Content Include="Views\Shared\_CategoriesSelectListPartial.cshtml" />
     <Content Include="Views\Product\Details.cshtml" />
     <Content Include="Views\Shared\_NotFound.cshtml" />
     <Content Include="Views\Product\ProductAdministration.cshtml" />
     <Content Include="Views\Shared\_RenderProductsPartial.cshtml" />
     <Content Include="Views\Shared\_PagingAjaxPartial.cshtml" />
     <Content Include="Views\Shared\_ImageUploadPartial.cshtml" />
+    <Content Include="Views\Product\_SelectListPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -363,6 +363,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\TempImages\" />
+    <Folder Include="Views\Comment\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CatalogueNew.Models\CatalogueNew.Models.csproj">

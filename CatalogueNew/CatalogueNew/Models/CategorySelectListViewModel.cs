@@ -6,14 +6,15 @@ using System.Web.Mvc;
 
 namespace CatalogueNew.Web.Models
 {
-    public class CategorySelectListViewModel
+    public class SelectListViewModel
     {
-        public string Name { get; set; }
-        public List<SelectListItem> SelectListItems { get; set; }
+        public List<SelectListItem> SelectListManufacturers { get; set; }
+        public List<SelectListItem> SelectListCategories { get; set; }
 
-        public CategorySelectListViewModel(List<SelectListItem> selectListItems)
+        public SelectListViewModel(List<SelectListItem> selectListManufacturers, List<SelectListItem> selectListCategories)
         {
-            SelectListItems = selectListItems;
+            SelectListManufacturers = selectListManufacturers;
+            SelectListCategories = selectListCategories;
         }
     }
 }

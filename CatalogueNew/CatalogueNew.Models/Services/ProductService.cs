@@ -28,7 +28,7 @@ namespace CatalogueNew.Models.Services
             Product product = (from prod in this.Context.Products
                                where prod.ProductID == id
                                select prod).Include(x => x.Category)
-                                .Include(x => x.Manufacturer).FirstOrDefault();
+                                .Include(x => x.Manufacturer).Include("Images").FirstOrDefault();
             return product;
         }
 
@@ -70,11 +70,43 @@ namespace CatalogueNew.Models.Services
 
         public PagedList<Product> GetProducts(int page)
         {
-
             var products = this.Context.Products.OrderBy(c => c.Name).Include("Images");
 
             var pagedList = new PagedList<Product>(products, page, pageSize);
             return pagedList;
+        }
+
+        public PagedList<Product> GetProducts(int page, int? categoryId, int? manufacturerId)
+        {
+            if (categoryId != null && manufacturerId != null)
+            {
+                var products = this.Context.Products
+                  .Where(x => x.ManufacturerID == manufacturerId && x.CategoryID == categoryId)
+                  .Include("Images")
+                  .OrderBy(c => c.Name);
+                return new PagedList<Product>(products, page, pageSize);
+            }
+            else if (categoryId == null && manufacturerId != null)
+            {
+                var products = this.Context.Products
+                  .Where(x => x.ManufacturerID == manufacturerId)
+                  .Include("Images")
+                  .OrderBy(c => c.Name);
+                return new PagedList<Product>(products, page, pageSize);
+            }
+            else if (categoryId != null && manufacturerId == null)
+            {
+                var products = this.Context.Products
+                  .Where(x => x.CategoryID == categoryId)
+                  .Include("Images")
+                  .OrderBy(c => c.Name);
+                return new PagedList<Product>(products, page, pageSize);
+            }
+            else
+            {
+                var products = this.Context.Products.Include("Images").OrderBy(c => c.Name);
+                return new PagedList<Product>(products, page, pageSize);
+            }
         }
     }
 }

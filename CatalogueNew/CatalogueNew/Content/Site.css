@@ -58,3 +58,12 @@ img {
     width: 100%;
     height: 150px;
 }
+
+.without-first {
+    width: 100%;
+    height: 10%;
+}
+
+#comment {
+    max-width: none;
+}

@@ -44,9 +44,8 @@ namespace CatalogueNew.Web.Controllers
 
         public ActionResult Details(int id)
         {
-            Product product;
+            Product product = productService.Find(id);
 
-            product = productService.Find(id);
             if (product == null)
             {
                 HttpContext.Response.StatusCode = 404;
@@ -147,9 +146,9 @@ namespace CatalogueNew.Web.Controllers
             return RedirectToAction("Index", "Product");
         }
 
-        public ActionResult Index(int page = 1)
+        public ActionResult Index(int? category, int? manufacturer, int page = 1)
         {
-            var pageItems = productService.GetProducts(page);
+            var pageItems = productService.GetProducts(page, category, manufacturer);
             var pagingViewModel = new PagingViewModel(pageItems.PageCount, pageItems.CurrentPage, "Index");
 
             var productListViewModels = new ProductListViewModel(pageItems.Items.ToList(), pagingViewModel);
@@ -162,14 +161,34 @@ namespace CatalogueNew.Web.Controllers
             return View(productListViewModels);
         }
 
-        public ActionResult ProductsByManufacturer(int id, int page = 1)
+        public ActionResult ManufacturersCategoriesSelectList()
         {
-            var pageItems = productService.GetProductsByManufacturer(page, id);
-            var pagingViewModel = new PagingViewModel(pageItems.PageCount, pageItems.CurrentPage, "ProductsByManufacturer", id);
+            var manufacturersList = new List<SelectListItem>();
+            var categoriesList = new List<SelectListItem>();
+            var manufacturers = manufacturerService.GetAll();
+            var categories = categoryService.GetAll();
 
-            var productListViewModels = new ProductListViewModel(pageItems.Items.ToList(), pagingViewModel);
+            foreach (var manufacturer in manufacturers)
+            {
+                manufacturersList.Add(new SelectListItem()
+                {
+                    Text = manufacturer.Name,
+                    Value = manufacturer.ManufacturerID.ToString()
+                });
+            }
 
-            return View(productListViewModels);
+            foreach (var category in categories)
+            {
+                categoriesList.Add(new SelectListItem()
+                {
+                    Text = category.Name,
+                    Value = category.CategoryID.ToString()
+                });
+            }
+
+            var selectListItems = new SelectListViewModel(manufacturersList, categoriesList);
+
+            return PartialView("_SelectListPartial", selectListItems);
         }
 
         public JsonResult SaveUploadedFile()
