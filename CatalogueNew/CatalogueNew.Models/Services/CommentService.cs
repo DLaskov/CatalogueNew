@@ -1,4 +1,5 @@
 ﻿using CatalogueNew.Models.Entities;
+using CatalogueNew.Models.Services.Base;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CatalogueNew.Models.Services
 {
-    public class CommentService : BaseService<Comment>, ICommentService
+    public class CommentService : BaseService, ICommentService
     {
         public CommentService(ICatalogueContext context)
             : base(context)
