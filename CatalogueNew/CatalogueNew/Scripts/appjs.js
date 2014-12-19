@@ -83,7 +83,7 @@
             this.on("success", function (file, data) {
                 file.UniqueName = data.UniqueName;
                 var innerHtml = "<input type='hidden' name='FileAttributesCollection' id='" + data.UniqueName +
-                    "' value='" + data.UniqueName + "/" + data.ImgName + "/" + data.MimeType + "' />"
+                    "' value='" + data.UniqueName + "\\" + data.ImgName + "\\" + data.MimeType + "' />"
                 $("div .form-horizontal").prepend(innerHtml);
             });
         }

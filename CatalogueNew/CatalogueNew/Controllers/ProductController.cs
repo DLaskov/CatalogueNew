@@ -28,6 +28,7 @@ namespace CatalogueNew.Web.Controllers
             this.imageService = imageService;
         }
 
+        [Authorize(Roles = "Manager")]
         public ActionResult ProductAdministration(int page = 1)
         {
             PagedList<Product> pageItems = productService.GetProducts(page);
@@ -60,6 +61,7 @@ namespace CatalogueNew.Web.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Manager")]
         public ActionResult Create()
         {
             ProductViewModel model = new ProductViewModel();
@@ -70,6 +72,7 @@ namespace CatalogueNew.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Manager")]
         public ActionResult Create(ProductViewModel model)
         {
             var images = new List<Image>();
@@ -80,14 +83,14 @@ namespace CatalogueNew.Web.Controllers
             {
                 foreach (var attributes in model.FileAttributesCollection)
                 {
-                    string[] FileAttributes = attributes.Split('/');
+                    string[] FileAttributes = attributes.Split('\\');
 
                     images.Add(new Image()
                     {
                         Value = FileAttributes[0].GetFileData(path),
                         LastUpdated = DateTime.UtcNow,
                         ImageName = FileAttributes[1],
-                        MimeType = FileAttributes[2]                    
+                        MimeType = FileAttributes[2]
                     });
                     try
                     {
@@ -112,6 +115,7 @@ namespace CatalogueNew.Web.Controllers
             return RedirectToAction("Index", "Product");
         }
 
+        [Authorize(Roles = "Manager")]
         public ActionResult Edit(int id)
         {
             Product product = productService.Find(id);
@@ -132,9 +136,10 @@ namespace CatalogueNew.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Manager")]
         public ActionResult Edit(int id, ProductViewModel model)
         {
-            if (User.IsInRole("Manager"))
+            if (ModelState.IsValid)
             {
 
                 Product product = productService.Find(id);
@@ -242,9 +247,10 @@ namespace CatalogueNew.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Manager")]
         public void RemoveImage(string value)
         {
-            string[] FileAttributes = value.Split('/');
+            string[] FileAttributes = value.Split('\\');
             var path = Server.MapPath("~/Images/TempImages/");
             try
             {
