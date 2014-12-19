@@ -17,7 +17,6 @@ namespace CatalogueNew.Models.Entities
         [StringLength(1000)]
         public string Text { get; set; }
 
-        //[Column(TypeName = "datetime2")]
         public DateTime? TimeStamp { get; set; }
 
         public int ProductID { get; set; }

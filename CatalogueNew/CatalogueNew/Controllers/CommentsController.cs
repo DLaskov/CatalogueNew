@@ -16,10 +16,6 @@ namespace CatalogueNew.Web.Controllers
     {
         private ICommentService commentsService;
 
-        public CommentsController()
-        {
-        }
-
         public CommentsController(ICommentService commentsService)
         {
             this.commentsService = commentsService;

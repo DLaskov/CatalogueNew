@@ -1,6 +1,7 @@
 ﻿$(document).ready(function () {
 
-    $("#submit-comment").click(function () {
+    $("#submit-comment").click(function (e) {
+        e.preventDefault();
         var comment = {
             text: $("#comment").val(),
             userId: $("#user-id").val(),
@@ -15,8 +16,6 @@
             success: function (data) { },
             error: function () { alert('error'); }
         });
-
-        return false;
     });
 
     var getPage = function () {
