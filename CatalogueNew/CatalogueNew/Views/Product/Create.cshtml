@@ -80,7 +80,13 @@ else
          }
          else
          {
-            <input type="submit" class="btn btn-success" value="Save product" />
+            <div class="clearfix">
+                @foreach (var image in Model.Product.Images)
+                {
+                <img class="img-thumbnail col-md-2" src="~/HttpImageHandler.ashx?id=@image.ImageID" alt="@image.ImageName" />
+                }
+            </div>
+                <input type="submit" class="btn btn-success" value="Save product" />
                 @Html.ActionLink("Cancel", "Index", "Home", null, new { @class = "btn btn-default" })
          }
             }
