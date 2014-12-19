@@ -45,18 +45,23 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="panel-body">
-            <form id="form-comment">
-                <textarea id="comment" class="form-control counted" name="comment" placeholder="Add comment about the product:" rows="5" style="margin-bottom:10px;"></textarea>
-                <button id="submit-comment" class="btn btn-info">Submit new comment</button>
-            </form>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="row">
+            <div class="panel-body">
+                <form id="form-comment">
+                    <textarea id="comment" class="form-control counted" name="comment" placeholder="Add comment about the product:" rows="5" style="margin-bottom:10px;"></textarea>
+                    <button id="submit-comment" class="btn btn-info">Submit new comment</button>
+                </form>
+            </div>
         </div>
-    </div>
+    }
 </div>
 
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Product.ProductID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+<div id="comments"></div>
 

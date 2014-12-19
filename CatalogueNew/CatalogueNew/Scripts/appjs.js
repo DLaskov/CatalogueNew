@@ -1,5 +1,40 @@
 ﻿$(document).ready(function () {
 
+    $.getJSON('http://localhost:38006/api/Comments',
+             function (Data) {
+                 $.each(Data, function (key, val) {
+                     $("#comments").html("<div>" + val.text + "</div>");
+                 });
+             });
+
+    //function GetCommentsByProduct() {
+    //    jQuery.support.cors = true;
+    //    $.ajax({
+    //        url: 'http://localhost:38006/api/Comments',
+    //        type: 'GET',
+    //        dataType: 'json',
+    //        success: function (data) {
+    //            WriteResponse(data);   
+    //        },
+    //        error: function (x, y, z) {
+    //            alert(x + '\n' + y + '\n' + z);
+    //        }
+    //    });
+    //};
+
+    //function WriteResponse(comments) {
+    //    if (comments !== null) {
+    //        var strResult = "<div class='media-body'><h4 class='media-heading'><span class='info'>";
+    //        $.each(comments, function (index, comments) {
+    //            strResult += comments.timeStamp + "</span></h4>" + "<p class='comment-text'>" + comments.text + "</p><hr /></div>"
+    //        });
+    //        $("#comments").html(strResult);
+    //    }
+    //    else {
+    //        $("#comments").html("No comments to display");
+    //    }
+    //}
+
     $("#submit-comment").click(function (e) {
         e.preventDefault();
         var comment = {

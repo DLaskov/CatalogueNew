@@ -21,7 +21,7 @@ namespace CatalogueNew.Web.Controllers
             this.commentsService = commentsService;
         }
 
-        public IEnumerable<Comment> GetByProduct(int productId)
+        public IEnumerable<Comment> Get(int productId)
         {
             return commentsService.GetByProduct(productId);
         }
@@ -31,20 +31,14 @@ namespace CatalogueNew.Web.Controllers
             return commentsService.GetByParent(parentId);
         }
 
-        public Comment Get(int id)
-        {
-            return commentsService.GetComment(id);
-        }
+        //public Comment Get(int id)
+        //{
+        //    return commentsService.GetComment(id);
+        //}
 
-        public Comment Post([FromBody]Comment value)
+        public Comment Post([FromBody]Comment comment)
         {
-            var comment = new Comment()
-            {
-                Text = value.Text,
-                ProductID = value.ProductID,
-                UserID = value.UserID,
-                TimeStamp = DateTime.UtcNow
-            };
+            comment.TimeStamp = DateTime.UtcNow;
 
             commentsService.Add(comment);
 
