@@ -15,19 +15,20 @@ namespace CatalogueNew.Models.Services
         {
         }
 
-        public Comment GetComment(int id)
-        {
-            return this.Context.Comments.Where(c => c.CommentID == id).FirstOrDefault();
-        }
-
         public IEnumerable<Comment> GetByProduct(int productId)
         {
-            return this.Context.Comments.Where(c => c.ProductID == productId);
+            return this.Context.Comments
+                .Where(c => c.ProductID == productId && c.ParentCommentID == null)
+                .Include("Users")
+                .Where(coment => this.Context.Users.Any(user => user.Id == coment.UserID));
         }
 
         public IEnumerable<Comment> GetByParent(int parentId)
         {
-            return this.Context.Comments.Where(c => c.ParentCommentID == parentId);
+            return this.Context.Comments
+                .Where(c => c.ParentCommentID == parentId)
+                .Include("Users")
+                .Where(coment => this.Context.Users.Any(user => user.Id == coment.UserID));
         }
 
         public void Add(Comment comment)
@@ -42,17 +43,9 @@ namespace CatalogueNew.Models.Services
             this.Context.SaveChanges();
         }
 
-        public void Remove(Comment comment)
-        {
-            this.Context.Comments.Remove(comment);
-            this.Context.SaveChanges();
-        }
-
         public void Remove(int id)
         {
-            var comment = this.GetComment(id);
-            this.Context.Comments.Remove(comment);
-            this.Context.SaveChanges();
+            this.Context.Database.ExecuteSqlCommand("usp_deleteComments @id = {0}", id);
         }
     }
 }

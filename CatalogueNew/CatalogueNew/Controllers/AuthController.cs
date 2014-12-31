@@ -64,6 +64,11 @@ namespace CatalogueNew.Web.Controllers
 
                 GetAuthenticationManager().SignIn(identity);
 
+                if(model.ReturnUrl == null)
+                {
+                    return RedirectToAction("Index", "Product");
+                }
+
                 return Redirect(GetRedirectUrl(model.ReturnUrl));
             }
 
