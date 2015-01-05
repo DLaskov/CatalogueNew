@@ -36,12 +36,17 @@
     </div>
     <div class="col-md-8">
         <br />
-        <div><strong>Category: </strong>@product.Category.Name</div>
-        <div><strong>Year: </strong>@product.Year.Value</div>
-        <div><strong>Description: </strong>@product.Description</div>
-        <div><strong>Raiting: </strong></div>
-        <div><strong>Tags: </strong></div>
-        <div><strong>Like Dislike Wishlist </strong></div>
+        <div class="lead"><strong>Category: </strong>@product.Category.Name</div>
+        <div class="lead"><strong>Year: </strong>@product.Year.Value</div>
+        <div class="lead"><strong>Description: </strong>@product.Description</div>
+
+        <div class="lead">
+            <div id="stars" class="starrr"><b>Raiting: </b></div>
+            <div id="rating"><b>Raiting: </b>You already gave a rating of <span id="count">0</span> star(s)</div> 
+        </div>
+
+        <div class="lead"><strong>Tags: </strong></div>
+        <div class="lead"><strong>Like Dislike Wishlist </strong></div>
     </div>
 </div>
 

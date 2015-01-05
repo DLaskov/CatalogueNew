@@ -110,12 +110,14 @@
     <Compile Include="Services\ImageService.cs" />
     <Compile Include="Services\IManufacturerService.cs" />
     <Compile Include="Services\IProductService.cs" />
+    <Compile Include="Services\IRatingService.cs" />
     <Compile Include="Services\ManufacturerService.cs" />
     <Compile Include="Services\Models\UserRole.cs" />
     <Compile Include="Services\ProductService.cs" />
     <Compile Include="Entities\Tag.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\Wishlist.cs" />
+    <Compile Include="Services\RatingService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
