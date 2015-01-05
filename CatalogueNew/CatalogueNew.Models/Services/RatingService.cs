@@ -32,5 +32,10 @@ namespace CatalogueNew.Models.Services
 
             return rating;
         }
+
+        public IQueryable<Rating> RatingsByProduct(int productID)
+        {
+            return this.Context.Ratings.Where(r => r.ProductID == productID);
+        }
     }
 }

@@ -25,11 +25,6 @@ namespace CatalogueNew.Web.Controllers
             return rating;
         }
 
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         public Rating Post([FromBody]Rating rating)
         {
             ratingServices.Add(rating);
