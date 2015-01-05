@@ -62,6 +62,13 @@ namespace CatalogueNew.Web.Controllers
         }
 
         [Authorize(Roles = "Manager")]
+        public ActionResult Delete(int id)
+        {
+            productService.Remove(id);
+            return RedirectToAction("ProductAdministration");
+        }
+
+        [Authorize(Roles = "Manager")]
         public ActionResult Create()
         {
             ProductViewModel model = new ProductViewModel();
@@ -148,6 +155,39 @@ namespace CatalogueNew.Web.Controllers
                 product.ManufacturerID = model.Product.ManufacturerID;
                 product.Year = model.Product.Year;
                 product.Description = model.Product.Description;
+                var images = new List<Image>();
+
+                var path = Server.MapPath("~/Images/TempImages/");
+
+                if (model.FileAttributesCollection != null)
+                {
+                    foreach (var attributes in model.FileAttributesCollection)
+                    {
+                        string[] FileAttributes = attributes.Split('\\');
+
+                        images.Add(new Image()
+                        {
+                            Value = FileAttributes[0].GetFileData(path),
+                            LastUpdated = DateTime.UtcNow,
+                            ImageName = FileAttributes[1],
+                            MimeType = FileAttributes[2]
+                        });
+                        try
+                        {
+                            System.IO.File.Delete(path + FileAttributes[0]);
+                        }
+                        catch
+                        {
+                            System.IO.File.Delete(path + FileAttributes[0]);
+                        }
+                    }
+                }
+
+                foreach (var image in images)
+                {
+                    image.ResizeImage();
+                    product.Images.Add(image);
+                }
 
                 productService.Modify(product);
             }
@@ -260,6 +300,12 @@ namespace CatalogueNew.Web.Controllers
             {
                 System.IO.File.Delete(path + FileAttributes[0]);
             }
+        }
+        [HttpPost]
+        [Authorize(Roles = "Manager")]
+        public void RemoveImageById(string value)
+        {
+            imageService.Remove(Int32.Parse(value));
         }
     }
 }

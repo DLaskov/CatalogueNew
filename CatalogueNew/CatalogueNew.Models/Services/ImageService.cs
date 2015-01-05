@@ -19,5 +19,11 @@ namespace CatalogueNew.Models.Services
             this.Context.Images.Add(image);
             this.Context.SaveChanges();
         }
+        public void Remove(int id)
+        {
+            var image = this.Context.Images.Find(id);
+            this.Context.Images.Remove(image);
+            this.Context.SaveChanges();
+        }
     }
 }

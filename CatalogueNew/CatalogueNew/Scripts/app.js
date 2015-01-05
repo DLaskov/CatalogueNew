@@ -299,9 +299,21 @@
         });
         return false;
     }
+    $(".img-preview").on("click", function () {
+        if (confirm("You are going to delete this image.")) {
+            var src = $(this).attr("src");
+            var id = src.split("=")[1];
+            $.post("../RemoveImageById", { value: id });
+            $(this).remove();
+        }
+    }
+    );
 
-    $(".body-content").on("click", ".ajax-pagination a", getPage);
-
+    function confirmProductDelete() {
+        if (!confirm("You are going to delete this product.")) {
+            $(this).preventDefault();
+        }
+    };
     Dropzone.options.dropzoneForm = {
 
         autoProcessQueue: true,

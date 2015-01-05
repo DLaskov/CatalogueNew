@@ -10,5 +10,6 @@ namespace CatalogueNew.Models.Services
     public interface IImageService
     {
         void Add(Image image);
+        void Remove(int id);
     }
 }

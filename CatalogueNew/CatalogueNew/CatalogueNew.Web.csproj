@@ -190,7 +190,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Images\no_pic_small.gif" />
-    <Content Include="Scripts\appjs.js" />
+    <Content Include="Scripts\app.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
