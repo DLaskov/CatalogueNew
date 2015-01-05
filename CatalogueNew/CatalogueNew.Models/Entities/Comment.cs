@@ -27,7 +27,7 @@ namespace CatalogueNew.Models.Entities
 
         public int? ParentCommentID { get; set; }
 
-        public virtual Comment ParentComment { get; set; }
+        //public virtual Comment ParentComment { get; set; }
 
         public virtual Product Products { get; set; }
 

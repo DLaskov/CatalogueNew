@@ -297,6 +297,8 @@
       <DependentUpon>HttpImageHandler.ashx</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
+    <Compile Include="Infrastructure\NinjectResolver.cs" />
+    <Compile Include="Infrastructure\NinjectScope.cs" />
     <Compile Include="Models\AppUserClaims.cs" />
     <Compile Include="Models\CategoryListViewModel.cs" />
     <Compile Include="Models\CategorySelectListViewModel.cs" />
