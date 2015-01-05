@@ -63,3 +63,5 @@
 /// <reference path="dropzone/dropzone.js" />
 /// <reference path="dropzone/dropzone-amd-module.min.js" />
 /// <reference path="app.js" />
+/// <reference path="moment-with-locales.js" />
+/// <reference path="moment.js" />

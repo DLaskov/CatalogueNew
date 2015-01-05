@@ -11,7 +11,7 @@ namespace CatalogueNew.Models.Entities
         [Key]
         public int RatingID { get; set; }
 
-        public int UserID { get; set; }
+        public string UserID { get; set; }
 
         public int Value { get; set; }
 
