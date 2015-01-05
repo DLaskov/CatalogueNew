@@ -4,59 +4,73 @@
 @{
     var product = @Model.Product;
 }
-<div class="container">
-    <div class="row">
-        <div class="col-md-4">
-            <input type="hidden" id="product-id" value="@product.ProductID" />
-            <input type="hidden" id="user-id" value="@User.Identity.GetUserId()" />
-            <h2>@product.Name</h2>
 
-            @if (product.Images.Count == 0)
-            {
-                <img src="~/Images/no_pic_small.gif" />
-            }
-            else if (product.Images.Count == 1)
-            {
-                <img src="@Url.Content("~/HttpImageHandler.ashx?id=" + product.Images.FirstOrDefault().ImageID)" class="img-rounded" />
-            }
-            else
-            {
-                <img src="@Url.Content("~/HttpImageHandler.ashx?id=" + product.Images.FirstOrDefault().ImageID)" class="img-rounded" />
-                <br /><br />
-                <div class="row">
-                    @foreach (var image in product.Images.Skip(1))
-                    {
-                        <div class="col-md-3">
-                            <img src="@Url.Content("~/HttpImageHandler.ashx?id=" + image.ImageID)" class="without-first img-rounded" />
-                        </div>
-                    }
-                </div>
-            }
+<div class="row">
+    <div class="col-md-4">
+        <input type="hidden" id="product-id" value="@product.ProductID" />
+        <input type="hidden" id="user-id" value="@User.Identity.GetUserId()" />
+        <h2>@product.Name</h2>
 
-        </div>
-        <div class="col-md-8">
-            <br />
-            <div><strong>Category: </strong>@product.Category.Name</div>
-            <div><strong>Year: </strong>@product.Year.Value</div>
-            <div><strong>Description: </strong>@product.Description</div>
-            <div><strong>Raiting: </strong></div>
-            <div><strong>Tags: </strong></div>
-            <div><strong>Like Dislike Wishlist </strong></div>
-        </div>
+        @if (product.Images.Count == 0)
+        {
+            <img src="~/Images/no_pic_small.gif" />
+        }
+        else if (product.Images.Count == 1)
+        {
+            <img src="@Url.Content("~/HttpImageHandler.ashx?id=" + product.Images.FirstOrDefault().ImageID)" class="img-rounded" />
+        }
+        else
+        {
+            <img src="@Url.Content("~/HttpImageHandler.ashx?id=" + product.Images.FirstOrDefault().ImageID)" class="img-rounded" />
+            <br /><br />
+            <div class="row">
+                @foreach (var image in product.Images.Skip(1))
+                {
+                    <div class="col-md-3">
+                        <img src="@Url.Content("~/HttpImageHandler.ashx?id=" + image.ImageID)" class="without-first img-rounded" />
+                    </div>
+                }
+            </div>
+        }
+
     </div>
+    <div class="col-md-8">
+        <br />
+        <div><strong>Category: </strong>@product.Category.Name</div>
+        <div><strong>Year: </strong>@product.Year.Value</div>
+        <div><strong>Description: </strong>@product.Description</div>
+        <div><strong>Raiting: </strong></div>
+        <div><strong>Tags: </strong></div>
+        <div><strong>Like Dislike Wishlist </strong></div>
+    </div>
+</div>
 
+@if (User.Identity.IsAuthenticated)
+{
     <div class="row">
         <div class="panel-body">
             <form id="form-comment">
-                <textarea id="comment" class="form-control counted" name="comment" placeholder="Add comment about the product:" rows="5" style="margin-bottom:10px;"></textarea>
+                <textarea id="comment" class="form-control counted" name="comment" placeholder="Add comment about the product:" rows="3" ></textarea>
+                <h6 class="pull-right" id="counter">1000 characters remaining</h6>
                 <button id="submit-comment" class="btn btn-info">Submit new comment</button>
             </form>
         </div>
     </div>
+    <input type="hidden" name="is-auth" value="true" />
+}
+else
+{
+    <input type="hidden" name="is-auth" value="false" />
+}
+
+@if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("Moderator"))
+{
+    <input type="hidden" name="has-role" value="true" />
+}
+else
+{
+    <input type="hidden" name="has-role" value="false" />
+}
+
+<div id="comments" class="media">
 </div>
-
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Product.ProductID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
-

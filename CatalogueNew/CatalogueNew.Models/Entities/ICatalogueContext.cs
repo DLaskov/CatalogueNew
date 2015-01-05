@@ -20,6 +20,7 @@ namespace CatalogueNew.Models.Entities
         IDbSet<User> Users { get; set; }
         IDbSet<IdentityUserRole> UserRoles { get; set; }
         IDbSet<IdentityRole> Roles { get; set; }
+        Database Database { get; }
         DbEntityEntry Entry(object entity);
         int SaveChanges();
     }

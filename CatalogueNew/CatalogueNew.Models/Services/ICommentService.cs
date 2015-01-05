@@ -9,8 +9,6 @@ namespace CatalogueNew.Models.Services
 {
     public interface ICommentService
     {
-        Comment GetComment(int id);
-
         IEnumerable<Comment> GetByProduct(int productId);
 
         IEnumerable<Comment> GetByParent(int parentId);
@@ -18,8 +16,6 @@ namespace CatalogueNew.Models.Services
         void Add(Comment comment);
 
         void Modify(Comment comment);
-
-        void Remove(Comment comment);
 
         void Remove(int id);
     }

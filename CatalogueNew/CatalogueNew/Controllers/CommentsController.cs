@@ -23,7 +23,8 @@ namespace CatalogueNew.Web.Controllers
 
         public IEnumerable<Comment> GetByProduct(int productId)
         {
-            return commentsService.GetByProduct(productId);
+            var comments = commentsService.GetByProduct(productId);
+            return comments;
         }
 
         public IEnumerable<Comment> GetByParent(int parentId)
@@ -31,34 +32,29 @@ namespace CatalogueNew.Web.Controllers
             return commentsService.GetByParent(parentId);
         }
 
-        public Comment Get(int id)
+        public Comment Post([FromBody]Comment comment)
         {
-            return commentsService.GetComment(id);
-        }
-
-        public Comment Post([FromBody]Comment value)
-        {
-            Comment comment = new Comment()
+            if (comment.Text != String.Empty)
             {
-                Text = value.Text,
-                ProductID = value.ProductID,
-                UserID = value.UserID,
-                TimeStamp = DateTime.UtcNow
-            };
-
-            commentsService.Add(comment);
+                comment.TimeStamp = DateTime.UtcNow;
+                commentsService.Add(comment);
+            }
 
             return comment;
         }
 
         public void Put([FromBody]Comment comment)
         {
-            commentsService.Modify(comment);
+            if (comment.Text != String.Empty)
+            {
+                comment.TimeStamp = DateTime.UtcNow;
+                commentsService.Modify(comment);
+            }
         }
 
-        public void Delete([FromBody]Comment comment)
+        public void Delete(int commentId)
         {
-            commentsService.Remove(comment);
+            commentsService.Remove(commentId);
         }
     }
 }

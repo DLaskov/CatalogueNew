@@ -12,7 +12,7 @@ else
 
 <h2>@ViewBag.Title</h2>
 
-@{ if (User.IsInRole("Manager"))
+@{ if (User.IsInRole("Manager") || User.IsInRole("Admin"))
  {
      using (Html.BeginForm("Create", "Product", null, FormMethod.Post, new { @class = "productForm", id = Model.Product.ProductID }))
      {
