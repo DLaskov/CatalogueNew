@@ -83,7 +83,7 @@ else
             @foreach (var image in Model.Product.Images)
             {
                 <div class="col-md-2 img-preview">
-                    <img  src="~/HttpImageHandler.ashx?id=@image.ImageID" alt="@image.ImageName" onclick="deleteProductImage(this.src)" />
+                    <img  src="~/HttpImageHandler.ashx?id=@image.ImageID" alt="@image.ImageName" />
                 </div>
             }
         </div>

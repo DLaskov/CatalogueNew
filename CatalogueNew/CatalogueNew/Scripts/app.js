@@ -301,7 +301,7 @@
         });
         return false;
     }
-    $(".img-preview").on("click", function () {
+    $(".img-preview img").on("click", function () {
         if (confirm("You are going to delete this image.")) {
             var src = $(this).attr("src");
             var id = src.split("=")[1];
