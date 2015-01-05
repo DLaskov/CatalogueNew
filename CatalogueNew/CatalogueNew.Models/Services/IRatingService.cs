@@ -12,5 +12,7 @@ namespace CatalogueNew.Models.Services
         void Add(Rating rating);
 
         Rating RatingByUserProduct(string userID, int productID);
+
+        IQueryable<Rating> RatingsByProduct(int productID);
     }
 }

@@ -354,7 +354,7 @@
     $("#comment").charCounter(1000, { container: "#counter" });
 
     $('#stars').on('starrr:change', function (e, value) {
-        //$('#count').html(value);
+
         var rating = {
             value: value,
             userID: $("#user-id").val(),
@@ -379,7 +379,6 @@
 
     function getRatingByUser(userID) {
         'use strict'
-
 
         $.ajax({
             url: 'http://localhost:38006/api/Rating?userID=' + userID + '&productID=' + $("#product-id").val(),
