@@ -50,7 +50,7 @@
     <div class="row">
         <div class="panel-body">
             <form id="form-comment">
-                <textarea id="comment" class="form-control counted" name="comment" placeholder="Add comment about the product:" rows="3" ></textarea>
+                <textarea id="comment" class="form-control counted" name="comment" placeholder="Add comment about the product:" rows="3"></textarea>
                 <h6 class="pull-right" id="counter">1000 characters remaining</h6>
                 <button id="submit-comment" class="btn btn-info">Submit new comment</button>
             </form>
@@ -74,3 +74,11 @@ else
 
 <div id="comments" class="media">
 </div>
+
+@section Scripts{
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/moment-with-locales.min.js"></script>
+    <script>
+        moment().format();
+    </script>
+}

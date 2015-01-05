@@ -15,7 +15,7 @@ namespace CatalogueNew.Models.Entities
         [StringLength(1000)]
         public string Text { get; set; }
 
-        public DateTime? TimeStamp { get; set; }
+        public DateTime TimeStamp { get; set; }
 
         public string UserID { get; set; }
 

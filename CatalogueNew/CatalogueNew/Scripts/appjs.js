@@ -63,8 +63,9 @@
                             $("#" + index).find("p").html(element);
                         }
                         else if (key === 'TimeStamp') {
-                            var date = convertUTCDateToLocalDate(new Date(element));
-                            $("#" + index).find("small").html(" &nbsp;" + date.toLocaleTimeString() + " " + date.toLocaleDateString());
+                            var temp = convertUTCDateToLocalDate(new Date(element));
+                            var date = moment.utc(temp).format('MMMM Do YYYY, h:mm:ss a');
+                            $("#" + index).find("small").html(" &nbsp;" + date);
                         }
                         else if (key === 'Users') {
                             $.each(element, function (key, element) {
@@ -111,8 +112,9 @@
                             $("#" + innerHtmlId).find("p").html(element);
                         }
                         else if (key === 'TimeStamp') {
-                            var date = convertUTCDateToLocalDate(new Date(element));
-                            $("#" + innerHtmlId).find("small").html(" &nbsp;" + date.toLocaleTimeString() + " " + date.toLocaleDateString());
+                            var temp = convertUTCDateToLocalDate(new Date(element));
+                            var date = moment.utc(temp).format('MMMM Do YYYY, h:mm:ss a');
+                            $("#" + innerHtmlId).find("small").html(" &nbsp;" + date);
                         }
                         else if (key === 'Users') {
                             $.each(element, function (key, element) {
