@@ -1,11 +1,9 @@
 ﻿@model ProductListViewModel
-
-<br />
 <div id="documentsList">
-    <div class="row">
-        @for (int i = 0; i <= @Model.Rows; i++)
-        {
-            for (int j = 0; j < 3; j++)
+    @for (int i = 0; i <= @Model.Rows; i++)
+    {
+        <div class="row">
+            @for (int j = 0; j < 3; j++)
             {
                 var currentProduct = 3 * i + j;
 
@@ -21,20 +19,22 @@
                     @if (product.Images.Count > 0)
                     {
                         <a href="~/Product/Details?id=@product.ProductID">
-                            <img src="@Url.Content("~/HttpImageHandler.ashx?id=" + product.Images.FirstOrDefault().ImageID)" class="img-rounded" />
+                            <div class="thumbnail">
+                                <img style="height: 100%; width: auto;" src="@Url.Content("~/HttpImageHandler.ashx?id=" + product.Images.FirstOrDefault().ImageID)" />
+                                <p class="caption">@product.Name</p>
+                            </div>
                         </a>
                     }
                     else
                     {
                         <a href="~/Product/Details?id=@product.ProductID">
-                            <img src="~/Images/no_pic_small.gif" class="img-rounded" />
+                            <img src="~/Images/no_pic_small.gif" />
+                            <p class="caption">@product.Name</p>
                         </a>
                     }
-
-                    <div><h3><a href="~/Product/Details?id=@product.ProductID">@product.Name</a></h3></div>
                 </div>
             }
-        }
-    </div>
+        </div>
+    }
     @Html.Partial("_PagingAjaxPartial", Model.PagingViewModel)
 </div>
