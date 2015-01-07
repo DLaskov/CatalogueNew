@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 
 namespace CatalogueNew.Web.Controllers
 {
@@ -18,16 +19,19 @@ namespace CatalogueNew.Web.Controllers
         private IManufacturerService manufacturerService;
         private IProductService productService;
         private IImageService imageService;
+        private IWishlistService wishlistService;
 
-        public ProductController(ICategoryService categoryService,
-            IManufacturerService manufacturerService, IProductService productService, IImageService imageService)
+        public ProductController(ICategoryService categoryService, IManufacturerService manufacturerService, 
+            IProductService productService, IImageService imageService, IWishlistService wishlistService)
         {
             this.categoryService = categoryService;
             this.manufacturerService = manufacturerService;
             this.productService = productService;
             this.imageService = imageService;
+            this.wishlistService = wishlistService;
         }
 
+        [Authorize(Roles = "Manager")]
         public ActionResult ProductAdministration(int page = 1)
         {
             PagedList<Product> pageItems = productService.GetProducts(page);
@@ -44,23 +48,34 @@ namespace CatalogueNew.Web.Controllers
 
         public ActionResult Details(int id)
         {
-            Product product;
+            Product product = productService.Find(id);
 
-            product = productService.Find(id);
             if (product == null)
             {
                 HttpContext.Response.StatusCode = 404;
                 return View("_NotFound");
             }
 
+            Wishlist wishlist = wishlistService.Find(id, User.Identity.GetUserId());
+
+            if (wishlist == null)
+            {
+                wishlist = new Wishlist()
+                {
+                    WishlistID = 0
+                };
+            }
+
             ProductViewModel model = new ProductViewModel()
             {
-                Product = product
+                Product = product,
+                Wishlist = wishlist
             };
 
             return View(model);
         }
 
+        [Authorize(Roles = "Manager")]
         public ActionResult Create()
         {
             ProductViewModel model = new ProductViewModel();
@@ -71,46 +86,50 @@ namespace CatalogueNew.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Manager")]
         public ActionResult Create(ProductViewModel model)
         {
             var images = new List<Image>();
 
-            var path = Server.MapPath("~/Images/imagepath");
+            var path = Server.MapPath("~/Images/TempImages/");
 
-            foreach (var fileName in model.FilesName)
+            if (model.FileAttributesCollection != null)
             {
-                var mimeType = fileName.GetMimeType();
-                var lastUpdate = DateTime.Now;
+                foreach (var attributes in model.FileAttributesCollection)
+                {
+                    string[] FileAttributes = attributes.Split('\\');
 
-                images.Add(new Image()
+                    images.Add(new Image()
                     {
-                        Value = fileName.GetFileData(path),
-                        LastUpdated = lastUpdate,
-                        MimeType = mimeType,
-                        ImageName = fileName
+                        Value = FileAttributes[0].GetFileData(path),
+                        LastUpdated = DateTime.UtcNow,
+                        ImageName = FileAttributes[1],
+                        MimeType = FileAttributes[2]
                     });
+                    try
+                    {
+                        System.IO.File.Delete(path + FileAttributes[0]);
+                    }
+                    catch
+                    {
+                        System.IO.File.Delete(path + FileAttributes[0]);
+                    }
+                }
             }
 
-                Product product = new Product()
-                {
-                    Name = model.Product.Name,
-                    Description = model.Product.Description,
-                    CategoryID = model.Product.CategoryID,
-                    ManufacturerID = model.Product.ManufacturerID,
-                    Year = model.Product.Year,
-                    Images = images
-                };
+            foreach (var image in images)
+            {
+                image.ResizeImage();
+            }
 
-                foreach (var image in images)
-                {
-                    System.IO.File.Delete(path + "/" + image.ImageName);
-                }
+            model.Product.Images = images;
 
-                productService.Add(product);
+            productService.Add(model.Product);
 
             return RedirectToAction("Index", "Product");
         }
 
+        [Authorize(Roles = "Manager")]
         public ActionResult Edit(int id)
         {
             Product product = productService.Find(id);
@@ -131,10 +150,12 @@ namespace CatalogueNew.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Manager")]
         public ActionResult Edit(int id, ProductViewModel model)
         {
-            if (User.IsInRole("Manager"))
+            if (ModelState.IsValid)
             {
+
                 Product product = productService.Find(id);
                 product.Name = model.Product.Name;
                 product.CategoryID = model.Product.CategoryID;
@@ -147,9 +168,9 @@ namespace CatalogueNew.Web.Controllers
             return RedirectToAction("Index", "Product");
         }
 
-        public ActionResult Index(int page = 1)
+        public ActionResult Index(int? category, int? manufacturer, int page = 1)
         {
-            var pageItems = productService.GetProducts(page);
+            var pageItems = productService.GetProducts(page, category, manufacturer);
             var pagingViewModel = new PagingViewModel(pageItems.PageCount, pageItems.CurrentPage, "Index");
 
             var productListViewModels = new ProductListViewModel(pageItems.Items.ToList(), pagingViewModel);
@@ -162,67 +183,116 @@ namespace CatalogueNew.Web.Controllers
             return View(productListViewModels);
         }
 
-        public ActionResult ProductsByManufacturer(int id, int page = 1)
+        public ActionResult ManufacturersCategoriesSelectList()
         {
-            var pageItems = productService.GetProductsByManufacturer(page, id);
-            var pagingViewModel = new PagingViewModel(pageItems.PageCount, pageItems.CurrentPage, "ProductsByManufacturer", id);
+            var manufacturersList = new List<SelectListItem>();
+            var categoriesList = new List<SelectListItem>();
+            var manufacturers = manufacturerService.GetAll();
+            var categories = categoryService.GetAll();
 
-            var productListViewModels = new ProductListViewModel(pageItems.Items.ToList(), pagingViewModel);
+            foreach (var manufacturer in manufacturers)
+            {
+                manufacturersList.Add(new SelectListItem()
+                {
+                    Text = manufacturer.Name,
+                    Value = manufacturer.ManufacturerID.ToString()
+                });
+            }
 
-            return View(productListViewModels);
+            foreach (var category in categories)
+            {
+                categoriesList.Add(new SelectListItem()
+                {
+                    Text = category.Name,
+                    Value = category.CategoryID.ToString()
+                });
+            }
+
+            var selectListItems = new SelectListViewModel(manufacturersList, categoriesList);
+
+            return PartialView("_SelectListPartial", selectListItems);
         }
 
-        public JsonResult SaveUploadedFile(ProductViewModel model)
+        public JsonResult SaveUploadedFile(HttpPostedFileBase file)
         {
-            var data = new StringBuilder();
-
             bool isSavedSuccessfully = true;
-            string fName = String.Empty;
+            string uniqueFileName = String.Empty;
+
             try
             {
-                foreach (string fileName in Request.Files)
+                if (file != null && file.ContentLength > 0)
                 {
-                    HttpPostedFileBase file = Request.Files[fileName];
-                    //Save file content goes here
-                    fName = file.FileName;
+                    var originalDirectory = new DirectoryInfo(string.Format("{0}Images\\TempImages", Server.MapPath(@"\")));
+                    string pathString = originalDirectory.ToString();
+                    bool isExists = Directory.Exists(pathString);
 
-                    data.Append("<input type='hidden' name='filesName' value='" + fName + "' />");
-
-                    if (file != null && file.ContentLength > 0)
+                    if (!isExists)
                     {
-
-                        var originalDirectory = new DirectoryInfo(string.Format("{0}Images", Server.MapPath(@"\")));
-
-                        string pathString = Path.Combine(originalDirectory.ToString(), "imagepath");
-
-                        var fileName1 = Path.GetFileName(file.FileName);
-
-                        bool isExists = Directory.Exists(pathString);
-
-                        if (!isExists)
-                            System.IO.Directory.CreateDirectory(pathString);
-
-                        var path = string.Format("{0}\\{1}", pathString, file.FileName);
-                        file.SaveAs(path);
-
+                        System.IO.Directory.CreateDirectory(pathString);
                     }
+                    uniqueFileName = Guid.NewGuid().ToString();
+                    var path = string.Format("{0}\\{1}", pathString, uniqueFileName);
 
+                    file.SaveAs(path);
                 }
-
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 isSavedSuccessfully = false;
             }
 
             if (isSavedSuccessfully)
             {
-                return Json(data.ToString(), JsonRequestBehavior.AllowGet);
+                return new JsonResult()
+                {
+                    Data = new
+                    {
+                        UniqueName = uniqueFileName,
+                        ImgName = file.FileName,
+                        MimeType = file.ContentType
+                    },
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
             }
             else
             {
                 return Json(new { Message = "Error in saving file" });
             }
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Manager")]
+        public void RemoveImage(string value)
+        {
+            string[] FileAttributes = value.Split('\\');
+            var path = Server.MapPath("~/Images/TempImages/");
+            try
+            {
+                System.IO.File.Delete(path + FileAttributes[0]);
+            }
+            catch
+            {
+                System.IO.File.Delete(path + FileAttributes[0]);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult AddToWishlist(string data)
+        {
+            var wishlist = new Wishlist
+            {
+                ProductID = Int32.Parse(data),
+                UserID = User.Identity.GetUserId()
+            };
+
+            wishlistService.Add(wishlist);
+
+            return Json(new WishlistViewModel{ Message = wishlist.WishlistID.ToString() }, JsonRequestBehavior.AllowGet);
+        }
+
+        public void RemoveFromWishlist(string data)
+        {
+            wishlistService.Remove(Int32.Parse(data));
         }
     }
 }

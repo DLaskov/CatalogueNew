@@ -12,12 +12,12 @@ namespace CatalogueNew.Web.Models
     {
         public Product Product { get; set; }
 
+        public Wishlist Wishlist { get; set; }
+
         public SelectList Categories { get; set; }
 
         public SelectList Manufacturers { get; set; }
 
-        public List<String> ImagePaths = new List<string>();
-
-        public List<string> FilesName { get; set; }
+        public List<string> FileAttributesCollection { get; set; }
     }
 }
