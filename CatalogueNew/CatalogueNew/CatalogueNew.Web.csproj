@@ -190,8 +190,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Images\no_pic_small.gif" />
-    <Content Include="Scripts\appjs.js" />
-    <Content Include="Scripts\appwishlistjs.js" />
+    <Content Include="Scripts\app.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -269,6 +268,10 @@
     <Content Include="Scripts\locales\bootstrap-datepicker.zh-TW.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment.min.js" />
     <Content Include="Scripts\npm.js" />
     <None Include="Scripts\_references.js" />
     <Content Include="Web.config">
@@ -291,7 +294,7 @@
     <Compile Include="Controllers\ManufacturerController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProductListViewModels.cs" />
-    <Compile Include="Controllers\WishlistController.cs" />
+    <Compile Include="Controllers\RatingController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -316,7 +319,6 @@
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\UsersListViewModel.cs" />
     <Compile Include="Models\UserViewModels.cs" />
-    <Compile Include="Models\WishlistViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Views\AppViewPage.cs" />
@@ -358,7 +360,6 @@
     <Content Include="Views\Shared\_PagingAjaxPartial.cshtml" />
     <Content Include="Views\Shared\_ImageUploadPartial.cshtml" />
     <Content Include="Views\Product\_SelectListPartial.cshtml" />
-    <Content Include="Views\Wishlist\View.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

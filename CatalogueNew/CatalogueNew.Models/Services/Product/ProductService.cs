@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CatalogueNew.Models.Services
 {
-    public class ProductService : BaseService<Product>, IProductService
+    public class ProductService : BaseService, IProductService
     {
         private const int pageSize = 9;
 
@@ -18,7 +18,7 @@ namespace CatalogueNew.Models.Services
         {
         }
 
-        public IEnumerable<Product> GetAll()
+        public IEnumerable<Product> All()
         {
             return this.Context.Products.ToList();
         }
@@ -32,11 +32,10 @@ namespace CatalogueNew.Models.Services
             return product;
         }
 
-        public int Add(Product product)
+        public void Add(Product product)
         {
             this.Context.Products.Add(product);
             this.Context.SaveChanges();
-            return (int)product.ProductID;
         }
 
         public void Modify(Product product)

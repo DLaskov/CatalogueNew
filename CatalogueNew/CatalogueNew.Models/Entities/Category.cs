@@ -15,10 +15,6 @@ namespace CatalogueNew.Models.Entities
         [StringLength(50)]
         public string Name { get; set; }
 
-        //public int? ParentCategoryID { get; set; }
-
-        //public virtual Category ParentCategory { get; set; }
-
         public ICollection<Product> products;
 
         public Category()

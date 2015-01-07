@@ -24,12 +24,27 @@ namespace CatalogueNew.Web.Controllers
         public IEnumerable<Comment> GetByProduct(int productId)
         {
             var comments = commentsService.GetByProduct(productId);
+
+            UTCToLocalTime(comments);
+
             return comments;
         }
 
         public IEnumerable<Comment> GetByParent(int parentId)
         {
-            return commentsService.GetByParent(parentId);
+            var comments = commentsService.GetByParent(parentId);
+
+            UTCToLocalTime(comments);
+
+            return comments;
+        }
+
+        private static void UTCToLocalTime(IEnumerable<Comment> comments)
+        {
+            foreach (var comment in comments)
+            {
+                comment.TimeStamp = TimeZone.CurrentTimeZone.ToLocalTime(comment.TimeStamp);
+            }
         }
 
         public Comment Post([FromBody]Comment comment)

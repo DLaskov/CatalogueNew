@@ -52,7 +52,7 @@ namespace CatalogueNew.Web.Infrastructure
                 .WithConstructorArgument("context", kernel.Get<ICatalogueContext>());
             kernel.Bind<UserManager<User>>().ToSelf();
             kernel.Bind<ICommentService>().To<CommentService>();
-            kernel.Bind<IWishlistService>().To <WishlistService>();
+            kernel.Bind<IRatingService>().To<RatingService>();
         }
     }
 }

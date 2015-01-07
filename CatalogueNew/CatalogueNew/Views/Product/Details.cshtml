@@ -9,7 +9,6 @@
     <div class="col-md-4">
         <input type="hidden" id="product-id" value="@product.ProductID" />
         <input type="hidden" id="user-id" value="@User.Identity.GetUserId()" />
-        <input type="hidden" id="has-wishlist" value="@Model.Wishlist.WishlistID" />
         <h2>@product.Name</h2>
 
         @if (product.Images.Count == 0)
@@ -37,12 +36,18 @@
     </div>
     <div class="col-md-8">
         <br />
-        <div><strong>Category: </strong>@product.Category.Name</div>
-        <div><strong>Year: </strong>@product.Year.Value</div>
-        <div><strong>Description: </strong>@product.Description</div>
-        <div><strong>Raiting: </strong></div>
-        <div><strong>Tags: </strong></div>
-        <div><strong>Like Dislike</strong> @if(User.Identity.IsAuthenticated){<input type="button" id="add-wishlist" class="btn btn-sm" value="+ Add To Wishlist" name="wishlist">}</div>
+        <div class="lead"><strong>Category: </strong>@product.Category.Name</div>
+        <div class="lead"><strong>Year: </strong>@product.Year.Value</div>
+        <div class="lead"><strong>Description: </strong>@product.Description</div>
+
+        <div class="lead">
+            <div id="stars" class="starrr"><b>Raiting: </b></div>
+            @*<div id="stars-existing" class="starrr" data-rating='4'></div>*@
+            <div id="rating"><b>Raiting: </b>You already gave a rating of <span id="count">0</span> star(s)</div> 
+        </div>
+
+        <div class="lead"><strong>Tags: </strong></div>
+        <div class="lead"><strong>Like Dislike Wishlist </strong></div>
     </div>
 </div>
 
@@ -51,7 +56,7 @@
     <div class="row">
         <div class="panel-body">
             <form id="form-comment">
-                <textarea id="comment" class="form-control counted" name="comment" placeholder="Add comment about the product:" rows="3" ></textarea>
+                <textarea id="comment" class="form-control counted" name="comment" placeholder="Add comment about the product:" rows="3"></textarea>
                 <h6 class="pull-right" id="counter">1000 characters remaining</h6>
                 <button id="submit-comment" class="btn btn-info">Submit new comment</button>
             </form>
@@ -76,3 +81,10 @@ else
 <div id="comments" class="media">
 </div>
 
+@section Scripts{
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/moment-with-locales.min.js"></script>
+    <script>
+        moment().format();
+    </script>
+}

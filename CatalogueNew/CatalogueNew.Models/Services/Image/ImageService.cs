@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CatalogueNew.Models.Services
 {
-    public class ImageService : BaseService<Image>, IImageService
+    public class ImageService : BaseService, IImageService
     {
         public ImageService(ICatalogueContext context)
             : base(context)
@@ -17,6 +17,12 @@ namespace CatalogueNew.Models.Services
         public void Add(Image image)
         {
             this.Context.Images.Add(image);
+            this.Context.SaveChanges();
+        }
+        public void Remove(int id)
+        {
+            var image = this.Context.Images.Find(id);
+            this.Context.Images.Remove(image);
             this.Context.SaveChanges();
         }
     }

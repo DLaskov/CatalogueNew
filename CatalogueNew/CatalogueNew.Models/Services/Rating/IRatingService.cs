@@ -7,8 +7,12 @@ using System.Threading.Tasks;
 
 namespace CatalogueNew.Models.Services
 {
-    public interface IImageService
+    public interface IRatingService
     {
-        void Add(Image image);
+        void Add(Rating rating);
+
+        Rating RatingByUserProduct(string userID, int productID);
+
+        IQueryable<Rating> RatingsByProduct(int productID);
     }
 }

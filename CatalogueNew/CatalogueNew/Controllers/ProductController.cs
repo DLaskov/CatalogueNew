@@ -9,7 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
 
 namespace CatalogueNew.Web.Controllers
 {
@@ -19,16 +18,14 @@ namespace CatalogueNew.Web.Controllers
         private IManufacturerService manufacturerService;
         private IProductService productService;
         private IImageService imageService;
-        private IWishlistService wishlistService;
 
-        public ProductController(ICategoryService categoryService, IManufacturerService manufacturerService, 
-            IProductService productService, IImageService imageService, IWishlistService wishlistService)
+        public ProductController(ICategoryService categoryService,
+            IManufacturerService manufacturerService, IProductService productService, IImageService imageService)
         {
             this.categoryService = categoryService;
             this.manufacturerService = manufacturerService;
             this.productService = productService;
             this.imageService = imageService;
-            this.wishlistService = wishlistService;
         }
 
         [Authorize(Roles = "Manager")]
@@ -56,31 +53,27 @@ namespace CatalogueNew.Web.Controllers
                 return View("_NotFound");
             }
 
-            Wishlist wishlist = wishlistService.Find(id, User.Identity.GetUserId());
-
-            if (wishlist == null)
-            {
-                wishlist = new Wishlist()
-                {
-                    WishlistID = 0
-                };
-            }
-
             ProductViewModel model = new ProductViewModel()
             {
-                Product = product,
-                Wishlist = wishlist
+                Product = product
             };
 
             return View(model);
         }
 
         [Authorize(Roles = "Manager")]
+        public ActionResult Delete(int id)
+        {
+            productService.Remove(id);
+            return RedirectToAction("ProductAdministration");
+        }
+
+        [Authorize(Roles = "Manager")]
         public ActionResult Create()
         {
             ProductViewModel model = new ProductViewModel();
-            model.Categories = new SelectList(categoryService.GetAll(), "CategoryID", "Name");
-            model.Manufacturers = new SelectList(manufacturerService.GetAll(), "ManufacturerID", "Name");
+            model.Categories = new SelectList(categoryService.All(), "CategoryID", "Name");
+            model.Manufacturers = new SelectList(manufacturerService.All(), "ManufacturerID", "Name");
             model.Product = new Product();
             return View(model);
         }
@@ -142,8 +135,8 @@ namespace CatalogueNew.Web.Controllers
             ProductViewModel model = new ProductViewModel()
             {
                 Product = product,
-                Categories = new SelectList(categoryService.GetAll(), "CategoryID", "Name"),
-                Manufacturers = new SelectList(manufacturerService.GetAll(), "ManufacturerID", "Name")
+                Categories = new SelectList(categoryService.All(), "CategoryID", "Name"),
+                Manufacturers = new SelectList(manufacturerService.All(), "ManufacturerID", "Name")
             };
 
             return View("Create", model);
@@ -162,6 +155,39 @@ namespace CatalogueNew.Web.Controllers
                 product.ManufacturerID = model.Product.ManufacturerID;
                 product.Year = model.Product.Year;
                 product.Description = model.Product.Description;
+                var images = new List<Image>();
+
+                var path = Server.MapPath("~/Images/TempImages/");
+
+                if (model.FileAttributesCollection != null)
+                {
+                    foreach (var attributes in model.FileAttributesCollection)
+                    {
+                        string[] FileAttributes = attributes.Split('\\');
+
+                        images.Add(new Image()
+                        {
+                            Value = FileAttributes[0].GetFileData(path),
+                            LastUpdated = DateTime.UtcNow,
+                            ImageName = FileAttributes[1],
+                            MimeType = FileAttributes[2]
+                        });
+                        try
+                        {
+                            System.IO.File.Delete(path + FileAttributes[0]);
+                        }
+                        catch
+                        {
+                            System.IO.File.Delete(path + FileAttributes[0]);
+                        }
+                    }
+                }
+
+                foreach (var image in images)
+                {
+                    image.ResizeImage();
+                    product.Images.Add(image);
+                }
 
                 productService.Modify(product);
             }
@@ -187,8 +213,8 @@ namespace CatalogueNew.Web.Controllers
         {
             var manufacturersList = new List<SelectListItem>();
             var categoriesList = new List<SelectListItem>();
-            var manufacturers = manufacturerService.GetAll();
-            var categories = categoryService.GetAll();
+            var manufacturers = manufacturerService.All();
+            var categories = categoryService.All();
 
             foreach (var manufacturer in manufacturers)
             {
@@ -275,24 +301,11 @@ namespace CatalogueNew.Web.Controllers
                 System.IO.File.Delete(path + FileAttributes[0]);
             }
         }
-
         [HttpPost]
-        public JsonResult AddToWishlist(string data)
+        [Authorize(Roles = "Manager")]
+        public void RemoveImageById(string value)
         {
-            var wishlist = new Wishlist
-            {
-                ProductID = Int32.Parse(data),
-                UserID = User.Identity.GetUserId()
-            };
-
-            wishlistService.Add(wishlist);
-
-            return Json(new WishlistViewModel{ Message = wishlist.WishlistID.ToString() }, JsonRequestBehavior.AllowGet);
-        }
-
-        public void RemoveFromWishlist(string data)
-        {
-            wishlistService.Remove(Int32.Parse(data));
+            imageService.Remove(Int32.Parse(value));
         }
     }
 }
