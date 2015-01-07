@@ -2713,3 +2713,33 @@ Parameter name: entity
    at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)
    at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
    at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+ERROR 2015-01-07 16:48:40,723 26683ms CatalogueLogger        Application_Error  - App_Error
+Ninject.ActivationException: Error activating IWishlistService
+No matching bindings are available, and the type is not self-bindable.
+Activation path:
+  2) Injection of dependency IWishlistService into parameter wishlistService of constructor of type ProductController
+  1) Request for ProductController
+
+Suggestions:
+  1) Ensure that you have defined a binding for IWishlistService.
+  2) If the binding was defined in a module, ensure that the module has been loaded into the kernel.
+  3) Ensure you have not accidentally created more than one kernel.
+  4) If you are using constructor arguments, ensure that the parameter name matches the constructors parameter name.
+  5) If you are using automatic module loading, ensure the search path and filters are correct.
+
+   at Ninject.KernelBase.Resolve(IRequest request)
+   at Ninject.Planning.Targets.Target`1.GetValue(Type service, IContext parent)
+   at Ninject.Planning.Targets.Target`1.ResolveWithin(IContext parent)
+   at Ninject.Activation.Providers.StandardProvider.GetValue(IContext context, ITarget target)
+   at Ninject.Activation.Providers.StandardProvider.<>c__DisplayClass4.<Create>b__2(ITarget target)
+   at System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   at System.Linq.Buffer`1..ctor(IEnumerable`1 source)
+   at System.Linq.Enumerable.ToArray[TSource](IEnumerable`1 source)
+   at Ninject.Activation.Providers.StandardProvider.Create(IContext context)
+   at Ninject.Activation.Context.ResolveInternal(Object scope)
+   at Ninject.Activation.Context.Resolve()
+   at Ninject.KernelBase.<>c__DisplayClass15.<Resolve>b__f(IBinding binding)
+   at System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at Ninject.Web.Mvc.NinjectDependencyResolver.GetService(Type serviceType)
+   at System.Web.Mvc.DefaultControllerFactory.DefaultControllerActivator.Create(RequestContext requestContext, Type controllerType)

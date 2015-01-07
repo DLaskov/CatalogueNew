@@ -6,7 +6,7 @@ $(document).ready(function () {
 
     wishlistButton.click(function () {
 
-        if (wishlistID == '0') {
+        if (wishlistID == 0) {
             $.post("AddToWishlist", { data: $("#product-id").val() }, function (data, textStatus, jqXHR) { wishlistID = data.Message; });
 
             wishlistButton.val("Added");        

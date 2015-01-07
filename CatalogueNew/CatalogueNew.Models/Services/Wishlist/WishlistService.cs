@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CatalogueNew.Models.Services
 {
-    public class WishlistService : BaseService<Wishlist>, IWishlistService
+    public class WishlistService : BaseService, IWishlistService
     {
         
         public WishlistService(ICatalogueContext context)

@@ -24,20 +24,20 @@ namespace CatalogueNew.Web.Controllers
             return View();
         }
 
-        public ActionResult Index(int page = 1)
-        {
-            var pageItems = wishlistService.GetWishlists(page);
-            var pagingViewModel = new PagingViewModel(pageItems.PageCount, pageItems.CurrentPage, "Index");
+        //public ActionResult Index(int page = 1)
+        //{
+        //    var pageItems = wishlistService.GetWishlists(page);
+        //    var pagingViewModel = new PagingViewModel(pageItems.PageCount, pageItems.CurrentPage, "Index");
 
-            var wishlistListViewModel = new WishlistViewModel(pageItems.Items.ToList(), pagingViewModel);
+        //    var wishlistListViewModel = new WishlistViewModel(pageItems.Items.ToList(), pagingViewModel);
 
-            if (Request.IsAjaxRequest())
-            {
-                return PartialView("_RenderProductsPartial", productListViewModels);
-            }
+        //    if (Request.IsAjaxRequest())
+        //    {
+        //        return PartialView("_RenderProductsPartial", productListViewModels);
+        //    }
 
-            return View(wishlistListViewModel);
-        }
+        //    return View(wishlistListViewModel);
+        //}
 
 
     }
