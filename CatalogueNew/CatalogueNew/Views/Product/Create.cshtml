@@ -83,7 +83,7 @@ else
             @foreach (var image in Model.Product.Images)
             {
                 <div class="col-md-2 img-preview">
-                    <img  src="~/HttpImageHandler.ashx?id=@image.ImageID" alt="@image.ImageName" />
+                    <img src="~/HttpImageHandler.ashx?id=@image.ImageID" alt="@image.ImageName" />
                 </div>
             }
         </div>
@@ -95,14 +95,16 @@ else
         </div>
     </form>
     <hr />
-    <form action="~/Product/SaveUploadedFile" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm">
-        <div class="form-group">
-            <div class="dropzone-previews"></div>
-        </div>
-    </form>
+    <div class="col-md-6">
+        <form action="~/Product/SaveUploadedFile" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm">
+            <div class="form-group">
+                <div class="dropzone-previews"></div>
+            </div>
+        </form>
+    </div>
  }
-   else
-   {
+ else
+ {
     <div class="row alert alert-danger">
         <p class="text-center">You are not authorized to create or edit products!</p>
     </div>

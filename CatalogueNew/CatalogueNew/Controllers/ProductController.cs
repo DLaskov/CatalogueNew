@@ -72,8 +72,8 @@ namespace CatalogueNew.Web.Controllers
         public ActionResult Create()
         {
             ProductViewModel model = new ProductViewModel();
-            model.Categories = new SelectList(categoryService.GetAll(), "CategoryID", "Name");
-            model.Manufacturers = new SelectList(manufacturerService.GetAll(), "ManufacturerID", "Name");
+            model.Categories = new SelectList(categoryService.All(), "CategoryID", "Name");
+            model.Manufacturers = new SelectList(manufacturerService.All(), "ManufacturerID", "Name");
             model.Product = new Product();
             return View(model);
         }
@@ -135,8 +135,8 @@ namespace CatalogueNew.Web.Controllers
             ProductViewModel model = new ProductViewModel()
             {
                 Product = product,
-                Categories = new SelectList(categoryService.GetAll(), "CategoryID", "Name"),
-                Manufacturers = new SelectList(manufacturerService.GetAll(), "ManufacturerID", "Name")
+                Categories = new SelectList(categoryService.All(), "CategoryID", "Name"),
+                Manufacturers = new SelectList(manufacturerService.All(), "ManufacturerID", "Name")
             };
 
             return View("Create", model);
@@ -213,8 +213,8 @@ namespace CatalogueNew.Web.Controllers
         {
             var manufacturersList = new List<SelectListItem>();
             var categoriesList = new List<SelectListItem>();
-            var manufacturers = manufacturerService.GetAll();
-            var categories = categoryService.GetAll();
+            var manufacturers = manufacturerService.All();
+            var categories = categoryService.All();
 
             foreach (var manufacturer in manufacturers)
             {
