@@ -9,7 +9,9 @@
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
             "~/Scripts/jquery-{version}.js",
-            "~/Scripts/appjs.js"));
+            "~/Scripts/appjs.js",
+            "~/Scripts/appwishlistjs.js",
+            "~/Scripts/jquery.unobtrusive-ajax.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -29,7 +31,7 @@
                       "~/Content/Site.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/dropzonescripts").Include(
-                     "~/Scripts/dropzone/dropzone.min.js"));
+                     "~/Scripts/dropzone/dropzone.js"));
 
             bundles.Add(new StyleBundle("~/Content/dropzonescss").Include(
                      "~/Scripts/dropzone/css/basic.css",

@@ -11,23 +11,26 @@ namespace CatalogueNew.Models.Entities
         [Key]
         public int CommentID { get; set; }
 
-        public int UserID { get; set; }
-
         [Required]
         [StringLength(1000)]
         public string Text { get; set; }
 
-        [Column(TypeName = "datetime2")]
-        public DateTime TimeStamp { get; set; }
+        public DateTime? TimeStamp { get; set; }
+
+        public string UserID { get; set; }
+
+        public virtual User Users { get; set; }
 
         public int ProductID { get; set; }
 
+        //public virtual Product Products { get; set; }
+
         public int? ParentCommentID { get; set; }
 
-        public virtual Comment ParentComment { get; set; }
+        //public virtual Comment ParentComment { get; set; }
 
-        public virtual Product Products { get; set; }
 
-        public virtual User Users { get; set; }
+
+
     }
 }

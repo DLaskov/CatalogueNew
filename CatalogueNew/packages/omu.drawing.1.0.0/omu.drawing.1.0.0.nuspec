@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>omu.drawing</id>
+    <version>1.0.0</version>
+    <title>Imager - resize, crop, save images</title>
+    <authors>Piotr Sobczak</authors>
+    <owners>Piotr Sobczak</owners>
+    <licenseUrl>http://imager.codeplex.com/license</licenseUrl>
+    <projectUrl>http://imager.codeplex.com/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>High quality image resizing and cropping</description>
+    <tags>image resizer cropping crop</tags>
+  </metadata>
+</package>

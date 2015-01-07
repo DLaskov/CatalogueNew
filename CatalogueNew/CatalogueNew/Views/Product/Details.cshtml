@@ -1,44 +1,78 @@
-﻿@model CatalogueNew.Web.Models.ProductViewModel
+﻿@using Microsoft.AspNet.Identity;
+@model ProductViewModel
+
 @{
-    ViewBag.Title = @Model.Product.Name;
+    var product = @Model.Product;
 }
 
-<h2>@ViewBag.Title</h2>
-<dl class="dl-horizontal">
-    <dt>
-        @Html.DisplayNameFor(model => model.Product.Name)
-    </dt>
-    <dt>
-        @Html.DisplayNameFor(model => model.Product.Category)
-    </dt>
-    <dt>
-        @Html.DisplayNameFor(model => model.Product.Manufacturer)
-    </dt>
-    <dt>
-        @Html.DisplayNameFor(model => model.Product.Year)
-    </dt>
-    <dt>
-        @Html.DisplayNameFor(model => model.Product.Description)
-    </dt>
+<div class="row">
+    <div class="col-md-4">
+        <input type="hidden" id="product-id" value="@product.ProductID" />
+        <input type="hidden" id="user-id" value="@User.Identity.GetUserId()" />
+        <input type="hidden" id="has-wishlist" value="@Model.Wishlist.WishlistID" />
+        <h2>@product.Name</h2>
 
-    <dd>
-        @Html.DisplayFor(model => model.Product.Name)
-    </dd>
-    <dd>
-        @Html.DisplayFor(model => model.Product.Category.Name)
-    </dd>
-    <dd>
-        @Html.DisplayFor(model => model.Product.Manufacturer.Name)
-    </dd>
-    <dd>
-        @Html.DisplayFor(model => model.Product.Year)
-    </dd>
-    <dd>
-        @Html.DisplayFor(model => model.Product.Description)
-    </dd>
-</dl>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Product.ProductID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+        @if (product.Images.Count == 0)
+        {
+            <img src="~/Images/no_pic_small.gif" />
+        }
+        else if (product.Images.Count == 1)
+        {
+            <img src="@Url.Content("~/HttpImageHandler.ashx?id=" + product.Images.FirstOrDefault().ImageID)" class="img-rounded" />
+        }
+        else
+        {
+            <img src="@Url.Content("~/HttpImageHandler.ashx?id=" + product.Images.FirstOrDefault().ImageID)" class="img-rounded" />
+            <br /><br />
+            <div class="row">
+                @foreach (var image in product.Images.Skip(1))
+                {
+                    <div class="col-md-3">
+                        <img src="@Url.Content("~/HttpImageHandler.ashx?id=" + image.ImageID)" class="without-first img-rounded" />
+                    </div>
+                }
+            </div>
+        }
+
+    </div>
+    <div class="col-md-8">
+        <br />
+        <div><strong>Category: </strong>@product.Category.Name</div>
+        <div><strong>Year: </strong>@product.Year.Value</div>
+        <div><strong>Description: </strong>@product.Description</div>
+        <div><strong>Raiting: </strong></div>
+        <div><strong>Tags: </strong></div>
+        <div><strong>Like Dislike</strong> @if(User.Identity.IsAuthenticated){<input type="button" id="add-wishlist" class="btn btn-sm" value="+ Add To Wishlist" name="wishlist">}</div>
+    </div>
+</div>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="row">
+        <div class="panel-body">
+            <form id="form-comment">
+                <textarea id="comment" class="form-control counted" name="comment" placeholder="Add comment about the product:" rows="3" ></textarea>
+                <h6 class="pull-right" id="counter">1000 characters remaining</h6>
+                <button id="submit-comment" class="btn btn-info">Submit new comment</button>
+            </form>
+        </div>
+    </div>
+    <input type="hidden" name="is-auth" value="true" />
+}
+else
+{
+    <input type="hidden" name="is-auth" value="false" />
+}
+
+@if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("Moderator"))
+{
+    <input type="hidden" name="has-role" value="true" />
+}
+else
+{
+    <input type="hidden" name="has-role" value="false" />
+}
+
+<div id="comments" class="media">
+</div>
 
