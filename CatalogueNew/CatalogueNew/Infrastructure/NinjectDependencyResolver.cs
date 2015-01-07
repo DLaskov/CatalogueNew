@@ -53,6 +53,7 @@ namespace CatalogueNew.Web.Infrastructure
             kernel.Bind<UserManager<User>>().ToSelf();
             kernel.Bind<ICommentService>().To<CommentService>();
             kernel.Bind<IRatingService>().To<RatingService>();
+            kernel.Bind<IWishlistService>().To<WishlistService>();
         }
     }
 }

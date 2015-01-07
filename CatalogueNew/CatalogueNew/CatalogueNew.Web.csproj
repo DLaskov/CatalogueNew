@@ -191,6 +191,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Images\no_pic_small.gif" />
     <Content Include="Scripts\app.js" />
+    <Content Include="Scripts\appwishlist.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -295,6 +296,7 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ProductListViewModels.cs" />
     <Compile Include="Controllers\RatingController.cs" />
+    <Compile Include="Controllers\WishlistController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -319,6 +321,7 @@
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\UsersListViewModel.cs" />
     <Compile Include="Models\UserViewModels.cs" />
+    <Compile Include="Models\WishlistViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Views\AppViewPage.cs" />
@@ -360,6 +363,7 @@
     <Content Include="Views\Shared\_PagingAjaxPartial.cshtml" />
     <Content Include="Views\Shared\_ImageUploadPartial.cshtml" />
     <Content Include="Views\Product\_SelectListPartial.cshtml" />
+    <Content Include="Views\Wishlist\View.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

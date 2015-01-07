@@ -9,6 +9,7 @@
     <div class="col-md-4">
         <input type="hidden" id="product-id" value="@product.ProductID" />
         <input type="hidden" id="user-id" value="@User.Identity.GetUserId()" />
+        <input type="hidden" id="has-wishlist" value="@Model.Wishlist.WishlistID" />
         <h2>@product.Name</h2>
 
         @if (product.Images.Count == 0)
@@ -43,11 +44,19 @@
         <div class="lead">
             <div id="stars" class="starrr"><b>Raiting: </b></div>
             @*<div id="stars-existing" class="starrr" data-rating='4'></div>*@
-            <div id="rating"><b>Raiting: </b>You already gave a rating of <span id="count">0</span> star(s)</div> 
+            <div id="rating"><b>Raiting: </b>You already gave a rating of <span id="count">0</span> star(s)</div>
         </div>
 
         <div class="lead"><strong>Tags: </strong></div>
-        <div class="lead"><strong>Like Dislike Wishlist </strong></div>
+        <div class="lead">
+            <strong>
+                Like Dislike
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <input type="button" id="add-wishlist" class="btn btn-sm" value="+ Add To Wishlist" name="wishlist">
+                }
+            </strong>
+        </div>
     </div>
 </div>
 

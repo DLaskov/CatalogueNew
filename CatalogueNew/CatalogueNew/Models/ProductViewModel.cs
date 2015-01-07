@@ -12,6 +12,8 @@ namespace CatalogueNew.Web.Models
     {
         public Product Product { get; set; }
 
+        public Wishlist Wishlist { get; set; }
+
         public SelectList Categories { get; set; }
 
         public SelectList Manufacturers { get; set; }
