@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace CatalogueNew.Models.Services
 {
-    public class CategoryService : BaseService<Category>, ICategoryService
+    public class CategoryService : BaseService, ICategoryService
     {
         private const int pageSize = 3;
 
@@ -58,7 +58,7 @@ namespace CatalogueNew.Models.Services
             return pagedList;
         }
 
-        public IEnumerable<Category> GetAll()
+        public IEnumerable<Category> All()
         {
             return this.Context.Categories.ToList();
         }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CatalogueNew.Models.Services
 {
-    public class RatingService : BaseService<Rating>, IRatingService
+    public class RatingService : BaseService, IRatingService
     {
         public RatingService(ICatalogueContext context)
             : base(context)

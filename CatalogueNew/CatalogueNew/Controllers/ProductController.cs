@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 
 namespace CatalogueNew.Web.Controllers
 {
@@ -19,14 +20,16 @@ namespace CatalogueNew.Web.Controllers
         private IManufacturerService manufacturerService;
         private IProductService productService;
         private IImageService imageService;
+        private IWishlistService wishlistService;
 
-        public ProductController(ICategoryService categoryService,
-            IManufacturerService manufacturerService, IProductService productService, IImageService imageService)
+        public ProductController(ICategoryService categoryService, IManufacturerService manufacturerService,
+            IProductService productService, IImageService imageService, IWishlistService wishlistService)
         {
             this.categoryService = categoryService;
             this.manufacturerService = manufacturerService;
             this.productService = productService;
             this.imageService = imageService;
+            this.wishlistService = wishlistService;
         }
 
         [Authorize(Roles = "Manager")]
@@ -47,19 +50,31 @@ namespace CatalogueNew.Web.Controllers
         public ActionResult Details(int id)
         {
             Product product = productService.Find(id);
+ 
+             product = productService.Find(id);
+             if (product == null)
+             {
+                 HttpContext.Response.StatusCode = 404;
+                 return View("_NotFound");
+             }
+ 
+             Wishlist wishlist = wishlistService.Find(id, User.Identity.GetUserId());
 
-            if (product == null)
-            {
-                HttpContext.Response.StatusCode = 404;
-                return View("_NotFound");
-            }
-
-            ProductViewModel model = new ProductViewModel()
-            {
-                Product = product
-            };
-
-            return View(model);
+             if (wishlist == null)
+             {
+                 wishlist = new Wishlist()
+                 {
+                     WishlistID = 0
+                 };
+             }
+ 
+             ProductViewModel model = new ProductViewModel()
+             {
+                 Product = product,
+                 Wishlist = wishlist
+             };
+ 
+             return View(model);
         }
 
         [Authorize(Roles = "Manager")]
@@ -73,8 +88,8 @@ namespace CatalogueNew.Web.Controllers
         public ActionResult Create()
         {
             ProductViewModel model = new ProductViewModel();
-            model.Categories = new SelectList(categoryService.GetAll(), "CategoryID", "Name");
-            model.Manufacturers = new SelectList(manufacturerService.GetAll(), "ManufacturerID", "Name");
+            model.Categories = new SelectList(categoryService.All(), "CategoryID", "Name");
+            model.Manufacturers = new SelectList(manufacturerService.All(), "ManufacturerID", "Name");
             model.Product = new Product();
             return View(model);
         }
@@ -136,8 +151,8 @@ namespace CatalogueNew.Web.Controllers
             ProductViewModel model = new ProductViewModel()
             {
                 Product = product,
-                Categories = new SelectList(categoryService.GetAll(), "CategoryID", "Name"),
-                Manufacturers = new SelectList(manufacturerService.GetAll(), "ManufacturerID", "Name")
+                Categories = new SelectList(categoryService.All(), "CategoryID", "Name"),
+                Manufacturers = new SelectList(manufacturerService.All(), "ManufacturerID", "Name")
             };
 
             return View("Create", model);
@@ -214,8 +229,8 @@ namespace CatalogueNew.Web.Controllers
         {
             var manufacturersList = new List<SelectListItem>();
             var categoriesList = new List<SelectListItem>();
-            var manufacturers = manufacturerService.GetAll();
-            var categories = categoryService.GetAll();
+            var manufacturers = manufacturerService.All();
+            var categories = categoryService.All();
 
             foreach (var manufacturer in manufacturers)
             {
@@ -307,6 +322,25 @@ namespace CatalogueNew.Web.Controllers
         public void RemoveImageById(string value)
         {
             imageService.Remove(Int32.Parse(value));
+        }
+
+        [HttpPost]
+        public JsonResult AddToWishlist(string data)
+        {
+            var wishlist = new Wishlist
+            {
+                ProductID = Int32.Parse(data),
+                UserID = User.Identity.GetUserId()
+            };
+
+            wishlistService.Add(wishlist);
+
+            return Json(new WishlistViewModel { Message = wishlist.WishlistID.ToString() }, JsonRequestBehavior.AllowGet);
+        }
+
+        public void RemoveFromWishlist(string data)
+        {
+            wishlistService.Remove(Int32.Parse(data));
         }
     }
 }

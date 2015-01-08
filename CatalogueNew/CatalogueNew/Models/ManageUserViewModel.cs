@@ -44,9 +44,11 @@ namespace CatalogueNew.Web.Models
         [Display(Name = "Email address")]
         [DataType(DataType.EmailAddress, ErrorMessage = "E-mail is not valid")]
         [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "E-mail is not valid")]
+        [Required(ErrorMessage="Fill E-Mail Address!")]
         public string Email { get; set; }
 
         [StringLength(30)]
+        [Required(ErrorMessage = "Fill your first name.")]
         public string FirstName { get; set; }
 
         [StringLength(30)]
@@ -55,6 +57,7 @@ namespace CatalogueNew.Web.Models
         [DataType(DataType.Date)]
         public DateTime? BirthDate { get; set; }
 
+        [Required(ErrorMessage = "Select gender.")]
         public GenderType? Gender { get; set; }
 
         public string ManageMessage { get; set; }

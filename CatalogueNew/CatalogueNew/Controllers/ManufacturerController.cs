@@ -36,7 +36,7 @@ namespace CatalogueNew.Web.Controllers
 
         public ActionResult LayoutManufacturers()
         {
-            var manufacturers = manufacturerServices.GetAll();
+            var manufacturers = manufacturerServices.All();
 
             return PartialView("_LayoutManufacturersPartial", manufacturers);
         }

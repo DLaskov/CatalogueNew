@@ -1,14 +1,9 @@
 ﻿$(document).ready(function () {
-    'use strict'
 
-    if ($('div').is('.details')) {
-        if ($("[name='is-auth']").val() == 'false') {
-            $('#input-rating').data('readonly', 'true');
-        }
     getCommentsByProduct();
-    }
 
     function renderBodyComment(indexParam, parentId) {
+        'use strict'
         var index = indexParam;
         var divClass = 'comment';
 
@@ -25,24 +20,24 @@
         edit += '<h6 class="pull-right" id="counter-edit-' + index + '">1000 characters remaining</h6>';
         edit += '<button id="edit-comment" class="btn btn-info">Edit comment</button> ';
         edit += '<button id="cancel-edit" class="btn btn-default">Cancel</button></form></div>';
-        var reply = '<div class="panel-body reply"><form id="form-comment">';
-        reply += '<textarea id="comment-reply" class="form-control counted" name="comment" placeholder="Add comment about the product:" rows="3" ></textarea>';
-        reply += '<h6 class="pull-right" id="counter-reply-' + index + '">1000 characters remaining</h6>';
-        reply += '<button id="submit-reply" class="btn btn-info">Submit reply</button> ';
-        reply += '<button id="cancel-reply" class="btn btn-default">Cancel</button></form></div>';
+        var replay = '<div class="panel-body replay"><form id="form-comment">';
+        replay += '<textarea id="comment-replay" class="form-control counted" name="comment" placeholder="Add comment about the product:" rows="3" ></textarea>';
+        replay += '<h6 class="pull-right" id="counter-replay-' + index + '">1000 characters remaining</h6>';
+        replay += '<button id="submit-replay" class="btn btn-info">Submit replay</button> ';
+        replay += '<button id="cancel-replay" class="btn btn-default">Cancel</button></form></div>';
 
         innerHtml += edit;
         innerHtml += '<h4 class="media-heading"><span class="info"></span><small></small></h4><p class="text-info"></p>';
 
         if (isAuth === 'true') {
-            innerHtml += '<button class="btn btn-info" id="reply">Reply</button> ';
+            innerHtml += '<button class="btn btn-info" id="replay">Replay</button> ';
 
             if (hasRole === 'true') {
                 innerHtml += '<button class="btn btn-default" id="edit">Edit</button> ';
                 innerHtml += '<button class="btn btn-danger" id="delete">Delete</button>';
             }
 
-            innerHtml += reply;
+            innerHtml += replay;
         }
         innerHtml += '</div>';
 
@@ -50,6 +45,7 @@
     }
 
     function getCommentsByProduct() {
+        'use strict'
         $.ajax({
             url: 'http://localhost:38006/api/Comments?productId=' + $("#product-id").val(),
             type: 'GET',
@@ -58,62 +54,95 @@
                 $("#comments .media-body").remove();
                 $("#comments hr").remove();
 
-                RenderCommentsBody(data)
+                $.each(data, function (index, comments) {
+                    var innerHtml = renderBodyComment(index);
+                    $("#comments").append(innerHtml);
+
+                    $.each(comments, function (key, element) {
+                        if (key === 'Text') {
+                            $("#" + index).find("p").html(element);
                         }
+                        else if (key === 'TimeStamp') {
+                            var date = convertUTCDateToLocalDate(new Date(element));
+                            $("#" + index).find("small").html(" &nbsp;" + date.toLocaleTimeString() + " " + date.toLocaleDateString());
+                        }
+                        else if (key === 'Users') {
+                            $.each(element, function (key, element) {
+                                if (key === 'UserName') {
+                                    $("#" + index).find("h4").prepend(element);
+                                }
                             });
                         }
-
-    function RenderCommentsBody(data, parentId) {
-        $.each(data, function (index, comment) {
-
-            if (comment.Comment.ParentCommentID == null) {
-                var innerHtml = renderBodyComment(index);
-                $("#comments").append(innerHtml);
-
-                $("#" + index).find("p").text(comment.Comment.Text).html();
-
-                var timeStamp = convertUTCDateToLocalDate(new Date(comment.Comment.TimeStamp));
-                var date = moment.utc(timeStamp).format('MMMM Do YYYY, h:mm:ss a');
-
-                $("#" + index).find("small").html(" &nbsp;" + date);
-                $("#" + index).find("h4").prepend(comment.Comment.Users.UserName);
-                $("#" + index).append('<input type="hidden" name="comment-id" value=' + comment.Comment.CommentID + ' />');
-                $("#" + index).append('<input type="hidden" name="parent-comment-id" value=' + comment.Comment.ParentCommentID + ' />');
+                        else if (key === 'CommentID') {
+                            $("#" + index).append('<input type="hidden" name="comment-id" value=' + element + ' />');
+                            getCommentsByParent(element);
+                        }
+                        else if (key === 'ParentCommentID') {
+                            $("#" + index).append('<input type="hidden" name="parent-comment-id" value=' + element + ' />');
+                        }
+                    });
+                });
+            },
+            error: function (x, y, z) {
             }
-            else {
-                var innerHtml = renderBodyComment(index, parentId);
-                    var commentId = $('input[name="comment-id"][value="' + parentId + '"]');
-                var commentIdVal = +commentId.val();
-                var innerHtmlId = parentId + '-' + index;
+        });
+    }
 
-                if (commentIdVal === parentId) {
+    function getCommentsByParent(parentId) {
+        'use strict'
+        $.ajax({
+            url: 'http://localhost:38006/api/Comments?parentId=' + parentId,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                var strParentId = parentId.toString();
+
+                $.each(data, function (index, comments) {
+                    var innerHtml = renderBodyComment(index, strParentId);
+                    var commentId = $('input[name="comment-id"][value="' + parentId + '"]');
+
+                    if (commentId.val() === strParentId) {
                         $(commentId.closest('.media-body').append(innerHtml));
                     }
 
-                $("#" + innerHtmlId).find("p").text(comment.Comment.Text).html();
-
-                var timeStamp = convertUTCDateToLocalDate(new Date(comment.Comment.TimeStamp));
-                var date = moment.utc(timeStamp).format('MMMM Do YYYY, h:mm:ss a');
-
-                            $("#" + innerHtmlId).find("small").html(" &nbsp;" + date);
-                $("#" + innerHtmlId).find("h4").prepend(comment.Comment.Users.UserName);
-                $("#" + innerHtmlId).append('<input type="hidden" name="comment-id" value=' + comment.Comment.CommentID + ' />');
-                $("#" + innerHtmlId).append('<input type="hidden" name="parent-comment-id" value=' + comment.Comment.ParentCommentID + ' />');
+                    $.each(comments, function (key, element) {
+                        var innerHtmlId = parentId + '-' + index;
+                        if (key === 'Text') {
+                            $("#" + innerHtmlId).find("p").html(element);
                         }
-
-            if (comment.Comments.length > 0) {
-                RenderCommentsBody(comment.Comments, comment.Comment.CommentID)
+                        else if (key === 'TimeStamp') {
+                            var date = convertUTCDateToLocalDate(new Date(element));
+                            $("#" + innerHtmlId).find("small").html(" &nbsp;" + date.toLocaleTimeString() + " " + date.toLocaleDateString());
+                        }
+                        else if (key === 'Users') {
+                            $.each(element, function (key, element) {
+                                if (key === 'UserName') {
+                                    $("#" + innerHtmlId).find("h4").prepend(element);
                                 }
-
                             });
                         }
+                        else if (key === 'CommentID') {
+                            $("#" + innerHtmlId).append('<input type="hidden" name="comment-id" value=' + element + ' />');
+                            getCommentsByParent(element);
+                        }
+                        else if (key === 'ParentCommentID') {
+                            $("#" + innerHtmlId).append('<input type="hidden" name="parent-comment-id" value=' + element + ' />');
+                        }
+                    });
+                });
+            },
+            error: function (x, y, z) {
+            }
+        });
+    }
 
-    $("#comments").on("click", "#submit-reply", function (e) {
+    $("#comments").on("click", "#submit-replay", function (e) {
         e.preventDefault();
         var _this = $(this);
 
         var comment = {
-            text: _this.closest('.media-body').find("#comment-reply").val(),
+            text: _this.closest('.media-body').find("#comment-replay").val(),
+            userId: $("#user-id").val(),
             productId: $("#product-id").val(),
             parentCommentId: _this.closest('.media-body').find('[name="comment-id"]').val()
         };
@@ -136,20 +165,20 @@
         });
     });
 
-    $("#comments").on("click", "#reply", function (e) {
+    $("#comments").on("click", "#replay", function (e) {
         e.preventDefault();
 
         var mediaBody = $(this).closest('.media-body');
-        var classReply = mediaBody.find('.reply').first();
+        var classReplay = mediaBody.find('.replay').first();
         var counterId = mediaBody.attr('id');
 
-        classReply.fadeToggle();
-        classReply.find("#comment-reply").charCounter(1000, { container: "#counter-reply-" + counterId });
+        classReplay.fadeToggle();
+        classReplay.find("#comment-replay").charCounter(1000, { container: "#counter-replay-" + counterId });
     });
 
-    $("#comments").on("click", "#cancel-reply", function (e) {
+    $("#comments").on("click", "#cancel-replay", function (e) {
         e.preventDefault();
-        $(this).closest('.reply').fadeOut();
+        $(this).closest('.replay').fadeOut();
     });
 
     $("#comments").on("click", "#edit", function (e) {
@@ -236,6 +265,7 @@
     });
 
     function convertUTCDateToLocalDate(date) {
+        'use strict'
         var newDate = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
 
         var offset = date.getTimezoneOffset() / 60;
@@ -269,21 +299,9 @@
         });
         return false;
     }
-    $(".img-preview img").on("click", function () {
-        if (confirm("You are going to delete this image.")) {
-            var src = $(this).attr("src");
-            var id = src.split("=")[1];
-            $.post("../RemoveImageById", { value: id });
-            $(this).remove();
-        }
-    }
-    );
 
-    function confirmProductDelete() {
-        if (!confirm("You are going to delete this product.")) {
-            $(this).preventDefault();
-        }
-    };
+    $(".body-content").on("click", ".ajax-pagination a", getPage);
+
     Dropzone.options.dropzoneForm = {
 
         autoProcessQueue: true,
@@ -332,44 +350,6 @@
     }
 
     $("#comment").charCounter(1000, { container: "#counter" });
-
-    $('#input-rating').on('rating.change', function (event, value, caption) {
-
-        var rating = {
-            value: value,
-            productId: $("#product-id").val()
-        }
-
-        $.ajax({
-            url: 'http://localhost:38006/api/Rating',
-            type: 'POST',
-            data: JSON.stringify(rating),
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                getProductRating(rating.productId);
-            },
-            error: function () { }
-        });
-    });
-
-    if ($('div').is('.details')) {
-        var userID = $("#user-id").val();
-        var productID = $("#product-id").val();
-        getProductRating(productID)
-    }
-
-    function getProductRating(productID) {
-
-
-        $.ajax({
-            url: 'http://localhost:38006/api/Rating?&productID=' + productID,
-            type: 'GET',
-            dataType: 'json',
-            success: function (data) {
-                $('#input-rating').rating('update', data);
-            }
-        });
-    };
 });
 
 (function ($) {

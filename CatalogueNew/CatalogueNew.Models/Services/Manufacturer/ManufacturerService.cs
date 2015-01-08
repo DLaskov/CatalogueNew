@@ -11,7 +11,7 @@ using System.Configuration;
 
 namespace CatalogueNew.Models.Services
 {
-    public class ManufacturerService : BaseService<Manufacturer>, IManufacturerService
+    public class ManufacturerService : BaseService, IManufacturerService
     {
         private readonly int pageSize = 1;
 
@@ -20,7 +20,7 @@ namespace CatalogueNew.Models.Services
         {
         }
 
-        public IEnumerable<Manufacturer> GetAll()
+        public IEnumerable<Manufacturer> All()
         {
             return this.Context.Manufacturers.ToList();
         }

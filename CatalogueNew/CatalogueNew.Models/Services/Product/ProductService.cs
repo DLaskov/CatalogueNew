@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CatalogueNew.Models.Services
 {
-    public class ProductService : BaseService<Product>, IProductService
+    public class ProductService : BaseService, IProductService
     {
         private const int pageSize = 9;
 
@@ -18,7 +18,7 @@ namespace CatalogueNew.Models.Services
         {
         }
 
-        public IEnumerable<Product> GetAll()
+        public IEnumerable<Product> All()
         {
             return this.Context.Products.ToList();
         }
@@ -32,11 +32,10 @@ namespace CatalogueNew.Models.Services
             return product;
         }
 
-        public int Add(Product product)
+        public void Add(Product product)
         {
             this.Context.Products.Add(product);
             this.Context.SaveChanges();
-            return (int)product.ProductID;
         }
 
         public void Modify(Product product)
@@ -107,6 +106,19 @@ namespace CatalogueNew.Models.Services
                 var products = this.Context.Products.Include("Images").OrderBy(c => c.Name);
                 return new PagedList<Product>(products, page, pageSize);
             }
+        }
+
+        public PagedList<Product> GetProducts(int page, string userID)
+        {
+            var products = (from prod in this.Context.Products
+                            join wish in this.Context.Wishlists on prod.ProductID equals wish.ProductID
+                            where userID == wish.UserID
+                            orderby prod.Name
+                            select prod).Include("Images");
+
+
+            var pagedList = new PagedList<Product>(products, page, pageSize);
+            return pagedList;
         }
     }
 }

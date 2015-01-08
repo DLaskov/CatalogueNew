@@ -10,6 +10,7 @@
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
             "~/Scripts/jquery-{version}.js",
             "~/Scripts/app.js",
+            "~/Scripts/appwishlist.js",
             "~/Scripts/jquery.unobtrusive-ajax.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -23,7 +24,7 @@
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.min.css",
+                      "~/Content/bootstrap.css",
                 //"~/Content/bootstrap.readable.min.css",
                       "~/Content/bootstrap-theme.min.css",
                       "~/Content/catalogue.css",

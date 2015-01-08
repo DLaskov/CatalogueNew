@@ -26,8 +26,10 @@ namespace CatalogueNew.Models.Entities
         [MaxLength(160)]
         public string Name { get; set; }
 
+        [DisplayName("Manufacturer")]
         public int ManufacturerID { get; set; }
 
+        [DisplayName("Category")]
         public int CategoryID { get; set; }
 
         public Category Category { get; set; }
