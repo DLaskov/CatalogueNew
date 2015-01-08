@@ -8,6 +8,7 @@ using System.Security.Claims;
 
 namespace CatalogueNew.Web.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : AppController
     {
         // GET: Home

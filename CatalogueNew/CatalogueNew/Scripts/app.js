@@ -1,9 +1,14 @@
 ﻿$(document).ready(function () {
+    'use strict'
 
-    getCommentsByProduct();
+    if ($('div').is('.details')) {
+        if ($("[name='is-auth']").val() == 'false') {
+            $('#input-rating').data('readonly', 'true');
+        }
+        getCommentsByProduct();
+    }
 
     function renderBodyComment(indexParam, parentId) {
-        'use strict'
         var index = indexParam;
         var divClass = 'comment';
 
@@ -20,24 +25,24 @@
         edit += '<h6 class="pull-right" id="counter-edit-' + index + '">1000 characters remaining</h6>';
         edit += '<button id="edit-comment" class="btn btn-info">Edit comment</button> ';
         edit += '<button id="cancel-edit" class="btn btn-default">Cancel</button></form></div>';
-        var replay = '<div class="panel-body replay"><form id="form-comment">';
-        replay += '<textarea id="comment-replay" class="form-control counted" name="comment" placeholder="Add comment about the product:" rows="3" ></textarea>';
-        replay += '<h6 class="pull-right" id="counter-replay-' + index + '">1000 characters remaining</h6>';
-        replay += '<button id="submit-replay" class="btn btn-info">Submit replay</button> ';
-        replay += '<button id="cancel-replay" class="btn btn-default">Cancel</button></form></div>';
+        var reply = '<div class="panel-body reply"><form id="form-comment">';
+        reply += '<textarea id="comment-reply" class="form-control counted" name="comment" placeholder="Add comment about the product:" rows="3" ></textarea>';
+        reply += '<h6 class="pull-right" id="counter-reply-' + index + '">1000 characters remaining</h6>';
+        reply += '<button id="submit-reply" class="btn btn-info">Submit reply</button> ';
+        reply += '<button id="cancel-reply" class="btn btn-default">Cancel</button></form></div>';
 
         innerHtml += edit;
         innerHtml += '<h4 class="media-heading"><span class="info"></span><small></small></h4><p class="text-info"></p>';
 
         if (isAuth === 'true') {
-            innerHtml += '<button class="btn btn-info" id="replay">Replay</button> ';
+            innerHtml += '<button class="btn btn-info" id="reply">Reply</button> ';
 
             if (hasRole === 'true') {
                 innerHtml += '<button class="btn btn-default" id="edit">Edit</button> ';
                 innerHtml += '<button class="btn btn-danger" id="delete">Delete</button>';
             }
 
-            innerHtml += replay;
+            innerHtml += reply;
         }
         innerHtml += '</div>';
 
@@ -45,7 +50,6 @@
     }
 
     function getCommentsByProduct() {
-        'use strict'
         $.ajax({
             url: 'http://localhost:38006/api/Comments?productId=' + $("#product-id").val(),
             type: 'GET',
@@ -54,97 +58,62 @@
                 $("#comments .media-body").remove();
                 $("#comments hr").remove();
 
-                $.each(data, function (index, comments) {
-                    var innerHtml = renderBodyComment(index);
-                    $("#comments").append(innerHtml);
-
-                    $.each(comments, function (key, element) {
-                        if (key === 'Text') {
-                            $("#" + index).find("p").html(element);
-                        }
-                        else if (key === 'TimeStamp') {
-                            var temp = convertUTCDateToLocalDate(new Date(element));
-                            var date = moment.utc(temp).format('MMMM Do YYYY, h:mm:ss a');
-                            $("#" + index).find("small").html(" &nbsp;" + date);
-                        }
-                        else if (key === 'Users') {
-                            $.each(element, function (key, element) {
-                                if (key === 'UserName') {
-                                    $("#" + index).find("h4").prepend(element);
-                                }
-                            });
-                        }
-                        else if (key === 'CommentID') {
-                            $("#" + index).append('<input type="hidden" name="comment-id" value=' + element + ' />');
-                            getCommentsByParent(element);
-                        }
-                        else if (key === 'ParentCommentID') {
-                            $("#" + index).append('<input type="hidden" name="parent-comment-id" value=' + element + ' />');
-                        }
-                    });
-                });
-            },
-            error: function (x, y, z) {
+                RenderCommentsBody(data)
             }
         });
     }
 
-    function getCommentsByParent(parentId) {
-        'use strict'
-        $.ajax({
-            url: 'http://localhost:38006/api/Comments?parentId=' + parentId,
-            type: 'GET',
-            dataType: 'json',
-            success: function (data) {
-                var strParentId = parentId.toString();
+    function RenderCommentsBody(data, parentId) {
+        $.each(data, function (index, comment) {
 
-                $.each(data, function (index, comments) {
-                    var innerHtml = renderBodyComment(index, strParentId);
-                    var commentId = $('input[name="comment-id"][value="' + parentId + '"]');
+            if (comment.Comment.ParentCommentID == null) {
+                var innerHtml = renderBodyComment(index);
+                $("#comments").append(innerHtml);
 
-                    if (commentId.val() === strParentId) {
-                        $(commentId.closest('.media-body').append(innerHtml));
-                    }
+                $("#" + index).find("p").text(comment.Comment.Text).html();
 
-                    $.each(comments, function (key, element) {
-                        var innerHtmlId = parentId + '-' + index;
-                        if (key === 'Text') {
-                            $("#" + innerHtmlId).find("p").html(element);
-                        }
-                        else if (key === 'TimeStamp') {
-                            var temp = convertUTCDateToLocalDate(new Date(element));
-                            var date = moment.utc(temp).format('MMMM Do YYYY, h:mm:ss a');
-                            $("#" + innerHtmlId).find("small").html(" &nbsp;" + date);
-                        }
-                        else if (key === 'Users') {
-                            $.each(element, function (key, element) {
-                                if (key === 'UserName') {
-                                    $("#" + innerHtmlId).find("h4").prepend(element);
-                                }
-                            });
-                        }
-                        else if (key === 'CommentID') {
-                            $("#" + innerHtmlId).append('<input type="hidden" name="comment-id" value=' + element + ' />');
-                            getCommentsByParent(element);
-                        }
-                        else if (key === 'ParentCommentID') {
-                            $("#" + innerHtmlId).append('<input type="hidden" name="parent-comment-id" value=' + element + ' />');
-                        }
-                    });
-                });
-            },
-            error: function (x, y, z) {
+                var timeStamp = convertUTCDateToLocalDate(new Date(comment.Comment.TimeStamp));
+                var date = moment.utc(timeStamp).format('MMMM Do YYYY, h:mm:ss a');
+
+                $("#" + index).find("small").html(" &nbsp;" + date);
+                $("#" + index).find("h4").prepend(comment.Comment.Users.UserName);
+                $("#" + index).append('<input type="hidden" name="comment-id" value=' + comment.Comment.CommentID + ' />');
+                $("#" + index).append('<input type="hidden" name="parent-comment-id" value=' + comment.Comment.ParentCommentID + ' />');
             }
+            else {
+                var innerHtml = renderBodyComment(index, parentId);
+                var commentId = $('input[name="comment-id"][value="' + parentId + '"]');
+                var commentIdVal = +commentId.val();
+                var innerHtmlId = parentId + '-' + index;
+
+                if (commentIdVal === parentId) {
+                    $(commentId.closest('.media-body').append(innerHtml));
+                }
+
+                $("#" + innerHtmlId).find("p").text(comment.Comment.Text).html();
+
+                var timeStamp = convertUTCDateToLocalDate(new Date(comment.Comment.TimeStamp));
+                var date = moment.utc(timeStamp).format('MMMM Do YYYY, h:mm:ss a');
+
+                $("#" + innerHtmlId).find("small").html(" &nbsp;" + date);
+                $("#" + innerHtmlId).find("h4").prepend(comment.Comment.Users.UserName);
+                $("#" + innerHtmlId).append('<input type="hidden" name="comment-id" value=' + comment.Comment.CommentID + ' />');
+                $("#" + innerHtmlId).append('<input type="hidden" name="parent-comment-id" value=' + comment.Comment.ParentCommentID + ' />');
+            }
+
+            if (comment.Comments.length > 0) {
+                RenderCommentsBody(comment.Comments, comment.Comment.CommentID)
+            }
+
         });
     }
 
-    $("#comments").on("click", "#submit-replay", function (e) {
+    $("#comments").on("click", "#submit-reply", function (e) {
         e.preventDefault();
         var _this = $(this);
 
         var comment = {
-            text: _this.closest('.media-body').find("#comment-replay").val(),
-            userId: $("#user-id").val(),
+            text: _this.closest('.media-body').find("#comment-reply").val(),
             productId: $("#product-id").val(),
             parentCommentId: _this.closest('.media-body').find('[name="comment-id"]').val()
         };
@@ -167,20 +136,20 @@
         });
     });
 
-    $("#comments").on("click", "#replay", function (e) {
+    $("#comments").on("click", "#reply", function (e) {
         e.preventDefault();
 
         var mediaBody = $(this).closest('.media-body');
-        var classReplay = mediaBody.find('.replay').first();
+        var classReply = mediaBody.find('.reply').first();
         var counterId = mediaBody.attr('id');
 
-        classReplay.fadeToggle();
-        classReplay.find("#comment-replay").charCounter(1000, { container: "#counter-replay-" + counterId });
+        classReply.fadeToggle();
+        classReply.find("#comment-reply").charCounter(1000, { container: "#counter-reply-" + counterId });
     });
 
-    $("#comments").on("click", "#cancel-replay", function (e) {
+    $("#comments").on("click", "#cancel-reply", function (e) {
         e.preventDefault();
-        $(this).closest('.replay').fadeOut();
+        $(this).closest('.reply').fadeOut();
     });
 
     $("#comments").on("click", "#edit", function (e) {
@@ -267,7 +236,6 @@
     });
 
     function convertUTCDateToLocalDate(date) {
-        'use strict'
         var newDate = new Date(date.getTime() + date.getTimezoneOffset() * 60 * 1000);
 
         var offset = date.getTimezoneOffset() / 60;
@@ -365,11 +333,10 @@
 
     $("#comment").charCounter(1000, { container: "#counter" });
 
-    $('#stars').on('starrr:change', function (e, value) {
+    $('#input-rating').on('rating.change', function (event, value, caption) {
 
         var rating = {
             value: value,
-            userID: $("#user-id").val(),
             productId: $("#product-id").val()
         }
 
@@ -379,31 +346,26 @@
             data: JSON.stringify(rating),
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
-                $.each(data, function (key, element) {
-                    if (key === 'UserID') {
-                        getRatingByUser(element);
-                    }
-                });
+                getProductRating(rating.productId);
             },
             error: function () { }
         });
     });
 
-    function getRatingByUser(userID) {
-        'use strict'
+    if ($('div').is('.details')) {
+        var userID = $("#user-id").val();
+        var productID = $("#product-id").val();
+        getProductRating(productID)
+    }
+
+    function getProductRating(productID) {
 
         $.ajax({
-            url: 'http://localhost:38006/api/Rating?userID=' + userID + '&productID=' + $("#product-id").val(),
+            url: 'http://localhost:38006/api/Rating?&productID=' + productID,
             type: 'GET',
             dataType: 'json',
             success: function (data) {
-                $.each(data, function (key, element) {
-                    if (key === 'Value') {
-                        $('#count').html(element);
-                    }
-                });
-                $('#stars').hide();
-                $('#rating').show();
+                $('#input-rating').rating('update', data);
             }
         });
     };
@@ -491,108 +453,3 @@
     };
 
 })(jQuery);
-
-// Starrr plugin (https://github.com/dobtco/starrr)
-var __slice = [].slice;
-
-(function ($, window) {
-    var Starrr;
-
-    Starrr = (function () {
-        Starrr.prototype.defaults = {
-            rating: void 0,
-            numStars: 5,
-            change: function (e, value) { }
-        };
-
-        function Starrr($el, options) {
-            var i, _, _ref,
-              _this = this;
-
-            this.options = $.extend({}, this.defaults, options);
-            this.$el = $el;
-            _ref = this.defaults;
-            for (i in _ref) {
-                _ = _ref[i];
-                if (this.$el.data(i) != null) {
-                    this.options[i] = this.$el.data(i);
-                }
-            }
-            this.createStars();
-            this.syncRating();
-            this.$el.on('mouseover.starrr', 'span', function (e) {
-                return _this.syncRating(_this.$el.find('span').index(e.currentTarget) + 1);
-            });
-            this.$el.on('mouseout.starrr', function () {
-                return _this.syncRating();
-            });
-            this.$el.on('click.starrr', 'span', function (e) {
-                return _this.setRating(_this.$el.find('span').index(e.currentTarget) + 1);
-            });
-            this.$el.on('starrr:change', this.options.change);
-        }
-
-        Starrr.prototype.createStars = function () {
-            var _i, _ref, _results;
-
-            _results = [];
-            for (_i = 1, _ref = this.options.numStars; 1 <= _ref ? _i <= _ref : _i >= _ref; 1 <= _ref ? _i++ : _i--) {
-                _results.push(this.$el.append("<span class='glyphicon .glyphicon-star-empty'></span>"));
-            }
-            return _results;
-        };
-
-        Starrr.prototype.setRating = function (rating) {
-            if (this.options.rating === rating) {
-                rating = void 0;
-            }
-            this.options.rating = rating;
-            this.syncRating();
-            return this.$el.trigger('starrr:change', rating);
-        };
-
-        Starrr.prototype.syncRating = function (rating) {
-            var i, _i, _j, _ref;
-
-            rating || (rating = this.options.rating);
-            if (rating) {
-                for (i = _i = 0, _ref = rating - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
-                    this.$el.find('span').eq(i).removeClass('glyphicon-star-empty').addClass('glyphicon-star');
-                }
-            }
-            if (rating && rating < 5) {
-                for (i = _j = rating; rating <= 4 ? _j <= 4 : _j >= 4; i = rating <= 4 ? ++_j : --_j) {
-                    this.$el.find('span').eq(i).removeClass('glyphicon-star').addClass('glyphicon-star-empty');
-                }
-            }
-            if (!rating) {
-                return this.$el.find('span').removeClass('glyphicon-star').addClass('glyphicon-star-empty');
-            }
-        };
-
-        return Starrr;
-
-    })();
-    return $.fn.extend({
-        starrr: function () {
-            var args, option;
-
-            option = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
-            return this.each(function () {
-                var data;
-
-                data = $(this).data('star-rating');
-                if (!data) {
-                    $(this).data('star-rating', (data = new Starrr($(this), option)));
-                }
-                if (typeof option === 'string') {
-                    return data[option].apply(data, args);
-                }
-            });
-        }
-    });
-})(window.jQuery, window);
-
-$(function () {
-    return $(".starrr").starrr();
-});

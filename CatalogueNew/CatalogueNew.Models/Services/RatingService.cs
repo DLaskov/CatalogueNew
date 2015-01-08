@@ -25,17 +25,25 @@ namespace CatalogueNew.Models.Services
             }
         }
 
-
-        public Rating RatingByUserProduct(string userID, int productID)
+        public int TotalRating(int productID)
         {
-            var rating = this.Context.Ratings.Where(r => r.UserID == userID && r.ProductID == productID).FirstOrDefault();
+            double totalRating = 0;
 
-            return rating;
-        }
+            var ratings = this.Context.Ratings.Where(r => r.ProductID == productID).Select(r => r.Value).ToList();
 
-        public IQueryable<Rating> RatingsByProduct(int productID)
-        {
-            return this.Context.Ratings.Where(r => r.ProductID == productID);
+            if (ratings.Count == 0)
+            {
+                return 0;
+            }
+
+            foreach (var rating in ratings)
+            {
+                totalRating += rating;
+            }
+
+            totalRating = Math.Round(totalRating / ratings.Count);
+
+            return (int)totalRating;
         }
     }
 }

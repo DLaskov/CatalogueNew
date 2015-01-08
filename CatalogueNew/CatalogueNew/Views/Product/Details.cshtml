@@ -5,7 +5,7 @@
     var product = @Model.Product;
 }
 
-<div class="row">
+<div class="row details">
     <div class="col-md-4">
         <input type="hidden" id="product-id" value="@product.ProductID" />
         <input type="hidden" id="user-id" value="@User.Identity.GetUserId()" />
@@ -39,16 +39,13 @@
         <div class="lead"><strong>Category: </strong>@product.Category.Name</div>
         <div class="lead"><strong>Year: </strong>@product.Year.Value</div>
         <div class="lead"><strong>Description: </strong>@product.Description</div>
-
         <div class="lead">
-            <div id="stars" class="starrr"><b>Raiting: </b></div>
-            @*<div id="stars-existing" class="starrr" data-rating='4'></div>*@
-            <div id="rating"><b>Raiting: </b>You already gave a rating of <span id="count">0</span> star(s)</div> 
+            <strong>Rating: </strong>
+            <input id="input-rating" class="rating" data-size="xs" data-show-clear="false" data-show-caption="false" data-step="1" />
         </div>
-
-        <div class="lead"><strong>Tags: </strong></div>
-        <div class="lead"><strong>Like Dislike Wishlist </strong></div>
     </div>
+    <div class="lead"><strong>Tags: </strong></div>
+    <div class="lead"><strong>Like Dislike Wishlist </strong></div>
 </div>
 
 @if (User.Identity.IsAuthenticated)
@@ -84,7 +81,11 @@ else
 @section Scripts{
     <script src="~/Scripts/moment.min.js"></script>
     <script src="~/Scripts/moment-with-locales.min.js"></script>
+
+    <link href="~/Content/star-rating.min.css" rel="stylesheet" />
+    <script src="~/Scripts/star-rating.min.js"></script>
     <script>
         moment().format();
     </script>
+
 }

@@ -65,3 +65,4 @@
 /// <reference path="app.js" />
 /// <reference path="moment-with-locales.js" />
 /// <reference path="moment.js" />
+/// <reference path="star-rating.js" />

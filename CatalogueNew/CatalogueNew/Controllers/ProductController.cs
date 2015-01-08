@@ -12,6 +12,7 @@ using System.Web.Mvc;
 
 namespace CatalogueNew.Web.Controllers
 {
+    [AllowAnonymous]
     public class ProductController : Controller
     {
         private ICategoryService categoryService;

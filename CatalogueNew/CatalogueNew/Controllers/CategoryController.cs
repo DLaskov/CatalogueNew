@@ -21,7 +21,7 @@ namespace CatalogueNew.Web.Controllers
         {
             this.categoryServices = categoryServices;
         }
-
+         
         public ActionResult Index(int page = 1)
         {
             PagedList<Category> pageItems = categoryServices.GetCategories(page);
