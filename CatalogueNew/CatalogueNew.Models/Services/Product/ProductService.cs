@@ -107,5 +107,18 @@ namespace CatalogueNew.Models.Services
                 return new PagedList<Product>(products, page, pageSize);
             }
         }
+
+        public PagedList<Product> GetProducts(int page, string userID)
+        {
+            var products = (from prod in this.Context.Products
+                            join wish in this.Context.Wishlists on prod.ProductID equals wish.ProductID
+                            where userID == wish.UserID
+                            orderby prod.Name
+                            select prod).Include("Images");
+
+
+            var pagedList = new PagedList<Product>(products, page, pageSize);
+            return pagedList;
+        }
     }
 }

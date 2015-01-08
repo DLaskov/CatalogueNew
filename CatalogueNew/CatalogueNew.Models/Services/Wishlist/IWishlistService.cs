@@ -10,18 +10,10 @@ namespace CatalogueNew.Models.Services
 {
     public interface IWishlistService
     {
-        PagedList<Wishlist> GetWishlists(int page);
-
         Wishlist Find(int productID, string userID);
 
         void Add(Wishlist wishlist);
 
-        void Modify(Wishlist wishlist);
-
-        void Remove(Wishlist wishlist);
-
         void Remove(int id);
-
-        IEnumerable<Wishlist> GetAll();
     }
 }
