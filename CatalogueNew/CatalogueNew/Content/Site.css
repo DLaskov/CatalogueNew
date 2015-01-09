@@ -169,3 +169,7 @@ thumbnail:hover {
 .checkbox input[type="checkbox"]{
     margin-left: 5px;
 }
+
+.star-rating{
+    display: inline-block;
+}
