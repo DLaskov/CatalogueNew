@@ -1391,15 +1391,15 @@ p {
 }
 
 .lead {
-    margin-bottom: 20px;
-    font-size: 16px;
+    margin-bottom: 5px;
+    font-size: 1em;
     font-weight: 300;
     line-height: 1.4;
 }
 
 @media (min-width: 768px) {
     .lead {
-        font-size: 21px;
+        font-size: 1em;
     }
 }
 
@@ -5690,7 +5690,6 @@ a.badge:focus {
 
 .thumbnail {
     display: block;
-    padding: 4px;
     height: 215px;
     line-height: 1.42857143;
     position: relative;
@@ -5704,6 +5703,7 @@ a.badge:focus {
 
     .thumbnail > img,
     .thumbnail a > img {
+        padding: 5px;
         max-height: 100%;
         max-width: 100%;
         height: auto;

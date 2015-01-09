@@ -10,19 +10,24 @@
         <input type="hidden" id="product-id" value="@product.ProductID" />
         <input type="hidden" id="user-id" value="@User.Identity.GetUserId()" />
         <input type="hidden" id="has-wishlist" value="@Model.Wishlist.WishlistID" />
-        <h2>@product.Name</h2>
 
         @if (product.Images.Count == 0)
         {
-            <img src="~/Images/no_pic_small.gif" />
+            <div class="thumbnail">
+                <img src="~/Images/no_pic_small.gif" />
+            </div>
         }
         else if (product.Images.Count == 1)
         {
-            <img src="@Url.Content("~/HttpImageHandler.ashx?id=" + product.Images.FirstOrDefault().ImageID)" class="img-rounded" />
+            <div class="thumbnail">
+                <img src="@Url.Content("~/HttpImageHandler.ashx?id=" + product.Images.FirstOrDefault().ImageID)" />
+            </div>
         }
         else
         {
-            <img src="@Url.Content("~/HttpImageHandler.ashx?id=" + product.Images.FirstOrDefault().ImageID)" class="img-rounded" />
+            <div class="thumbnail">
+                <img src="@Url.Content("~/HttpImageHandler.ashx?id=" + product.Images.FirstOrDefault().ImageID)" />
+            </div>
             <br /><br />
             <div class="row">
                 @foreach (var image in product.Images.Skip(1))
@@ -36,7 +41,7 @@
 
     </div>
     <div class="col-md-8">
-        <br />
+        <h2>@product.Name</h2>
         <div class="lead"><strong>Category: </strong>@product.Category.Name</div>
         <div class="lead"><strong>Year: </strong>@product.Year.Value</div>
         <div class="lead"><strong>Description: </strong>@product.Description</div>
@@ -44,16 +49,16 @@
             <strong>Rating: </strong>
             <input id="input-rating" class="rating" data-size="xs" data-show-clear="false" data-show-caption="false" data-step="1" />
         </div>
-    </div>
-    <div class="lead"><strong>Tags: </strong></div>
-    <div class="lead">
-        <strong>
-            Like Dislike
-            @if (User.Identity.IsAuthenticated)
-            {
-                <input type="button" id="add-wishlist" class="btn btn-sm btn-success" value="+ Add To Wishlist" name="wishlist">
-            }
-        </strong>
+        <div class="lead"><strong>Tags: </strong></div>
+        <div class="lead">
+            <strong>
+                Like Dislike
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <input type="button" id="add-wishlist" class="btn btn-sm btn-success" value="Add To Wishlist" name="wishlist">
+                }
+            </strong>
+        </div>
     </div>
 </div>
 

@@ -17,7 +17,7 @@ $(document).ready(function () {
             $.post("RemoveFromWishlist", { data: wishlistID });
             wishlist.val('0');
             wishlistID = '0';
-            wishlistButton.val('+ Add To Wishlist');
+            wishlistButton.val('Add To Wishlist');
             wishlistButton.removeClass("btn btn-sm btn-danger")
             wishlistButton.removeClass("btn btn-sm btn-warning")
             wishlistButton.addClass("btn btn-sm btn-success");
