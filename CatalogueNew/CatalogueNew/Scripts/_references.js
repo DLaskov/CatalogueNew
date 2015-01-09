@@ -1,4 +1,5 @@
-﻿/// <autosync enabled="true" />
+﻿/// <reference path="jquery-ui-1.11.2.js" />
+/// <autosync enabled="true" />
 /// <reference path="app.js" />
 /// <reference path="appjs.js" />
 /// <reference path="appwishlist.js" />

@@ -32,6 +32,8 @@ $(document).ready(function () {
     wishlistButton.mouseenter(function () {
         if (wishlistID !== '0') {
             wishlistButton.val("Remove From Wishlist");
+            wishlistButton.removeClass("btn btn-sm btn-warning");
+            wishlistButton.removeClass("btn btn-sm btn-success");
             wishlistButton.addClass("btn btn-sm btn-danger");
         }
     });
