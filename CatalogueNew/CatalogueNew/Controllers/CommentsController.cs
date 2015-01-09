@@ -29,18 +29,10 @@ namespace CatalogueNew.Web.Controllers
 
             foreach (var comment in comments)
             {
-                comment.Comment.TimeStamp = TimeZone.CurrentTimeZone.ToLocalTime(comment.Comment.TimeStamp);
+                comment.ParentComment.TimeStamp = TimeZone.CurrentTimeZone.ToLocalTime(comment.ParentComment.TimeStamp);
             }
 
             return comments;
-        }
-
-        private static void UTCToLocalTime(IEnumerable<Comment> comments)
-        {
-            foreach (var comment in comments)
-            {
-                comment.TimeStamp = TimeZone.CurrentTimeZone.ToLocalTime(comment.TimeStamp);
-            }
         }
 
         public Comment Post([FromBody]Comment comment)

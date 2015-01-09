@@ -9,8 +9,8 @@ namespace CatalogueNew.Models.Infrastructure
 {
     public class CommentWrapper
     {
-        public Comment Comment { get; set; }
+        public Comment ParentComment { get; set; }
 
-        public List<CommentWrapper> Comments { get; set; }
+        public List<CommentWrapper> ChildrenComments { get; set; }
     }
 }

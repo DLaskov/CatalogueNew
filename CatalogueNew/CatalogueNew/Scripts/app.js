@@ -2,10 +2,68 @@
     'use strict'
 
     if ($('div').is('.details')) {
-        if ($("[name='is-auth']").val() == 'false') {
+        var isAuth = $("[name='is-auth']").val();
+
+        if (isAuth == 'false') {
             $('#input-rating').data('readonly', 'true');
         }
-    getCommentsByProduct();
+
+        getCommentsByProduct();
+    }
+
+    function getCommentsByProduct() {
+        var productId = $("#product-id").val();
+
+        $.ajax({
+            url: 'http://localhost:38006/api/Comments?productId=' + productId,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                $("#comments .media-body").remove();
+                $("#comments hr").remove();
+                renderComments(data)
+            }
+        });
+    }
+
+    function renderComments(data, parentId) {
+        $.each(data, function (index, comment) {
+
+            if (comment.ParentComment.ParentCommentID == null) {
+                var innerHtml = renderBodyComment(index);
+                $("#comments").append(innerHtml);
+
+                renderData(index, comment);
+            }
+            else {
+                var innerHtml = renderBodyComment(index, parentId);
+                var commentId = $('input[name="comment-id"][value="' + parentId + '"]');
+                var commentIdVal = +commentId.val();
+                var innerHtmlId = parentId + '-' + index;
+
+                if (commentIdVal === parentId) {
+                    $(commentId.closest('.media-body').append(innerHtml));
+                }
+
+                renderData(innerHtmlId, comment);
+            }
+
+            if (comment.ChildrenComments.length > 0) {
+                renderComments(comment.ChildrenComments, comment.ParentComment.CommentID)
+            }
+
+        });
+    }
+
+    function renderData(index, comment) {
+        var timeStamp = convertUTCDateToLocalDate(new Date(comment.ParentComment.TimeStamp));
+        var date = moment.utc(timeStamp).format('MMMM Do YYYY, h:mm:ss a');
+
+        $("#" + index).find("p").text(comment.ParentComment.Text).html();
+        $("#" + index).find("small").html(" &nbsp;" + date);
+        $("#" + index).find("h4").prepend(comment.ParentComment.Users.UserName);
+        $("#" + index).append('<input type="hidden" name="comment-id" value=' + comment.ParentComment.CommentID + ' />');
+        $("#" + index).append('<input type="hidden" name="parent-comment-id" value=' + comment.ParentComment.ParentCommentID + ' />');
     }
 
     function renderBodyComment(indexParam, parentId) {
@@ -48,65 +106,6 @@
 
         return innerHtml;
     }
-
-    function getCommentsByProduct() {
-        $.ajax({
-            url: 'http://localhost:38006/api/Comments?productId=' + $("#product-id").val(),
-            type: 'GET',
-            dataType: 'json',
-            success: function (data) {
-                $("#comments .media-body").remove();
-                $("#comments hr").remove();
-
-                RenderCommentsBody(data)
-                        }
-                            });
-                        }
-
-    function RenderCommentsBody(data, parentId) {
-        $.each(data, function (index, comment) {
-
-            if (comment.Comment.ParentCommentID == null) {
-                var innerHtml = renderBodyComment(index);
-                $("#comments").append(innerHtml);
-
-                $("#" + index).find("p").text(comment.Comment.Text).html();
-
-                var timeStamp = convertUTCDateToLocalDate(new Date(comment.Comment.TimeStamp));
-                var date = moment.utc(timeStamp).format('MMMM Do YYYY, h:mm:ss a');
-
-                $("#" + index).find("small").html(" &nbsp;" + date);
-                $("#" + index).find("h4").prepend(comment.Comment.Users.UserName);
-                $("#" + index).append('<input type="hidden" name="comment-id" value=' + comment.Comment.CommentID + ' />');
-                $("#" + index).append('<input type="hidden" name="parent-comment-id" value=' + comment.Comment.ParentCommentID + ' />');
-            }
-            else {
-                var innerHtml = renderBodyComment(index, parentId);
-                    var commentId = $('input[name="comment-id"][value="' + parentId + '"]');
-                var commentIdVal = +commentId.val();
-                var innerHtmlId = parentId + '-' + index;
-
-                if (commentIdVal === parentId) {
-                        $(commentId.closest('.media-body').append(innerHtml));
-                    }
-
-                $("#" + innerHtmlId).find("p").text(comment.Comment.Text).html();
-
-                var timeStamp = convertUTCDateToLocalDate(new Date(comment.Comment.TimeStamp));
-                var date = moment.utc(timeStamp).format('MMMM Do YYYY, h:mm:ss a');
-
-                            $("#" + innerHtmlId).find("small").html(" &nbsp;" + date);
-                $("#" + innerHtmlId).find("h4").prepend(comment.Comment.Users.UserName);
-                $("#" + innerHtmlId).append('<input type="hidden" name="comment-id" value=' + comment.Comment.CommentID + ' />');
-                $("#" + innerHtmlId).append('<input type="hidden" name="parent-comment-id" value=' + comment.Comment.ParentCommentID + ' />');
-                        }
-
-            if (comment.Comments.length > 0) {
-                RenderCommentsBody(comment.Comments, comment.Comment.CommentID)
-                                }
-
-                            });
-                        }
 
     $("#comments").on("click", "#submit-reply", function (e) {
         e.preventDefault();
@@ -284,6 +283,7 @@
             $(this).preventDefault();
         }
     };
+
     Dropzone.options.dropzoneForm = {
 
         autoProcessQueue: true,
@@ -353,13 +353,11 @@
     });
 
     if ($('div').is('.details')) {
-        var userID = $("#user-id").val();
         var productID = $("#product-id").val();
         getProductRating(productID)
     }
 
     function getProductRating(productID) {
-
 
         $.ajax({
             url: 'http://localhost:38006/api/Rating?&productID=' + productID,

@@ -46,8 +46,8 @@ namespace CatalogueNew.Models.Services
                 {
                     commentsWrapperList.Add(new CommentWrapper()
                     {
-                        Comment = comment,
-                        Comments = new List<CommentWrapper>(0)
+                        ParentComment = comment,
+                        ChildrenComments = new List<CommentWrapper>(0)
                     });
                     commentsByProduct.Remove(comment);
                 }
@@ -65,18 +65,18 @@ namespace CatalogueNew.Models.Services
 
             foreach (var commentWrapper in commentsWrapper)
             {
-                var children = commentsByProduct.Where(x => x.ParentCommentID == commentWrapper.Comment.CommentID).ToList();
+                var children = commentsByProduct.Where(x => x.ParentCommentID == commentWrapper.ParentComment.CommentID).ToList();
 
                 foreach (var child in children)
                 {
-                    commentWrapper.Comments.Add(new CommentWrapper()
+                    commentWrapper.ChildrenComments.Add(new CommentWrapper()
                     {
-                        Comment = child,
-                        Comments = new List<CommentWrapper>(0)
+                        ParentComment = child,
+                        ChildrenComments = new List<CommentWrapper>(0)
                     });
                     commentsByProduct.Remove(child);
                 }
-                SetChildren(commentWrapper.Comments, commentsByProduct);
+                SetChildren(commentWrapper.ChildrenComments, commentsByProduct);
             }
 
             return commentsWrapper;
