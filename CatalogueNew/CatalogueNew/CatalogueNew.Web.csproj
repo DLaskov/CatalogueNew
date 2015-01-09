@@ -296,7 +296,6 @@
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\ManufacturerController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
-    <Compile Include="Controllers\ProductListViewModels.cs" />
     <Compile Include="Controllers\RatingController.cs" />
     <Compile Include="Controllers\WishlistController.cs" />
     <Compile Include="Global.asax.cs">

@@ -14,7 +14,7 @@ else
 
 @{ if (User.IsInRole("Manager") || User.IsInRole("Admin"))
  {
-    <form method="post" class="productForm col-md-6" style="float: none; margin: 0 auto;">
+    <form method="post" class="productForm col-md-6 center-block" style="float: none;">
 
         <div class="form-horizontal">
 
@@ -95,7 +95,7 @@ else
         </div>
     </form>
     <hr />
-    <div class="col-md-6">
+    <div class="col-md-6 center-block" style="float: none;">
         <form action="~/Product/SaveUploadedFile" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneForm">
             <div class="form-group">
                 <div class="dropzone-previews"></div>

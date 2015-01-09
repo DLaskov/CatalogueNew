@@ -255,6 +255,7 @@ namespace CatalogueNew.Web.Controllers
             return PartialView("_SelectListPartial", selectListItems);
         }
 
+        [Authorize(Roles = "Manager")]
         public JsonResult SaveUploadedFile(HttpPostedFileBase file)
         {
             bool isSavedSuccessfully = true;

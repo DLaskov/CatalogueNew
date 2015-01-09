@@ -20,6 +20,7 @@ namespace CatalogueNew.Web.Controllers
             this.manufacturerServices = manufacturerServices;
         }
 
+        [Authorize(Roles = "Manager")]
         public ActionResult Index(int page = 1)
         {
             PagedList<Manufacturer> pageItems = manufacturerServices.GetManufacturers(page);
@@ -41,6 +42,7 @@ namespace CatalogueNew.Web.Controllers
             return PartialView("_LayoutManufacturersPartial", manufacturers);
         }
 
+        [Authorize(Roles = "Manager")]
         public ActionResult Details(int id)
         {
             Manufacturer manufacturer = manufacturerServices.Find(id);
@@ -53,12 +55,14 @@ namespace CatalogueNew.Web.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Manager")]
         public ActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "Manager")]
         [ValidateAntiForgeryToken]
         public ActionResult Create(ManufacturerViewModel model)
         {
@@ -77,6 +81,7 @@ namespace CatalogueNew.Web.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Manager")]
         public ActionResult Edit(int id)
         {
             Manufacturer manufacturer = manufacturerServices.Find(id);
@@ -91,6 +96,7 @@ namespace CatalogueNew.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Manager")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(ManufacturerViewModel model)
         {
@@ -109,6 +115,7 @@ namespace CatalogueNew.Web.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Manager")]
         public ActionResult Delete(int id)
         {
             Manufacturer manufacturer = manufacturerServices.Find(id);
@@ -123,6 +130,7 @@ namespace CatalogueNew.Web.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Manager")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
