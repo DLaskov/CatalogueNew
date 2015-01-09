@@ -22,6 +22,7 @@ namespace CatalogueNew.Web.Controllers
             this.categoryServices = categoryServices;
         }
 
+        [Authorize(Roles = "Manager")]
         public ActionResult Index(int page = 1)
         {
             PagedList<Category> pageItems = categoryServices.GetCategories(page);
@@ -36,6 +37,7 @@ namespace CatalogueNew.Web.Controllers
             return View(categoryListViewModels);
         }
 
+        [Authorize(Roles = "Manager")]
         public ActionResult Details(int id)
         {
             Category category = categoryServices.Find(id);
@@ -48,12 +50,14 @@ namespace CatalogueNew.Web.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Manager")]
         public ActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "Manager")]
         [ValidateAntiForgeryToken]
         public ActionResult Create(CategoryViewModel model)
         {
@@ -71,6 +75,7 @@ namespace CatalogueNew.Web.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Manager")]
         public ActionResult Edit(int id)
         {
             Category category = categoryServices.Find(id);
@@ -85,6 +90,7 @@ namespace CatalogueNew.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Manager")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(CategoryViewModel model)
         {
@@ -103,6 +109,7 @@ namespace CatalogueNew.Web.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Manager")]
         public ActionResult Delete(int id)
         {
             Category category = categoryServices.Find(id);
@@ -117,6 +124,7 @@ namespace CatalogueNew.Web.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Manager")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
