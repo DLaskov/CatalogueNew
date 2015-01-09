@@ -32,7 +32,7 @@ namespace CatalogueNew.Web.Controllers
 
             if (Request.IsAjaxRequest())
             {
-                return PartialView("_RenderProductsForWishlistPartial", productListViewModel);
+                return PartialView("_RenderProductsPartial", productListViewModel);
             }
 
             return View(productListViewModel);

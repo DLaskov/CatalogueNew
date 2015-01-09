@@ -24,9 +24,9 @@
                         }
                         <a href="~/Product/Details?id=@product.ProductID">
                             <div class="thumbnail">
-                                <img style="height: 100%; width: auto;" src="@Url.Content("~/HttpImageHandler.ashx?id=" + product.Images.FirstOrDefault().ImageID)" />
-                                <p class="caption">@product.Name</p>
+                                <img src="@Url.Content("~/HttpImageHandler.ashx?id=" + product.Images.FirstOrDefault().ImageID)" />                    
                             </div>
+                            <p class="caption">@product.Name</p>
                         </a>
                     }
                     else
@@ -36,7 +36,9 @@
                             <button id="remove-wishlist" class="wish btn btn-danger" value="@product.ProductID">X</button>
                         }
                         <a href="~/Product/Details?id=@product.ProductID">
-                            <img src="~/Images/no_pic_small.gif" />
+                            <div class="thumbnail">
+                                <img src="~/Images/no_pic_small.gif" />                                
+                            </div>
                             <p class="caption">@product.Name</p>
                         </a>
                     }
