@@ -1,4 +1,5 @@
 ﻿using CatalogueNew.Models.Entities;
+using CatalogueNew.Models.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,7 @@ namespace CatalogueNew.Models.Services
 {
     public interface ICommentService
     {
-        IEnumerable<Comment> GetByProduct(int productId);
-
-        IEnumerable<Comment> GetByParent(int parentId);
+        IEnumerable<CommentWrapper> CommentsByProduct(int productID);
 
         void Add(Comment comment);
 
