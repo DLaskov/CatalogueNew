@@ -100,7 +100,7 @@ img {
     width: 100%;
 }
 
-#comment-replay, #comment-edit {
+#comment-reply, #comment-edit {
     max-width: 100%;
     max-height: 300px;
 }
@@ -113,7 +113,7 @@ img {
     display: block;
 }
 
-div .replay {
+div .reply {
     display: none;
     min-width: 100%;
     max-width: 650px;
@@ -134,7 +134,7 @@ textarea {
     margin-bottom: 10px;
 }
 
-#rating {
+#rating, #stars {
     display: none;
 }
 
@@ -152,4 +152,13 @@ thumbnail:hover {
     height: 40px;
     text-shadow: 1px 1px 1px #464646;
     color: #fbfbfb
+}
+
+#remove-wishlist {
+    width: 30px;
+    height: 30px;
+    color: #fbfbfb;
+    margin: 0 0 5px 0;
+    padding: 0 0 0 0;
+    font-size: 7pt;
 }

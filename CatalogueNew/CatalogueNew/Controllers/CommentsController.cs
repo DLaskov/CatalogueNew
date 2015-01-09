@@ -1,5 +1,6 @@
 ﻿using CatalogueNew.Models.Entities;
 using CatalogueNew.Models.Services;
+using CatalogueNew.Web.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -8,7 +9,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
-using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
+using CatalogueNew.Models.Infrastructure;
 
 namespace CatalogueNew.Web.Controllers
 {
@@ -21,36 +23,23 @@ namespace CatalogueNew.Web.Controllers
             this.commentsService = commentsService;
         }
 
-        public IEnumerable<Comment> GetByProduct(int productId)
+        public IEnumerable<CommentWrapper> Get(int productID)
         {
-            var comments = commentsService.GetByProduct(productId);
+            var comments = commentsService.CommentsByProduct(productID);
 
-            UTCToLocalTime(comments);
-
-            return comments;
-        }
-
-        public IEnumerable<Comment> GetByParent(int parentId)
-        {
-            var comments = commentsService.GetByParent(parentId);
-
-            UTCToLocalTime(comments);
-
-            return comments;
-        }
-
-        private static void UTCToLocalTime(IEnumerable<Comment> comments)
-        {
             foreach (var comment in comments)
             {
-                comment.TimeStamp = TimeZone.CurrentTimeZone.ToLocalTime(comment.TimeStamp);
+                comment.ParentComment.TimeStamp = TimeZone.CurrentTimeZone.ToLocalTime(comment.ParentComment.TimeStamp);
             }
+
+            return comments;
         }
 
         public Comment Post([FromBody]Comment comment)
         {
             if (comment.Text != String.Empty)
             {
+                comment.UserID = User.Identity.GetUserId();
                 comment.TimeStamp = DateTime.UtcNow;
                 commentsService.Add(comment);
             }
@@ -58,6 +47,7 @@ namespace CatalogueNew.Web.Controllers
             return comment;
         }
 
+        [Authorize(Roles = "Admin, Manager, Moderator")]
         public void Put([FromBody]Comment comment)
         {
             if (comment.Text != String.Empty)
@@ -67,6 +57,7 @@ namespace CatalogueNew.Web.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin, Manager, Moderator")]
         public void Delete(int commentId)
         {
             commentsService.Remove(commentId);

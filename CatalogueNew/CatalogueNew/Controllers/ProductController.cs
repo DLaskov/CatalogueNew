@@ -13,6 +13,7 @@ using Microsoft.AspNet.Identity;
 
 namespace CatalogueNew.Web.Controllers
 {
+    [AllowAnonymous]
     public class ProductController : Controller
     {
         private ICategoryService categoryService;

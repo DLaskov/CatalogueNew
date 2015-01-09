@@ -1,11 +1,13 @@
 ﻿using CatalogueNew.Models.Entities;
 using CatalogueNew.Models.Services;
+using CatalogueNew.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Microsoft.AspNet.Identity;
 
 namespace CatalogueNew.Web.Controllers
 {
@@ -18,26 +20,19 @@ namespace CatalogueNew.Web.Controllers
             this.ratingServices = ratingServices;
         }
 
-        public Rating Get(string userID, int productID)
+        public int Get(int productID)
         {
-            Rating rating = ratingServices.RatingByUserProduct(userID, productID);
+            int totalRating = ratingServices.TotalRating(productID);
 
-            return rating;
+            return totalRating;
         }
 
         public Rating Post([FromBody]Rating rating)
         {
+            rating.UserID = User.Identity.GetUserId();
             ratingServices.Add(rating);
 
             return rating;
-        }
-
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        public void Delete(int id)
-        {
         }
     }
 }

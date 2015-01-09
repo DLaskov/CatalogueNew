@@ -2,6 +2,7 @@
 using CatalogueNew.Models.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,22 +11,18 @@ namespace CatalogueNew.Models.Services
 {
     public class WishlistService : BaseService, IWishlistService
     {
-        
+        private const int pageSize = 9;
         public WishlistService(ICatalogueContext context)
             : base(context)
         {
-        }
-
-        public PagedList<Wishlist> GetWishlists(int page)
-        {
-            throw new NotImplementedException();
         }
 
         public Wishlist Find(int productID, string userID)
         {
             var wishlist = this.Context.
                 Wishlists.
-                Where(wl => wl.ProductID == productID && wl.UserID == userID).FirstOrDefault();
+                Where(wl => wl.ProductID == productID && wl.UserID == userID).
+                FirstOrDefault();
 
             return wishlist;
         }
@@ -36,16 +33,6 @@ namespace CatalogueNew.Models.Services
             this.Context.SaveChanges();
         }
 
-        public void Modify(Wishlist wishlist)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Remove(Wishlist wishlist)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Remove(int id)
         {
             var wishlist = this.Context.Wishlists.Find(id);
@@ -53,9 +40,12 @@ namespace CatalogueNew.Models.Services
             this.Context.SaveChanges();
         }
 
-        public IEnumerable<Wishlist> GetAll()
+        public void Remove(int productID, string userID)
         {
-            throw new NotImplementedException();
+            var wishlist = Find(productID, userID);
+
+            this.Context.Wishlists.Remove(wishlist);
+            this.Context.SaveChanges();
         }
     }
 }
