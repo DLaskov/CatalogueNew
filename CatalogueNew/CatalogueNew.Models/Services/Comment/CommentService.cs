@@ -34,7 +34,7 @@ namespace CatalogueNew.Models.Services
         {
             var commentsByProduct = this.Context.Comments
                 .Where(c => c.ProductID == productID)
-                .Include("Users")
+                .Include(c => c.Users)
                 .Where(coment => this.Context.Users.Any(user => user.Id == coment.UserID))
                 .ToList();
 

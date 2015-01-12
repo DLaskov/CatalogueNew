@@ -55,41 +55,50 @@ img {
 }
 
 .img-preview {
-   padding: 0;
-   margin: 10px;
-}
-
-.img-preview img {
-        height: auto;
-    display: inline-block;
-    max-width: 100%;
-    padding: 4px;
-    line-height: 1.42857143;
-    background-color: #fff;
+    padding: 0;
+    margin: 10px;
+    width: 100px;
+    height: 100px;
     border: 1px solid #ddd;
-    border-radius: 4px;
-    -webkit-transition: all .2s ease-in-out;
-    -o-transition: all .2s ease-in-out;
-    transition: all .2s ease-in-out;
+    background: white;
 }
 
-.img-preview img:hover {
-    opacity: 0.5;
-}
+    .img-preview img {
+        padding: 5px;
+        max-height: 100%;
+        max-width: 100%;
+        height: auto;
+        width: auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+    }
 
-        .img-preview:hover::after {
-            position: absolute;
-            margin-top: -65%;
-            left: 35%;
-            color: red;
-            font-size: 2em;
-            z-index: 1;
-            content: "\e088";
-            font-family: 'Glyphicons Halflings';
-            font-style: normal;
-            font-weight: normal;
-            line-height: 1;
+        .img-preview:hover > img  {
+            opacity: 0.5;
         }
+
+    .img-preview:hover::after {
+        max-height: 100%;
+        max-width: 100%;
+        height: auto;
+        width: auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+        color: red;
+        font-size: 2em;
+        z-index: 1;
+        content: "\e088";
+        font-family: 'Glyphicons Halflings';
+        font-style: normal;
+        font-weight: normal;
+        line-height: 1;
+    }
 
 .without-first {
     width: 100%;
@@ -152,7 +161,7 @@ thumbnail:hover {
 }
 
 #add-wishlist {
-    width: 135px;
+    width: 145px;
     text-shadow: 1px 1px 1px #464646;
     color: #fbfbfb;
 }
@@ -166,10 +175,10 @@ thumbnail:hover {
     font-size: 7pt;
 }
 
-.checkbox input[type="checkbox"]{
+.checkbox input[type="checkbox"] {
     margin-left: 5px;
 }
 
-.star-rating{
+.star-rating {
     display: inline-block;
 }

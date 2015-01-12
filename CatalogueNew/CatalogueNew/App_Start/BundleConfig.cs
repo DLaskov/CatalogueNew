@@ -15,10 +15,10 @@
             "~/Scripts/jquery.unobtrusive-ajax.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
+                      "~/Scripts/jquery.validate*"));
 
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-*"));
+                      "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.min.js",
@@ -37,6 +37,14 @@
             bundles.Add(new StyleBundle("~/Content/dropzonescss").Include(
                      "~/Scripts/dropzone/css/basic.css",
                      "~/Scripts/dropzone/css/dropzone.css"));
+            bundles.Add(new StyleBundle("~/Content/slidercss").Include(
+                     "~/Content/jquery.bxslider.css"
+                ));
+            bundles.Add(new ScriptBundle("~/bundles/sliderjs").Include(
+                     "~/Scripts/jquery.easing.1.3.js",
+                     "~/Scripts/jquery.fitvids.js",
+                     "~/Scripts/jquery.bxslider.js"
+                ));
         }
     }
 }

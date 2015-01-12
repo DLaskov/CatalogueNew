@@ -1,6 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity;
 @model ProductViewModel
-
 @{
     var product = @Model.Product;
 }
@@ -25,16 +24,38 @@
         }
         else
         {
-            <div class="thumbnail">
-                <img src="@Url.Content("~/HttpImageHandler.ashx?id=" + product.Images.FirstOrDefault().ImageID)" />
-            </div>
-            <br /><br />
-            <div class="row">
+            @*<div class="thumbnail">
+                    <img src="@Url.Content("~/HttpImageHandler.ashx?id=" + product.Images.FirstOrDefault().ImageID)" />
+                </div>*@
+            @*<div class="row">
+                    @foreach (var image in product.Images.Skip(1))
+                    {
+                        <div class="col-md-3">
+                            <img src="@Url.Content("~/HttpImageHandler.ashx?id=" + image.ImageID)" class="without-first img-rounded" />
+                        </div>
+                    }
+                </div>*@
+            <ul class="bxslider">
+                <li><img src="@Url.Content("~/HttpImageHandler.ashx?id=" + product.Images.FirstOrDefault().ImageID)" /></li>
                 @foreach (var image in product.Images.Skip(1))
                 {
-                    <div class="col-md-3">
-                        <img src="@Url.Content("~/HttpImageHandler.ashx?id=" + image.ImageID)" class="without-first img-rounded" />
+                    <li><img src="@Url.Content("~/HttpImageHandler.ashx?id=" + image.ImageID)" /></li>
+                }
+            </ul>
+            <div id="bx-pager">
+                @{
+                int i = 0;
+                foreach (var image in product.Images)
+                {
+                    <div class="col-md-3" >
+                        <a data-slide-index="@i" href="">
+                            <div class="img-thumbnail">
+                                <img src="@Url.Content("~/HttpImageHandler.ashx?id=" + image.ImageID)" />
+                            </div>
+                        </a>
                     </div>
+                    ++i;
+                }
                 }
             </div>
         }
@@ -92,6 +113,7 @@ else
 <div id="comments" class="media">
 </div>
 
+
 @section Scripts{
     <script src="~/Scripts/moment.min.js"></script>
     <script src="~/Scripts/moment-with-locales.min.js"></script>
@@ -101,5 +123,4 @@ else
     <script>
         moment().format();
     </script>
-
 }

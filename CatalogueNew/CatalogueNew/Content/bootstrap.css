@@ -1214,18 +1214,28 @@ img {
 }
 
 .img-thumbnail {
-    display: inline-block;
+    display: block;
     max-width: 100%;
-    height: auto;
-    padding: 4px;
+    height: 60px;
     line-height: 1.42857143;
     background-color: #fff;
     border: 1px solid #ddd;
-    border-radius: 4px;
     -webkit-transition: all .2s ease-in-out;
     -o-transition: all .2s ease-in-out;
     transition: all .2s ease-in-out;
 }
+
+    .img-thumbnail img {
+        max-height: 50px;
+        max-width: 50px;
+        height: auto;
+        width: auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+    }
 
 .img-circle {
     border-radius: 50%;
@@ -5690,7 +5700,7 @@ a.badge:focus {
 
 .thumbnail {
     display: block;
-    height: 215px;
+    height: 215px !important;
     line-height: 1.42857143;
     position: relative;
     background-color: #fff;

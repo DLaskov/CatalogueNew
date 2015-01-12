@@ -1,7 +1,17 @@
 ﻿$(document).ready(function () {
     'use strict'
-
-    if ($('div').is('.details')) {
+    $("#registerForm").submit(function (event) {
+        if ($("#Password").val() != $("#passwordConfirm").val()) {
+            $("#passwordConfirm").after("<p style=\"color: red\">Password doesn't match!</p>");
+            event.preventDefault();
+        }
+        if ($("#UserName").val() == $("#Password").val()) {
+            $("#Password").after("<p style=\"color: red\">Password must be different from username!</p>");
+            event.preventDefault();
+        }
+        return;
+    });
+    if ($('div .details').is('.details')) {
         var isAuth = $("[name='is-auth']").val();
 
         if (isAuth == 'false') {
@@ -10,7 +20,11 @@
 
         getCommentsByProduct();
     }
-
+    $('.bxslider').bxSlider({
+        pagerCustom: '#bx-pager',
+        height: 265,
+        adaptiveHeight: true
+    });
     function getCommentsByProduct() {
         var productId = $("#product-id").val();
 
@@ -268,11 +282,11 @@
         });
         return false;
     }
-    $(".img-preview img").on("click", function () {
+    $(".img-preview").on("click", function () {
         if (confirm("You are going to delete this image.")) {
-            var src = $(this).attr("src");
+            var src = $("img", this).attr("src");
             var id = src.split("=")[1];
-            $.post("../RemoveImageById", { value: id });
+            $.post("RemoveImageById", { value: id });
             $(this).remove();
         }
     }
