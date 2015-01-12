@@ -11,6 +11,7 @@ using System.Web;
 using System.Web.Http;
 using Microsoft.AspNet.Identity;
 using CatalogueNew.Models.Infrastructure;
+using System.Threading.Tasks;
 
 namespace CatalogueNew.Web.Controllers
 {
@@ -23,9 +24,9 @@ namespace CatalogueNew.Web.Controllers
             this.commentsService = commentsService;
         }
 
-        public IEnumerable<CommentWrapper> Get(int productID)
+        public async Task<IEnumerable<CommentWrapper>> Get(int productID)
         {
-            var comments = commentsService.CommentsByProduct(productID);
+            var comments = await commentsService.CommentsByProduct(productID);
 
             foreach (var comment in comments)
             {
@@ -48,19 +49,18 @@ namespace CatalogueNew.Web.Controllers
         }
 
         [Authorize(Roles = "Admin, Manager, Moderator")]
-        public void Put([FromBody]Comment comment)
+        public async Task Put([FromBody]Comment comment)
         {
             if (comment.Text != String.Empty)
             {
-                comment.TimeStamp = DateTime.UtcNow;
-                commentsService.Modify(comment);
+                await commentsService.Modify(comment);
             }
         }
 
         [Authorize(Roles = "Admin, Manager, Moderator")]
-        public void Delete(int commentId)
+        public async Task Delete(int commentId)
         {
-            commentsService.Remove(commentId);
+            await commentsService.Remove(commentId);
         }
     }
 }

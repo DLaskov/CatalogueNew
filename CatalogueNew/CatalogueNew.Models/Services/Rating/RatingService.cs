@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace CatalogueNew.Models.Services
 {
@@ -14,9 +15,9 @@ namespace CatalogueNew.Models.Services
         {
         }
 
-        public void Add(Rating rating)
+        public async Task Add(Rating rating)
         {
-            var userRating = this.Context.Ratings.Where(ur => ur.UserID == rating.UserID && ur.ProductID == rating.ProductID).FirstOrDefault();
+            var userRating = await this.Context.Ratings.Where(ur => ur.UserID == rating.UserID && ur.ProductID == rating.ProductID).FirstOrDefaultAsync();
 
             if (userRating == null)
             {
@@ -25,25 +26,18 @@ namespace CatalogueNew.Models.Services
             }
         }
 
-        public int TotalRating(int productID)
+        public async Task<int> TotalRating(int productID)
         {
-            double totalRating = 0;
+            var rating = await this.Context.Ratings.Where(r => r.ProductID == productID).AverageAsync(r => r.Value);
 
-            var ratings = this.Context.Ratings.Where(r => r.ProductID == productID).Select(r => r.Value).ToList();
+            return (int)rating;
+        }
 
-            if (ratings.Count == 0)
-            {
-                return 0;
-            }
+        public async Task<int> UserRating(int productID, string userID)
+        {
+            var result = await this.Context.Ratings.Where(r => r.ProductID == productID && r.UserID == userID).Select(r => r.Value).FirstOrDefaultAsync();
 
-            foreach (var rating in ratings)
-            {
-                totalRating += rating;
-            }
-
-            totalRating = Math.Round(totalRating / ratings.Count);
-
-            return (int)totalRating;
+            return result;
         }
     }
 }

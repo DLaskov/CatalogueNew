@@ -10,12 +10,12 @@ namespace CatalogueNew.Models.Services
 {
     public interface ICommentService
     {
-        IEnumerable<CommentWrapper> CommentsByProduct(int productID);
+        Task<IEnumerable<CommentWrapper>> CommentsByProduct(int productID);
 
         void Add(Comment comment);
 
-        void Modify(Comment comment);
+        Task Modify(Comment comment);
 
-        void Remove(int id);
+        Task Remove(int id);
     }
 }
