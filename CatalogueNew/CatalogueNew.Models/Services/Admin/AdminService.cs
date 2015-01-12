@@ -33,8 +33,8 @@ namespace CatalogueNew.Models.Services
 
         public void Modify(User user)
         {
-                this.Context.Entry(user).State = EntityState.Modified;
-                this.Context.SaveChanges();
+            this.Context.Entry(user).State = EntityState.Modified;
+            this.Context.SaveChanges();
         }
 
         public void ModifyUserRoles(User user, UserRole userRole)
@@ -77,6 +77,31 @@ namespace CatalogueNew.Models.Services
 
         public void Remove(User user)
         {
+            var comments = this.Context.Comments.Where(c => c.UserID == user.Id).ToList();
+            var ratings = this.Context.Ratings.Where(r => r.UserID == user.Id).ToList();
+            var roles = this.Context.UserRoles.Where(r => r.UserId == user.Id).ToList();
+            var wishlists = this.Context.Wishlists.Where(w => w.UserID == user.Id).ToList();
+
+            foreach (Comment comment in comments)
+            {
+                this.Context.Database.ExecuteSqlCommand("usp_deleteComments @id = {0}", comment.CommentID);
+            }
+
+            foreach (Rating rating in ratings)
+            {
+                this.Context.Ratings.Remove(rating);
+            }
+
+            foreach (IdentityUserRole userRole in roles)
+            {
+                this.Context.UserRoles.Remove(userRole);
+            }
+
+            foreach (Wishlist wishlist in wishlists)
+            {
+                this.Context.Wishlists.Remove(wishlist);
+            }
+
             this.Context.Users.Remove(user);
             this.Context.SaveChanges();
         }
@@ -127,7 +152,7 @@ namespace CatalogueNew.Models.Services
                     }
                 }
 
-                usersWithRoles.Add(user, userRole);                
+                usersWithRoles.Add(user, userRole);
             }
             pagedList.UsersRoles = usersWithRoles;
             return pagedList;
