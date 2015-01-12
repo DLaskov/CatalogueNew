@@ -202,6 +202,8 @@
     $("#comments").on("click", "#delete", function (e) {
         e.preventDefault();
         var commentId = $(this).parent().find("input").val();
+        var buttonDelete = $(e.target).closest('button');
+        buttonDelete.attr("disabled", "disabled");
 
         $.ajax({
             url: 'http://localhost:38006/api/Comments?commentId=' + commentId,
@@ -209,6 +211,7 @@
             dataType: 'json',
             success: function () {
                 getCommentsByProduct();
+                buttonDelete.removeAttr("disabled");
             },
             error: function () { }
         });
@@ -222,6 +225,9 @@
             productId: $("#product-id").val()
         };
 
+        $("#comment").attr("disabled", "disabled");
+        $("#submit-comment").attr("disabled", "disabled");
+
         $.ajax({
             url: 'http://localhost:38006/api/Comments',
             type: 'POST',
@@ -229,6 +235,8 @@
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
                 getCommentsByProduct();
+                $("#comment").removeAttr("disabled");
+                $("#submit-comment").removeAttr("disabled");
             },
             error: function () { }
         });
