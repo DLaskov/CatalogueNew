@@ -79,6 +79,6 @@
                     "' value='" + data.UniqueName + "\\" + data.ImgName + "\\" + data.MimeType + "' />"
                 $("div .form-horizontal").prepend(innerHtml);
             });
-        }
-    }
-});
+            }
+            }
+        });
