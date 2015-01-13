@@ -9,6 +9,8 @@ using System.Linq;
 using Microsoft.AspNet.Identity;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
+using System.Data.Entity.Core;
+using System.Data.Entity.Infrastructure;
 
 namespace CatalogueNew.Models.Services
 {
@@ -77,33 +79,50 @@ namespace CatalogueNew.Models.Services
 
         public void Remove(User user)
         {
-            var comments = this.Context.Comments.Where(c => c.UserID == user.Id).ToList();
+            var comments = this.Context.Comments.Where(c => c.UserID == user.Id).OrderByDescending(c => c.CommentID).ToList();
             var ratings = this.Context.Ratings.Where(r => r.UserID == user.Id).ToList();
             var roles = this.Context.UserRoles.Where(r => r.UserId == user.Id).ToList();
             var wishlists = this.Context.Wishlists.Where(w => w.UserID == user.Id).ToList();
+            bool cascadeDelete;
 
-            foreach (Comment comment in comments)
+            do
             {
-                this.Context.Database.ExecuteSqlCommand("usp_deleteComments @id = {0}", comment.CommentID);
-            }
+                cascadeDelete = false;
 
-            foreach (Rating rating in ratings)
-            {
-                this.Context.Ratings.Remove(rating);
-            }
+                foreach (Comment comment in comments)
+                {
+                    this.Context.Database.ExecuteSqlCommand("usp_deleteComments @id = {0}", comment.CommentID);
+                }
 
-            foreach (IdentityUserRole userRole in roles)
-            {
-                this.Context.UserRoles.Remove(userRole);
-            }
+                foreach (Rating rating in ratings)
+                {
+                    this.Context.Ratings.Remove(rating);
+                }
 
-            foreach (Wishlist wishlist in wishlists)
-            {
-                this.Context.Wishlists.Remove(wishlist);
-            }
+                foreach (IdentityUserRole userRole in roles)
+                {
+                    this.Context.UserRoles.Remove(userRole);
+                }
 
-            this.Context.Users.Remove(user);
-            this.Context.SaveChanges();
+                foreach (Wishlist wishlist in wishlists)
+                {
+                    this.Context.Wishlists.Remove(wishlist);
+                }
+
+                this.Context.Users.Remove(user);
+
+                try
+                {
+                    this.Context.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    cascadeDelete = true;
+                    ex.Entries.Single().Reload();
+                }
+
+            } while (cascadeDelete);
+
         }
 
         public void AddUserRole(IdentityUserRole userRole)

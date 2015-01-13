@@ -13,7 +13,7 @@ namespace CatalogueNew.Models.Entities
         {
             Comments = new HashSet<Comment>();
             Images = new HashSet<Image>();
-            LikesDislikes = new HashSet<LikeDislike>();
+            LikesDislikes = new HashSet<LikesDislike>();
             ProductsTags = new HashSet<ProductTag>();
             Ratings = new HashSet<Rating>();
         }
@@ -48,7 +48,7 @@ namespace CatalogueNew.Models.Entities
 
         public virtual ICollection<Image> Images { get; set; }
 
-        public virtual ICollection<LikeDislike> LikesDislikes { get; set; }
+        public virtual ICollection<LikesDislike> LikesDislikes { get; set; }
 
         public virtual Manufacturer Manufacturer { get; set; }
 

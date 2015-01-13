@@ -253,6 +253,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\like.js" />
     <Content Include="Scripts\locales\bootstrap-datepicker.ar.js" />
     <Content Include="Scripts\locales\bootstrap-datepicker.az.js" />
     <Content Include="Scripts\locales\bootstrap-datepicker.bg.js" />
@@ -331,6 +332,7 @@
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
+    <Compile Include="Controllers\LikeDislikeController.cs" />
     <Compile Include="Controllers\ManufacturerController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\RatingController.cs" />
@@ -349,6 +351,7 @@
     <Compile Include="Models\CategorySelectListViewModel.cs" />
     <Compile Include="Models\CategoryViewModel.cs" />
     <Compile Include="Models\ImageExtensionMethod.cs" />
+    <Compile Include="Models\LikeDislikeViewModel.cs" />
     <Compile Include="Models\LogInViewModel.cs" />
     <Compile Include="Models\ManageUserViewModel.cs" />
     <Compile Include="Models\ManufacturerListViewModel.cs" />
@@ -415,6 +418,7 @@
     <Folder Include="Images\TempImages\" />
     <Folder Include="logs\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\Like\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CatalogueNew.Models\CatalogueNew.Models.csproj">

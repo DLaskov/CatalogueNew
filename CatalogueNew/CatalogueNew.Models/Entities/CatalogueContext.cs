@@ -18,7 +18,7 @@ namespace CatalogueNew.Models.Entities
         public virtual IDbSet<Category> Categories { get; set; }
         public virtual IDbSet<Comment> Comments { get; set; }
         public virtual IDbSet<Image> Images { get; set; }
-        public virtual IDbSet<LikeDislike> LikesDislikes { get; set; }
+        public virtual IDbSet<LikesDislike> LikesDislikes { get; set; }
         public virtual IDbSet<Manufacturer> Manufacturers { get; set; }
         public virtual IDbSet<Product> Products { get; set; }
         public virtual IDbSet<ProductTag> ProductsTags { get; set; }

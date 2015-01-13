@@ -1,6 +1,7 @@
 ﻿$(document).ready(function () {
     'use strict'
-    ratingRevealingModule.productRating(ratingRevealingModule.productID);
+    var productID = ratingRevealingModule.productID;
+    ratingRevealingModule.productRating(productID);
 });
 
 var ratingRevealingModule = (function () {

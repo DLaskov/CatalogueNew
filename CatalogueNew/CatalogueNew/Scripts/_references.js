@@ -67,5 +67,6 @@
 /// <reference path="locales/bootstrap-datepicker.zh-cn.js" />
 /// <reference path="locales/bootstrap-datepicker.zh-tw.js" />
 /// <reference path="comments.js" />
-/// <reference path="star-rating.js" />
 /// <reference path="rating.js" />
+/// <reference path="star-rating.js" />
+/// <reference path="like.js" />
