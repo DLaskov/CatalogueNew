@@ -40,7 +40,7 @@ namespace CatalogueNew.Models.Services
         {
             var commentsByProduct = await this.Context.Comments
                 .Where(c => c.ProductID == productID)
-                .Include(x => x.User)
+                .Include(c => c.User)
                 .ToListAsync();
 
             var commentsWrapperList = new List<CommentWrapper>();
