@@ -49,7 +49,7 @@ var wishlistButtonBehavior = (function () {
                 wishlistButton.val("Remove From Wishlist");
                 wishlistButton.removeClass("btn btn-sm btn-warning");
                 wishlistButton.removeClass("btn btn-sm btn-success");
-                wishlistButton.toggleClass("btn btn-sm btn-danger")
+                wishlistButton.addClass("btn btn-sm btn-danger")
             }
         });
 
