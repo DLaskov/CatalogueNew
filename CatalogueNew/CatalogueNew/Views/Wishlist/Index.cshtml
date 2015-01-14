@@ -5,8 +5,17 @@
 }
 
 <h2>Wishlist</h2>
-@Html.Partial("_RenderProductsPartial", Model)
+@if (Model.Products.Count != 0)
+{
+    @Html.Partial("_RenderProductsPartial", Model)
 
-@section Scripts{
-    @Scripts.Render("~/bundels/product")
+    @section Scripts{
+        <script src="~/scripts/wishlist.js"></script>
+    }
+}
+else
+{
+    <div class="row alert alert-danger">
+        <p class="text-center">There are no items in your Wishlist!</p>
+    </div>
 }
