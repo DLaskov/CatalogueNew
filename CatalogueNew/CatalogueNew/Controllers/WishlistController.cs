@@ -26,7 +26,7 @@ namespace CatalogueNew.Web.Controllers
         {
             if (page <= 0)
             {
-                return View();
+                page = 1;
             }
 
             string userID = User.Identity.GetUserId();
