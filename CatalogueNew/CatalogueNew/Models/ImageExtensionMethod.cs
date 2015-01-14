@@ -11,7 +11,7 @@ namespace CatalogueNew.Web.Models
 {
     public static class ImageExtensionMethod
     {
-        private const int ImgMaxWidth = 350;
+        private const int ImgMaxWidth = 400;
         private const int ImgMaxHeight = 250;
 
         public static byte[] GetFileData(this string fileName, string filePath)

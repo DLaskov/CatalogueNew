@@ -6,8 +6,12 @@
     <title>Web Catalogue</title>
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/dropzonescss")
-    @Styles.Render("~/Content/slidercss")
+    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/modernizr")
+    @if (IsSectionDefined("AddToHead"))
+    {
+        @RenderSection("AddToHead", false)
+    }
     <meta name="description" content="The description of my page" />
 </head>
 <body>
@@ -69,11 +73,8 @@
             <p>&copy; @DateTime.Now.Year - Team Acer</p>
         </footer>
     </div>
-
-    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/dropzonescripts")
-    @Scripts.Render("~/bundles/sliderjs")
     @RenderSection("scripts", required: false)
 </body>
 </html>
