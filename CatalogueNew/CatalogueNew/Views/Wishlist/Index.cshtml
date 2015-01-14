@@ -5,7 +5,7 @@
 }
 
 <h2>Wishlist</h2>
-@if (Model.Products.Count != 0)
+@if (Model != null)
 {
     @Html.Partial("_RenderProductsPartial", Model)
 

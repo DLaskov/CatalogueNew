@@ -29,8 +29,11 @@ namespace CatalogueNew.Models.Services
 
         public void Add(Wishlist wishlist)
         {
-            this.Context.Wishlists.Add(wishlist);
-            this.Context.SaveChanges();
+            if (Find(wishlist.ProductID, wishlist.UserID) == null)
+            {
+                this.Context.Wishlists.Add(wishlist);
+                this.Context.SaveChanges();
+            }
         }
 
         public void Remove(int id)
