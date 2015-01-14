@@ -49,7 +49,5 @@ namespace CatalogueNew.Web.Controllers
 
             return Json(new { Page = pageItems.Items.Count() <= 0 ? pageItems.CurrentPage - 1 : pageItems.CurrentPage });
         }
-
-
     }
 }
