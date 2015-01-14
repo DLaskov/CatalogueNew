@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using CatalogueNew.Models.Infrastructure;
 
 namespace CatalogueNew.Models.Services.Like
 {
@@ -22,42 +23,39 @@ namespace CatalogueNew.Models.Services.Like
             if (userLike == null)
             {
                 this.Context.LikesDislikes.Add(like);
-                this.Context.SaveChanges();
+                await this.Context.SaveChangesAsync();
             }
             else
             {
                 userLike.IsLike = like.IsLike;
                 this.Context.Entry(userLike).State = EntityState.Modified;
-                this.Context.SaveChanges();
+                await this.Context.SaveChangesAsync();
             }
         }
 
-        public List<LikesDislike> All(int productID)
+        private List<LikesDislike> All(int productID)
         {
             return this.Context.LikesDislikes.Where(l => l.ProductID == productID).ToList();
         }
 
-        public LikesDislike IsLike(int productID, string userID)
+        public LikeDislikeWrapper IsLikeDislikeCounts(int productID, string userID)
         {
             var likesDislikes = All(productID);
-
-            return likesDislikes.Where(ld => ld.UserID == userID).FirstOrDefault();
-        }
-
-        public int LikesCout(int productID)
-        {
-            var likesDislikes = All(productID);
+            var like = likesDislikes.Where(ld => ld.UserID == userID).FirstOrDefault();
             var likes = likesDislikes.Where(ld => ld.IsLike == true).ToList();
-
-            return likes.Count;
-        }
-
-        public int DislikesCout(int productID)
-        {
-            var likesDislikes = All(productID);
             var dislikes = likesDislikes.Where(ld => ld.IsLike == false).ToList();
+            LikeDislikeWrapper likeDislikeWrapper;
 
-            return dislikes.Count;
+            if (like != null)
+            {
+                likeDislikeWrapper = new LikeDislikeWrapper(like.IsLike, likes.Count, dislikes.Count);
+            }
+            else
+            {
+                likeDislikeWrapper = new LikeDislikeWrapper(null, likes.Count, dislikes.Count);
+            }
+
+            return likeDislikeWrapper;
         }
     }
 }

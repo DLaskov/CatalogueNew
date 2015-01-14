@@ -352,7 +352,6 @@
     <Compile Include="Models\CategorySelectListViewModel.cs" />
     <Compile Include="Models\CategoryViewModel.cs" />
     <Compile Include="Models\ImageExtensionMethod.cs" />
-    <Compile Include="Models\LikeDislikeViewModel.cs" />
     <Compile Include="Models\LogInViewModel.cs" />
     <Compile Include="Models\ManageUserViewModel.cs" />
     <Compile Include="Models\ManufacturerListViewModel.cs" />

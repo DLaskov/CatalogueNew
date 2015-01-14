@@ -37,13 +37,13 @@ namespace CatalogueNew.Web.Controllers
         }
 
         [Authorize]
-        public Comment Post([FromBody]Comment comment)
+        public async Task<Comment> Post([FromBody]Comment comment)
         {
             if (comment.Text != String.Empty)
             {
                 comment.UserID = User.Identity.GetUserId();
                 comment.TimeStamp = DateTime.UtcNow;
-                commentsService.Add(comment);
+                 await commentsService.Add(comment);
             }
 
             return comment;
