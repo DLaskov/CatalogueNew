@@ -36,6 +36,7 @@ namespace CatalogueNew.Web.Controllers
             return comments;
         }
 
+        [Authorize]
         public Comment Post([FromBody]Comment comment)
         {
             if (comment.Text != String.Empty)

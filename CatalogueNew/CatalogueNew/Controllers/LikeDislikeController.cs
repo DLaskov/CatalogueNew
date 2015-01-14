@@ -20,6 +20,7 @@ namespace CatalogueNew.Web.Controllers
             this.likeServices = likeServices;
         }
 
+        [Authorize]
         public async Task<LikesDislike> Post([FromBody]LikesDislike likeDislike)
         {
             var userID = User.Identity.GetUserId();

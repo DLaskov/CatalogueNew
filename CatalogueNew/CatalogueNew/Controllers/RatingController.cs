@@ -33,6 +33,7 @@ namespace CatalogueNew.Web.Controllers
             return ratingModel;
         }
 
+        [Authorize]
         public async Task<Rating> Post([FromBody]Rating rating)
         {
             rating.UserID = User.Identity.GetUserId();
