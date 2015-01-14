@@ -12,6 +12,6 @@ namespace CatalogueNew.Models.Services.Like
     {
         Task Add(LikesDislike like);
 
-        LikeDislikeWrapper IsLikeDislikeCounts(int productID, string userID);
+        Task<LikeDislikeWrapper> IsLikeDislikeCounts(int productID, string userID);
     }
 }

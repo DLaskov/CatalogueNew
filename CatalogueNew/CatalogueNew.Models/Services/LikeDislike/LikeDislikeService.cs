@@ -33,14 +33,14 @@ namespace CatalogueNew.Models.Services.Like
             }
         }
 
-        private List<LikesDislike> All(int productID)
+        private async Task<List<LikesDislike>> All(int productID)
         {
-            return this.Context.LikesDislikes.Where(l => l.ProductID == productID).ToList();
+            return await this.Context.LikesDislikes.Where(l => l.ProductID == productID).ToListAsync();
         }
 
-        public LikeDislikeWrapper IsLikeDislikeCounts(int productID, string userID)
+        public async Task<LikeDislikeWrapper> IsLikeDislikeCounts(int productID, string userID)
         {
-            var likesDislikes = All(productID);
+            var likesDislikes = await All(productID);
             var like = likesDislikes.Where(ld => ld.UserID == userID).FirstOrDefault();
             var likes = likesDislikes.Where(ld => ld.IsLike == true).ToList();
             var dislikes = likesDislikes.Where(ld => ld.IsLike == false).ToList();
