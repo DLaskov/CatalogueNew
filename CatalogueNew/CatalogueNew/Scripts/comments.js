@@ -58,7 +58,7 @@ var commentsRevealingModule = (function () {
 
         $("#" + index).find("p").text(comment.ParentComment.Text).html();
         $("#" + index).find("small").html(" &nbsp;" + date);
-        $("#" + index).find("h4").prepend(comment.ParentComment.Users.UserName);
+        $("#" + index).find("h4").prepend(comment.ParentComment.User.UserName);
         $("#" + index).append('<input type="hidden" name="comment-id" value=' + comment.ParentComment.CommentID + ' />');
         $("#" + index).append('<input type="hidden" name="parent-comment-id" value=' + comment.ParentComment.ParentCommentID + ' />');
     }
