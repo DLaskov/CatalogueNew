@@ -64,7 +64,7 @@ namespace CatalogueNew.Web.Controllers
 
                 GetAuthenticationManager().SignIn(identity);
 
-                if(model.ReturnUrl == null)
+                if (model.ReturnUrl == null)
                 {
                     return RedirectToAction("Index", "Product");
                 }
@@ -154,7 +154,8 @@ namespace CatalogueNew.Web.Controllers
         {
             usermanager.UserValidator = new UserValidator<User>(usermanager)
             {
-                AllowOnlyAlphanumericUserNames = false
+                AllowOnlyAlphanumericUserNames = false,
+                RequireUniqueEmail = true
             };
         }
 

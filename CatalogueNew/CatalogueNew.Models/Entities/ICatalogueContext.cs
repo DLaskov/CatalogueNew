@@ -10,7 +10,7 @@ namespace CatalogueNew.Models.Entities
         IDbSet<Category> Categories { get; set; }
         IDbSet<Comment> Comments { get; set; }
         IDbSet<Image> Images { get; set; }
-        IDbSet<LikeDislike> LikesDislikes { get; set; }
+        IDbSet<LikesDislike> LikesDislikes { get; set; }
         IDbSet<Manufacturer> Manufacturers { get; set; }
         IDbSet<Product> Products { get; set; }
         IDbSet<ProductTag> ProductsTags { get; set; }

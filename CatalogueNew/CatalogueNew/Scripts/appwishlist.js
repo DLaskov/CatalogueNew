@@ -6,21 +6,29 @@ var wishlistRemove = $('#documentsList');
 $(document).ready(function () {
 
     wishlistButton.click(function () {
-
         if (wishlistID == 0) {
-            $.post("AddToWishlist", { data: $("#product-id").val() }, function (data, textStatus, jqXHR) { wishlistID = data.Message; });
-
-            wishlistButton.val("Remove From Wishlist");
-            wishlistButton.addClass("btn btn-sm btn-danger");
+            wishlistButton.attr("disabled", "disabled");
+            wishlistButton.val('Loading...');
+            $.post("AddToWishlist", { data: $("#product-id").val() }, function (data, textStatus, jqXHR) {
+                wishlistID = data.Message;
+                wishlistButton.removeAttr("disabled");
+                wishlistButton.val("Remove From Wishlist");
+                wishlistButton.addClass("btn btn-sm btn-danger");
+            });
         }
         else {
-            $.post("RemoveFromWishlist", { data: wishlistID });
-            wishlist.val('0');
-            wishlistID = '0';
-            wishlistButton.val('Add To Wishlist');
-            wishlistButton.removeClass("btn btn-sm btn-danger")
-            wishlistButton.removeClass("btn btn-sm btn-warning")
-            wishlistButton.addClass("btn btn-sm btn-success");
+            wishlistButton.attr("disabled", "disabled");
+            wishlistButton.val('Loading...');
+            $.post("RemoveFromWishlist", { data: wishlistID }, function (data, textStatus, jqXHR) {
+                wishlist.val('0');
+                wishlistID = '0';
+                wishlistButton.removeAttr("disabled");
+                wishlistButton.val('Add To Wishlist');
+                wishlistButton.removeClass("btn btn-sm btn-danger")
+                wishlistButton.removeClass("btn btn-sm btn-warning")
+                wishlistButton.addClass("btn btn-sm btn-success");
+            });
+
         }
     });
 
@@ -34,7 +42,7 @@ $(document).ready(function () {
             wishlistButton.val("Remove From Wishlist");
             wishlistButton.removeClass("btn btn-sm btn-warning");
             wishlistButton.removeClass("btn btn-sm btn-success");
-            wishlistButton.addClass("btn btn-sm btn-danger");
+            wishlistButton.toggleClass("btn btn-sm btn-danger")
         }
     });
 
@@ -46,25 +54,43 @@ $(document).ready(function () {
         }
     });
 
-    wishlistRemove.on('click', '.wish',
+    $(document).on('click', '.wish',
         function (event) {
-        var name = $(event.target).closest('button').val();
-        $.post("RemoveFromWishlist", { data: name },
+        $("#load").removeAttr('style');
+        var name = $(this).closest('button').val();
+        var currentPage = $("#current-page").val();
+        $.post("RemoveFromWishlist", { data: name, page: currentPage },
             function (result) {
-                wishlistRemove.load('Index', { page: getUrlParameter('page') });
+
+                var a = $(".ajax-pagination a");
+                var currentPage = result.Page;
+                var options =
+                    {
+                        url: "/Wishlist/Index/0?page="+currentPage,
+                        data: $("form").serialize(),
+                        type: "get"
+                    };
+
+                $.ajax(options).done(function (data) {
+                    var target = a.parents(".ajax-pagination").attr("data-devtest-target");
+                    $(target).replaceWith(data);
+                    products = $('.product');
+                    window.location.hash = options.url;
+                });
+                $("#load").attr('style', 'display: none');
             });
        
     });
 
-    function getUrlParameter(sParam) {
-        var sPageURL = window.location.search.substring(2);
-        var sURLVariables = sPageURL.split('?');
-        for (var i = 0; i < sURLVariables.length; i++) {
-            var sParameterName = sURLVariables[i].split('=');
-            if (sParameterName[0] == sParam) {
-                return sParameterName[1];
-            }
-        }
-    }
+    //function getUrlParameter(sParam) {
+    //    var sPageURL = window.location.search.substring(2);
+    //    var sURLVariables = sPageURL.split('?');
+    //    for (var i = 0; i < sURLVariables.length; i++) {
+    //        var sParameterName = sURLVariables[i].split('=');
+    //        if (sParameterName[0] == sParam) {
+    //            return sParameterName[1];
+    //        }
+    //    }
+    //}
 
 });

@@ -85,7 +85,7 @@
     <Compile Include="Entities\Comment.cs" />
     <Compile Include="Entities\ICatalogueContext.cs" />
     <Compile Include="Entities\Image.cs" />
-    <Compile Include="Entities\LikeDislike.cs" />
+    <Compile Include="Entities\LikesDislike.cs" />
     <Compile Include="Entities\Manufacturer.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\ProductTag.cs" />
@@ -109,6 +109,8 @@
     <Compile Include="Services\Comment\ICommentService.cs" />
     <Compile Include="Services\Image\IImageService.cs" />
     <Compile Include="Services\Image\ImageService.cs" />
+    <Compile Include="Services\LikeDislike\ILikeDislikeService.cs" />
+    <Compile Include="Services\LikeDislike\LikeDislikeService.cs" />
     <Compile Include="Services\Manufacturer\IManufacturerService.cs" />
     <Compile Include="Services\Product\IProductService.cs" />
     <Compile Include="Services\Rating\IRatingService.cs" />

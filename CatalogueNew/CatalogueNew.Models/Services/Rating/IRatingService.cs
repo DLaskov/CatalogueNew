@@ -9,8 +9,10 @@ namespace CatalogueNew.Models.Services
 {
     public interface IRatingService
     {
-        void Add(Rating rating);
+        Task Add(Rating rating);
 
-        int TotalRating(int productID);
+        Task<int> TotalRating(int productID);
+
+        Task<int> UserRating(int productID, string userID);
     }
 }

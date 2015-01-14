@@ -8,7 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Microsoft.AspNet.Identity;
-using System.Threading;
+using System.Threading.Tasks;
 
 namespace CatalogueNew.Web.Controllers
 {
@@ -21,17 +21,23 @@ namespace CatalogueNew.Web.Controllers
             this.ratingServices = ratingServices;
         }
 
-        public int Get(int productID)
+        public async Task<RatingViewModel> Get(int productID)
         {
-            int totalRating = ratingServices.TotalRating(productID);
+            var userID = User.Identity.GetUserId();
 
-            return totalRating;
+            int totalRating = await ratingServices.TotalRating(productID);
+            int userRating = await ratingServices.UserRating(productID, userID);
+
+            var ratingModel = new RatingViewModel(totalRating, userRating);
+
+            return ratingModel;
         }
 
-        public Rating Post([FromBody]Rating rating)
+        [Authorize]
+        public async Task<Rating> Post([FromBody]Rating rating)
         {
             rating.UserID = User.Identity.GetUserId();
-            ratingServices.Add(rating);
+            await ratingServices.Add(rating);
 
             return rating;
         }
