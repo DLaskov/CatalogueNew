@@ -80,7 +80,7 @@ namespace CatalogueNew.Web.Controllers
         {
             if (string.IsNullOrEmpty(returnUrl) || !Url.IsLocalUrl(returnUrl))
             {
-                return Url.Action("index", "home");
+                return Url.Action("Index", "Product");
             }
 
             return returnUrl;
@@ -92,7 +92,7 @@ namespace CatalogueNew.Web.Controllers
             var authManager = ctx.Authentication;
 
             authManager.SignOut("ApplicationCookie");
-            return RedirectToAction("index", "home");
+            return RedirectToAction("Index", "Product");
         }
 
         [HttpGet]
@@ -126,7 +126,7 @@ namespace CatalogueNew.Web.Controllers
             if (result.Succeeded)
             {
                 await SignIn(user);
-                return RedirectToAction("index", "home");
+                return RedirectToAction("Index", "Product");
             }
 
             foreach (var error in result.Errors)

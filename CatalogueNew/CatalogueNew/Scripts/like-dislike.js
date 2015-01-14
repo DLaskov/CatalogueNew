@@ -5,9 +5,16 @@
 
 var likeRevealingModule = (function () {
     var $productID = $("#product-id").val();
+    var isAuth = $("[name='is-auth']").val();
 
     $('#like').click(function (e) {
         e.preventDefault();
+
+        if (isAuth === 'false') {
+            alert('Log in please!');
+            return false;
+        }
+
         var _this = $(this);
         var like = {
             isLike: true,
@@ -28,6 +35,12 @@ var likeRevealingModule = (function () {
 
     $('#dislike').click(function (e) {
         e.preventDefault();
+
+        if (isAuth === 'false') {
+            alert('Log in please!');
+            return false;
+        }
+
         var _this = $(this);
         var dislike = {
             isLike: false,
