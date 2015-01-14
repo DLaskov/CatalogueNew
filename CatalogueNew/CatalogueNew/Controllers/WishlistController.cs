@@ -38,14 +38,16 @@ namespace CatalogueNew.Web.Controllers
             return View(productListViewModel);
         }
 
-        public ActionResult RemoveFromWishlist(string data)
+        [HttpPost]
+        public ActionResult RemoveFromWishlist(string data, string page)
         {
             int productID = Int32.Parse(data);
             string userID = User.Identity.GetUserId();
             wishlistService.Remove(productID, userID);
 
-            var redirectUrl = new UrlHelper(Request.RequestContext).Action("Index", "Wishlist");
-            return Json(new { Url = redirectUrl });
+            var pageItems = productService.GetProducts(Int32.Parse(page), userID);
+
+            return Json(new { Page = pageItems.Items.Count() <= 0 ? pageItems.CurrentPage - 1 : pageItems.CurrentPage });
         }
 
 
