@@ -29,6 +29,6 @@ namespace CatalogueNew.Models.Entities
 
         public virtual Product Products { get; set; }
 
-        public virtual User Users { get; set; }
+        public virtual User User { get; set; }
     }
 }

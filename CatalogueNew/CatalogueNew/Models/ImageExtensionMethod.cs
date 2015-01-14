@@ -11,8 +11,8 @@ namespace CatalogueNew.Web.Models
 {
     public static class ImageExtensionMethod
     {
-        private const int ImgMaxWidth = 125;
-        private const int ImgMaxHeight = 125;
+        private const int ImgMaxWidth = 350;
+        private const int ImgMaxHeight = 250;
 
         public static byte[] GetFileData(this string fileName, string filePath)
         {
@@ -35,7 +35,7 @@ namespace CatalogueNew.Web.Models
             return mimeType;
         }
 
-        public static Image ResizeImage(this Image image)
+        public static byte[] ResizeImage(this Image image)
         {
             var ms = new MemoryStream(image.Value);
             var source = Imager.Resize(System.Drawing.Image.FromStream(ms), ImgMaxWidth, ImgMaxHeight, false);
@@ -43,13 +43,7 @@ namespace CatalogueNew.Web.Models
 
             source.Save(fileResize, ImageFormat.Png);
 
-            var resizedImage = new Image()
-            {
-                ImageName = image.ImageName,
-                Value = fileResize.ToArray()
-            };
-
-            return resizedImage;
+            return fileResize.ToArray();
         }
     }
 }

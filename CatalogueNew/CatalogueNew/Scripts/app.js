@@ -39,7 +39,7 @@
         if (confirm("You are going to delete this image.")) {
             var src = $("img", this).attr("src");
             var id = src.split("=")[1];
-            $.post("RemoveImageById", { value: id });
+            $.post("../RemoveImageById", { value: id });
             $(this).remove();
         }
     });

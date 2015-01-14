@@ -3648,6 +3648,7 @@ select[multiple].form-group-lg .form-control {
     color: #fff;
     background-color: #5bc0de;
     border-color: #46b8da;
+    text-shadow: 1px 1px 1px #464646 !important;
 }
 
     .btn-info:hover,
@@ -3748,6 +3749,7 @@ select[multiple].form-group-lg .form-control {
     color: #fff;
     background-color: #d9534f;
     border-color: #d43f3a;
+    text-shadow: 1px 1px 1px #464646 !important;
 }
 
     .btn-danger:hover,
@@ -7572,6 +7574,15 @@ button.close {
     .visible-md-inline-block {
         display: inline-block !important;
     }
+
+    .img-thumbnail {
+        height: 43px;
+    }
+
+        .img-thumbnail > img {
+            max-height: 37px;
+            max-width: 37px;
+        }
 }
 
 @media (min-width: 1200px) {
