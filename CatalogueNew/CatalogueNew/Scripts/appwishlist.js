@@ -1,96 +1,103 @@
-﻿var wishlistButton = $('#add-wishlist');
-var wishlist = $('#has-wishlist');
-var wishlistID = wishlist.val();
-var wishlistRemove = $('#documentsList');
+﻿$(document).ready(function () {
+    wishlistButtonBehavior.productDetails();
+    wishlistButtonBehavior.wishlistPage();
+});
 
-$(document).ready(function () {
+var wishlistButtonBehavior = (function () {
 
-    wishlistButton.click(function () {
-        if (wishlistID == 0) {
-            wishlistButton.attr("disabled", "disabled");
-            wishlistButton.val('Loading...');
-            $.post("AddToWishlist", { data: $("#product-id").val() }, function (data, textStatus, jqXHR) {
-                wishlistID = data.Message;
-                wishlistButton.removeAttr("disabled");
-                wishlistButton.val("Remove From Wishlist");
-                wishlistButton.addClass("btn btn-sm btn-danger");
-            });
-        }
-        else {
-            wishlistButton.attr("disabled", "disabled");
-            wishlistButton.val('Loading...');
-            $.post("RemoveFromWishlist", { data: wishlistID }, function (data, textStatus, jqXHR) {
-                wishlist.val('0');
-                wishlistID = '0';
-                wishlistButton.removeAttr("disabled");
-                wishlistButton.val('Add To Wishlist');
-                wishlistButton.removeClass("btn btn-sm btn-danger")
-                wishlistButton.removeClass("btn btn-sm btn-warning")
-                wishlistButton.addClass("btn btn-sm btn-success");
-            });
+    var wishlistButton = $('#add-wishlist');
+    var wishlist = $('#has-wishlist');
+    var wishlistID = wishlist.val();
+    var wishlistRemove = $('#documentsList');
 
-        }
-    });
+    function inProductDetails() {
 
-    if (wishlistID !== '0') {
-        wishlistButton.val("In Your Wishlist");
-        wishlistButton.addClass("btn btn-sm btn-warning")
-    }
+        wishlistButton.click(function () {
+            if (wishlistID == 0) {
+                wishlistButton.attr("disabled", "disabled");
+                wishlistButton.val('Loading...');
+                $.post("AddToWishlist", { data: $("#product-id").val() }, function (data, textStatus, jqXHR) {
+                    wishlistID = data.Message;
+                    wishlistButton.removeAttr("disabled");
+                    wishlistButton.val("Remove From Wishlist");
+                    wishlistButton.addClass("btn btn-sm btn-danger");
+                });
+            }
+            else {
+                wishlistButton.attr("disabled", "disabled");
+                wishlistButton.val('Loading...');
+                $.post("RemoveFromWishlist", { data: wishlistID }, function (data, textStatus, jqXHR) {
+                    wishlist.val('0');
+                    wishlistID = '0';
+                    wishlistButton.removeAttr("disabled");
+                    wishlistButton.val('Add To Wishlist');
+                    wishlistButton.removeClass("btn btn-sm btn-danger")
+                    wishlistButton.removeClass("btn btn-sm btn-warning")
+                    wishlistButton.addClass("btn btn-sm btn-success");
+                });
 
-    wishlistButton.mouseenter(function () {
-        if (wishlistID !== '0') {
-            wishlistButton.val("Remove From Wishlist");
-            wishlistButton.removeClass("btn btn-sm btn-warning");
-            wishlistButton.removeClass("btn btn-sm btn-success");
-            wishlistButton.toggleClass("btn btn-sm btn-danger")
-        }
-    });
+            }
+        });
 
-    wishlistButton.mouseleave(function () {
         if (wishlistID !== '0') {
             wishlistButton.val("In Your Wishlist");
-            wishlistButton.removeClass("btn btn-sm btn-danger");
-            wishlistButton.addClass("btn btn-sm btn-warning");
+            wishlistButton.addClass("btn btn-sm btn-warning")
         }
-    });
 
-    $(document).on('click', '.wish',
-        function (event) {
-        $("#load").removeAttr('style');
-        var name = $(this).closest('button').val();
-        var currentPage = $("#current-page").val();
-        $.post("RemoveFromWishlist", { data: name, page: currentPage },
-            function (result) {
+        wishlistButton.mouseenter(function () {
+            if (wishlistID !== '0') {
+                wishlistButton.val("Remove From Wishlist");
+                wishlistButton.removeClass("btn btn-sm btn-warning");
+                wishlistButton.removeClass("btn btn-sm btn-success");
+                wishlistButton.toggleClass("btn btn-sm btn-danger")
+            }
+        });
 
-                var a = $(".ajax-pagination a");
-                var currentPage = result.Page;
-                var options =
-                    {
-                        url: "/Wishlist/Index/0?page="+currentPage,
-                        data: $("form").serialize(),
-                        type: "get"
-                    };
+        wishlistButton.mouseleave(function () {
+            if (wishlistID !== '0') {
+                wishlistButton.val("In Your Wishlist");
+                wishlistButton.removeClass("btn btn-sm btn-danger");
+                wishlistButton.addClass("btn btn-sm btn-warning");
+            }
+        });
+    }   
 
-                $.ajax(options).done(function (data) {
-                    var target = a.parents(".ajax-pagination").attr("data-devtest-target");
-                    $(target).replaceWith(data);
-                    products = $('.product');
-                    window.location.hash = options.url;
+    function inWishlist() {
+
+        $(document).on('click', '.wish',
+            function (event) {
+            $("#load").removeAttr('style');
+            var name = $(this).closest('.wish').val();
+            var currentPage = $("#current-page").val();
+            $.post("Wishlist/RemoveFromWishlist", { data: name, page: currentPage },
+                function (result) {
+
+                    var a = $(".ajax-pagination a");
+                    var currentPage = result.Page;
+                    var options =
+                        {
+                            url: "/Wishlist/Index/0?page=" + currentPage,
+                            data: $("form").serialize(),
+                            type: "get"
+                        };
+
+                    $.ajax(options).done(function (data) {
+                        var target = a.parents(".ajax-pagination").attr("data-devtest-target");
+                        $(target).replaceWith(data);
+                        products = $('.product');
+                        window.location.hash = options.url;
+                    });
+                    $("#load").attr('style', 'display: none');
                 });
-                $("#load").attr('style', 'display: none');
-            });
-       
-    });
+        });
+    }
 
-    //function getUrlParameter(sParam) {
-    //    var sPageURL = window.location.search.substring(2);
-    //    var sURLVariables = sPageURL.split('?');
-    //    for (var i = 0; i < sURLVariables.length; i++) {
-    //        var sParameterName = sURLVariables[i].split('=');
-    //        if (sParameterName[0] == sParam) {
-    //            return sParameterName[1];
-    //        }
-    //    }
-    //}
+    return {
+        productDetails: inProductDetails,
+        wishlistPage: inWishlist
+    }
 
-});
+})();
+
+
+
