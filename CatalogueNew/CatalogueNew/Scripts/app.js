@@ -20,6 +20,8 @@
         return false;
     }
 
+    $(".body-content").on("click", ".ajax-pagination a", getPage);
+
     $(".img-preview img").on("click", function () {
         if (confirm("You are going to delete this image.")) {
             var src = $(this).attr("src");
