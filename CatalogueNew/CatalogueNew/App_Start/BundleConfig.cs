@@ -11,7 +11,6 @@
             "~/Scripts/jquery-{version}.js",
             "~/Scripts/jquery-ui-{version}.js",
             "~/Scripts/app.js",
-            "~/Scripts/appwishlist.js",
             "~/Scripts/jquery.unobtrusive-ajax.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -44,6 +43,7 @@
                     "~/Scripts/comments.js",
                     "~/Scripts/star-rating.min.js",
                     "~/Scripts/rating.js",
+                    "~/Scripts/wishlist.js",
                     "~/Scripts/moment.min.js",
                     "~/Scripts/moment-with-locales.min.js",
                     "~/Scripts/jquery.scrollUp.min.js"));

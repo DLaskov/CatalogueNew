@@ -225,7 +225,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Images\no_pic_small.gif" />
     <Content Include="Scripts\app.js" />
-    <Content Include="Scripts\appwishlist.js" />
+    <Content Include="Scripts\wishlist.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
