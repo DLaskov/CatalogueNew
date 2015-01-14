@@ -46,6 +46,7 @@
                     "~/Scripts/comments.js",
                     "~/Scripts/star-rating.min.js",
                     "~/Scripts/rating.js",
+                    "~/Scripts/wishlist.js",
                     "~/Scripts/moment.min.js",
                     "~/Scripts/moment-with-locales.min.js",
                     "~/Scripts/jquery.scrollUp.min.js"));
