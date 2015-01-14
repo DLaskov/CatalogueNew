@@ -11,11 +11,6 @@
         }
         return;
     });
-    $('.bxslider').bxSlider({
-        pagerCustom: '#bx-pager',
-        height: 265,
-        adaptiveHeight: true
-    });
 
     var getPage = function () {
         var a = $(this);

@@ -114,8 +114,7 @@ namespace CatalogueNew.Models.Services
                             join wish in this.Context.Wishlists on prod.ProductID equals wish.ProductID
                             where userID == wish.UserID
                             orderby prod.Name
-                            select prod).Include("Images");
-
+                            select prod).Include("Images"); 
 
             var pagedList = new PagedList<Product>(products, page, pageSize);
             return pagedList;

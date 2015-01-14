@@ -26,7 +26,7 @@
                         }
                         <a href="~/Product/Details?id=@product.ProductID">
                             <div class="thumbnail">
-                                <img src="@Url.Content("~/HttpImageHandler.ashx?id=" + product.Images.FirstOrDefault().ImageID)" />                    
+                                <img src="@Url.Content("~/HttpImageHandler.ashx?id=" + product.Images.FirstOrDefault().ImageID)" />
                             </div>
                             <p class="caption">@product.Name</p>
                         </a>
@@ -39,7 +39,7 @@
                         }
                         <a href="~/Product/Details?id=@product.ProductID">
                             <div class="thumbnail">
-                                <img src="~/Images/no_pic_small.gif" />                                
+                                <img src="~/Images/no_pic_small.gif" />
                             </div>
                             <p class="caption">@product.Name</p>
                         </a>

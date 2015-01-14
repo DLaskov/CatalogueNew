@@ -40,9 +40,8 @@
                      "~/Scripts/jquery.bxslider.js"
                 ));
 
-            bundles.Add(new ScriptBundle("~/bundels/product").Include(
+            bundles.Add(new ScriptBundle("~/bundles/product").Include(
                     "~/Scripts/like-dislike.js",
-                    "~/Scripts/appwishlist.js",
                     "~/Scripts/comments.js",
                     "~/Scripts/star-rating.min.js",
                     "~/Scripts/rating.js",

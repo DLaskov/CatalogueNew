@@ -7,6 +7,13 @@
  *
  * Released under the MIT license - http://opensource.org/licenses/MIT
  */
+$(document).ready(function () {
+    $('.bxslider').bxSlider({
+        pagerCustom: '#bx-pager',
+        height: 265,
+        adaptiveHeight: true
+    });
+});
 
 ;(function($){
 
