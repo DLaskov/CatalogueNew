@@ -128,7 +128,7 @@ namespace CatalogueNew.Web.Controllers
 
             foreach (var image in images)
             {
-                image.ResizeImage();
+               image.Value = image.ResizeImage();
             }
 
             model.Product.Images = images;
