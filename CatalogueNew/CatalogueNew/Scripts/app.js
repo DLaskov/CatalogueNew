@@ -38,6 +38,8 @@
         }
     });
 
+    $(".body-content").on("click", ".ajax-pagination a", getPage);
+
     function confirmProductDelete() {
         if (!confirm("You are going to delete this product.")) {
             $(this).preventDefault();
