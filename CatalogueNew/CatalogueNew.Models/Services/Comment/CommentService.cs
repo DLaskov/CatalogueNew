@@ -1,8 +1,10 @@
 ﻿using CatalogueNew.Models.Entities;
 using CatalogueNew.Models.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CatalogueNew.Models.Services
 {
@@ -19,28 +21,31 @@ namespace CatalogueNew.Models.Services
             this.Context.SaveChanges();
         }
 
-        public void Modify(Comment comment)
+        public async Task Modify(Comment comment)
         {
-            this.Context.Entry(comment).State = EntityState.Modified;
+            var dataComment = await this.Context.Comments.Where(c => c.CommentID == comment.CommentID).FirstOrDefaultAsync();
+            dataComment.Text = comment.Text;
+            dataComment.TimeStamp = DateTime.UtcNow;
+
+            this.Context.Entry(dataComment).State = EntityState.Modified;
             this.Context.SaveChanges();
         }
 
-        public void Remove(int id)
+        public async Task Remove(int id)
         {
-            this.Context.Database.ExecuteSqlCommand("usp_deleteComments @id = {0}", id);
+            await this.Context.Database.ExecuteSqlCommandAsync("usp_deleteComments @id = {0}", id);
         }
 
-        public IEnumerable<CommentWrapper> CommentsByProduct(int productID)
+        public async Task<IEnumerable<CommentWrapper>> CommentsByProduct(int productID)
         {
-            var commentsByProduct = this.Context.Comments
+            var commentsByProduct = await this.Context.Comments
                 .Where(c => c.ProductID == productID)
-                .Include("Users")
-                .Where(coment => this.Context.Users.Any(user => user.Id == coment.UserID))
-                .ToList();
+                .Include(x => x.User)
+                .ToListAsync();
 
             var commentsWrapperList = new List<CommentWrapper>();
 
-            foreach (var comment in commentsByProduct.ToList())
+            foreach (var comment in commentsByProduct)
             {
                 if (comment.ParentCommentID == null)
                 {
@@ -49,7 +54,6 @@ namespace CatalogueNew.Models.Services
                         ParentComment = comment,
                         ChildrenComments = new List<CommentWrapper>(0)
                     });
-                    commentsByProduct.Remove(comment);
                 }
             }
 
@@ -58,11 +62,6 @@ namespace CatalogueNew.Models.Services
 
         private List<CommentWrapper> SetChildren(List<CommentWrapper> commentsWrapper, List<Comment> commentsByProduct)
         {
-            if (commentsByProduct.Count == 0)
-            {
-                return commentsWrapper;
-            }
-
             foreach (var commentWrapper in commentsWrapper)
             {
                 var children = commentsByProduct.Where(x => x.ParentCommentID == commentWrapper.ParentComment.CommentID).ToList();
@@ -74,7 +73,6 @@ namespace CatalogueNew.Models.Services
                         ParentComment = child,
                         ChildrenComments = new List<CommentWrapper>(0)
                     });
-                    commentsByProduct.Remove(child);
                 }
                 SetChildren(commentWrapper.ChildrenComments, commentsByProduct);
             }

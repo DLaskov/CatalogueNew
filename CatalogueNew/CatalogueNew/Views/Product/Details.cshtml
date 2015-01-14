@@ -45,14 +45,15 @@
         <div class="lead"><strong>Category: </strong>@product.Category.Name</div>
         <div class="lead"><strong>Year: </strong>@product.Year.Value</div>
         <div class="lead"><strong>Description: </strong>@product.Description</div>
-        <div class="lead">
+        <div class="lead" id="rating-id">
             <strong>Rating: </strong>
             <input id="input-rating" class="rating" data-size="xs" data-show-clear="false" data-show-caption="false" data-step="1" />
         </div>
         <div class="lead"><strong>Tags: </strong></div>
         <div class="lead">
+            <a id="like" class="btn btn-default glyphicon glyphicon-thumbs-up" href=""> Like </a>
+            <a id="dislike" class="btn btn-default glyphicon glyphicon-thumbs-down" href=""> Dislike </a>
             <strong>
-                Like Dislike
                 @if (User.Identity.IsAuthenticated)
                 {
                     <input type="button" id="add-wishlist" class="btn btn-sm btn-success" value="Add To Wishlist" name="wishlist">
@@ -89,17 +90,32 @@ else
     <input type="hidden" name="has-role" value="false" />
 }
 
-<div id="comments" class="media">
+<a id="scrollUp" href="#top" title="Scroll to top" style="position: fixed; z-index: 2147483647;">Scroll to top</a>
+<div id="comments" class="media container container-fluid">
 </div>
 
 @section Scripts{
-    <script src="~/Scripts/moment.min.js"></script>
-    <script src="~/Scripts/moment-with-locales.min.js"></script>
-
+    <script src="~/Scripts/like.js"></script>
+    <script src="~/Scripts/comments.js"></script>
     <link href="~/Content/star-rating.min.css" rel="stylesheet" />
     <script src="~/Scripts/star-rating.min.js"></script>
+    <script src="~/Scripts/rating.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/moment-with-locales.min.js"></script>
+    <script src="~/Scripts/jquery.scrollUp.min.js"></script>
     <script>
         moment().format();
+
+        $.scrollUp({
+            scrollName: 'scrollUp', // Element ID
+            topDistance: '1000', // Distance from top before showing element (px)
+            topSpeed: 300, // Speed back to top (ms)
+            animation: 'fade', // Fade, slide, none
+            animationInSpeed: 200, // Animation in speed (ms)
+            animationOutSpeed: 200, // Animation out speed (ms)
+            scrollText: 'Scroll to top', // Text for element
+            activeOverlay: false, // Set CSS color to display scrollUp active point, e.g '#00FFFF'
+        });
     </script>
 
 }

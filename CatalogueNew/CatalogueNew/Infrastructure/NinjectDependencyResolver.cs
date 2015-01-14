@@ -14,6 +14,7 @@ using Ninject.Parameters;
 using Ninject.Extensions.NamedScope;
 using CatalogueNew.Web.Controllers;
 using System.Data.Entity;
+using CatalogueNew.Models.Services.Like;
 
 namespace CatalogueNew.Web.Infrastructure
 {
@@ -54,6 +55,7 @@ namespace CatalogueNew.Web.Infrastructure
             kernel.Bind<ICommentService>().To<CommentService>();
             kernel.Bind<IRatingService>().To<RatingService>();
             kernel.Bind<IWishlistService>().To<WishlistService>();
+            kernel.Bind<ILikeDislikeService>().To<LikeDislikeService>();
         }
     }
 }
