@@ -3,7 +3,9 @@
 @{
     var product = @Model.Product;
 }
-
+@section AddToHead{
+    <link href="~/content/jquery.bxslider.css" rel="stylesheet" />
+}
 <div class="row details">
     <div class="col-md-4">
         <input type="hidden" id="product-id" value="@product.ProductID" />
@@ -24,17 +26,6 @@
         }
         else
         {
-            @*<div class="thumbnail">
-                    <img src="@Url.Content("~/HttpImageHandler.ashx?id=" + product.Images.FirstOrDefault().ImageID)" />
-                </div>*@
-            @*<div class="row">
-                    @foreach (var image in product.Images.Skip(1))
-                    {
-                        <div class="col-md-3">
-                            <img src="@Url.Content("~/HttpImageHandler.ashx?id=" + image.ImageID)" class="without-first img-rounded" />
-                        </div>
-                    }
-                </div>*@
             <ul class="bxslider">
                 <li><img src="@Url.Content("~/HttpImageHandler.ashx?id=" + product.Images.FirstOrDefault().ImageID)" /></li>
                 @foreach (var image in product.Images.Skip(1))
@@ -89,7 +80,7 @@
             <form id="form-comment">
                 <textarea id="comment" class="form-control counted" name="comment" placeholder="Add comment about the product:" rows="3"></textarea>
                 <h6 class="pull-right" id="counter">1000 characters remaining</h6>
-                <button id="submit-comment" class="btn btn-info">Submit new comment</button>
+                <button id="submit-comment" class="btn btn-sm btn-info">Submit new comment</button>
             </form>
         </div>
     </div>
@@ -116,6 +107,7 @@ else
 
 @section Scripts{
     @Scripts.Render("~/bundels/product")
+    @Scripts.Render("~/bundles/sliderjs")
     <script type="text/javascript">
         moment().format();
 

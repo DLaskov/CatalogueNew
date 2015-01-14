@@ -11,7 +11,6 @@
             "~/Scripts/jquery-{version}.js",
             "~/Scripts/jquery-ui-{version}.js",
             "~/Scripts/app.js",
-            "~/Scripts/appwishlist.js",
             "~/Scripts/jquery.unobtrusive-ajax.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -35,12 +34,6 @@
             bundles.Add(new ScriptBundle("~/bundles/dropzonescripts").Include(
                      "~/Scripts/dropzone/dropzone.js"));
 
-            bundles.Add(new StyleBundle("~/Content/dropzonescss").Include(
-                     "~/Scripts/dropzone/css/basic.css",
-                     "~/Scripts/dropzone/css/dropzone.css"));
-            bundles.Add(new StyleBundle("~/Content/slidercss").Include(
-                     "~/Content/jquery.bxslider.css"
-                ));
             bundles.Add(new ScriptBundle("~/bundles/sliderjs").Include(
                      "~/Scripts/jquery.easing.1.3.js",
                      "~/Scripts/jquery.fitvids.js",
@@ -48,10 +41,12 @@
                 ));
 
             bundles.Add(new ScriptBundle("~/bundels/product").Include(
-                "~/Scripts/like-dislike.js",
+                    "~/Scripts/like-dislike.js",
+                    "~/Scripts/appwishlist.js",
                     "~/Scripts/comments.js",
                     "~/Scripts/star-rating.min.js",
                     "~/Scripts/rating.js",
+                    "~/Scripts/wishlist.js",
                     "~/Scripts/moment.min.js",
                     "~/Scripts/moment-with-locales.min.js",
                     "~/Scripts/jquery.scrollUp.min.js"));

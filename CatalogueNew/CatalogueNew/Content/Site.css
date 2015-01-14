@@ -172,6 +172,8 @@ thumbnail:hover {
     width: 145px;
     text-shadow: 1px 1px 1px #464646;
     color: #fbfbfb;
+    position: relative;
+    top: 1px;
 }
 
 #remove-wishlist {
