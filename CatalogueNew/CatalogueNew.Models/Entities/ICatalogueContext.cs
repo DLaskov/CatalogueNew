@@ -2,6 +2,7 @@
 using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Threading.Tasks;
 
 namespace CatalogueNew.Models.Entities
 {
@@ -22,6 +23,7 @@ namespace CatalogueNew.Models.Entities
         IDbSet<IdentityRole> Roles { get; set; }
         Database Database { get; }
         DbEntityEntry Entry(object entity);
+        Task<int> SaveChangesAsync();
         int SaveChanges();
     }
 }

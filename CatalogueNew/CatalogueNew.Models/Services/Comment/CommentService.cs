@@ -15,10 +15,10 @@ namespace CatalogueNew.Models.Services
         {
         }
 
-        public void Add(Comment comment)
+        public async Task Add(Comment comment)
         {
             this.Context.Comments.Add(comment);
-            this.Context.SaveChanges();
+            await this.Context.SaveChangesAsync();
         }
 
         public async Task Modify(Comment comment)
@@ -28,7 +28,7 @@ namespace CatalogueNew.Models.Services
             dataComment.TimeStamp = DateTime.UtcNow;
 
             this.Context.Entry(dataComment).State = EntityState.Modified;
-            this.Context.SaveChanges();
+            await this.Context.SaveChangesAsync();
         }
 
         public async Task Remove(int id)
@@ -40,7 +40,7 @@ namespace CatalogueNew.Models.Services
         {
             var commentsByProduct = await this.Context.Comments
                 .Where(c => c.ProductID == productID)
-                .Include(x => x.User)
+                .Include(c => c.User)
                 .ToListAsync();
 
             var commentsWrapperList = new List<CommentWrapper>();

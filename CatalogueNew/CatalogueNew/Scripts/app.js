@@ -1,5 +1,21 @@
 ﻿$(document).ready(function () {
     'use strict'
+    $("#registerForm").submit(function (event) {
+        if ($("#Password").val() != $("#passwordConfirm").val()) {
+            $("#passwordConfirm").after("<p style=\"color: red\">Password doesn't match!</p>");
+            event.preventDefault();
+        }
+        if ($("#UserName").val() == $("#Password").val()) {
+            $("#Password").after("<p style=\"color: red\">Password must be different from username!</p>");
+            event.preventDefault();
+        }
+        return;
+    });
+    $('.bxslider').bxSlider({
+        pagerCustom: '#bx-pager',
+        height: 265,
+        adaptiveHeight: true
+    });
 
     var getPage = function () {
         var a = $(this);
@@ -14,17 +30,13 @@
         $.ajax(options).done(function (data) {
             var target = a.parents(".ajax-pagination").attr("data-devtest-target");
             $(target).replaceWith(data);
-            products = $('.product');
             window.location.hash = options.url;
         });
         return false;
     }
-
-    $(".body-content").on("click", ".ajax-pagination a", getPage);
-
-    $(".img-preview img").on("click", function () {
+    $(".img-preview").on("click", function () {
         if (confirm("You are going to delete this image.")) {
-            var src = $(this).attr("src");
+            var src = $("img", this).attr("src");
             var id = src.split("=")[1];
             $.post("../RemoveImageById", { value: id });
             $(this).remove();
@@ -81,6 +93,6 @@
                     "' value='" + data.UniqueName + "\\" + data.ImgName + "\\" + data.MimeType + "' />"
                 $("div .form-horizontal").prepend(innerHtml);
             });
-        }
-    }
-});
+            }
+            }
+        });

@@ -1,12 +1,12 @@
-﻿using CatalogueNew.Models.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace CatalogueNew.Web.Models
+namespace CatalogueNew.Models.Infrastructure
 {
-    public class LikeDislikeViewModel
+    public class LikeDislikeWrapper
     {
         public bool? IsLike { get; set; }
 
@@ -14,7 +14,7 @@ namespace CatalogueNew.Web.Models
 
         public int DislikesCount { get; set; }
 
-        public LikeDislikeViewModel(bool? isLike, int likesCount, int dislikesCount)
+        public LikeDislikeWrapper(bool? isLike, int likesCount, int dislikesCount)
         {
             IsLike = isLike;
             LikesCount = likesCount;

@@ -11,7 +11,7 @@
 
 @using (Html.BeginForm("Register", "Auth", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "registerForm" }))
 {
-    <div class="col-md-offset-4">
+    <div class="col-md-4 center-block" style="float: none;">
 
         <div class="form-group">
             All fields marked with <span class="required">*</span> are required!
@@ -66,16 +66,3 @@
         <input type="submit" class="btn btn-success" value="Register" />
     </div>
 }
-<script language="javascript">
-    $("#registerForm").submit(function (event) {
-        if ($("#@Html.IdFor(x => x.Password)").val() != $("#passwordConfirm").val()) {
-            $("#passwordConfirm").after("<p>Password doesn't match.</p>");
-            event.preventDefault();
-        }
-        if ($("#@Html.IdFor(x => x.UserName)").val() == $("#@Html.IdFor(x => x.Password)").val()) {
-            $("#@Html.IdFor(x => x.Password)").after("<p>Password must be different from username.</p>");
-            event.preventDefault();
-        }
-        return;
-    })
-</script>

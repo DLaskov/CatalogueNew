@@ -8,6 +8,7 @@ using System.Web.Http;
 using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
 using CatalogueNew.Web.Models;
+using CatalogueNew.Models.Infrastructure;
 
 namespace CatalogueNew.Web.Controllers
 {
@@ -31,20 +32,12 @@ namespace CatalogueNew.Web.Controllers
             return likeDislike;
         }
 
-        public LikeDislikeViewModel Get(int productID)
+        public LikeDislikeWrapper Get(int productID)
         {
             var userID = User.Identity.GetUserId();
-            var likesCount = likeServices.LikesCout(productID);
-            var dislikesCount = likeServices.DislikesCout(productID);
-            var likeDislike = likeServices.IsLike(productID, userID);
-            LikeDislikeViewModel likesModel;
+            LikeDislikeWrapper likeDislikeWrapper = likeServices.IsLikeDislikeCounts(productID, userID);
 
-            if (likeDislike == null)
-            {
-                return likesModel = new LikeDislikeViewModel(null, likesCount, dislikesCount);
-            }
-
-            return likesModel = new LikeDislikeViewModel(likeDislike.IsLike, likesCount, dislikesCount);
+            return likeDislikeWrapper;
         }
     }
 }

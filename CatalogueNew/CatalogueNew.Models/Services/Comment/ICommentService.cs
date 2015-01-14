@@ -12,7 +12,7 @@ namespace CatalogueNew.Models.Services
     {
         Task<IEnumerable<CommentWrapper>> CommentsByProduct(int productID);
 
-        void Add(Comment comment);
+        Task Add(Comment comment);
 
         Task Modify(Comment comment);
 

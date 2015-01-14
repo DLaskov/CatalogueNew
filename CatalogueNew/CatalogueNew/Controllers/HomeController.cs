@@ -16,6 +16,5 @@ namespace CatalogueNew.Web.Controllers
         {
             return View();
         }
-        
     }
 }

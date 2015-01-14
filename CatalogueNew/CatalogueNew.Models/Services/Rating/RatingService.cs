@@ -22,7 +22,7 @@ namespace CatalogueNew.Models.Services
             if (userRating == null)
             {
                 this.Context.Ratings.Add(rating);
-                this.Context.SaveChanges();
+                await this.Context.SaveChangesAsync();
             }
         }
 

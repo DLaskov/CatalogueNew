@@ -1,4 +1,5 @@
 ﻿using CatalogueNew.Models.Entities;
+using CatalogueNew.Models.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,6 @@ namespace CatalogueNew.Models.Services.Like
     {
         Task Add(LikesDislike like);
 
-        LikesDislike IsLike(int productID, string userID);
-
-        int LikesCout(int productID);
-
-        int DislikesCout(int productID);
+        LikeDislikeWrapper IsLikeDislikeCounts(int productID, string userID);
     }
 }
