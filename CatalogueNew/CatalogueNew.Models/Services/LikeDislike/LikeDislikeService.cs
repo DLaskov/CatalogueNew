@@ -38,7 +38,7 @@ namespace CatalogueNew.Models.Services.Like
             return await this.Context.LikesDislikes.Where(l => l.ProductID == productID).ToListAsync();
         }
 
-        public async Task<LikeDislikeWrapper> IsLikeDislikeCounts(int productID, string userID)
+        public async Task<LikeDislikeWrapper> GetLikesDislikesCount(int productID, string userID)
         {
             var likesDislikes = await All(productID);
             var like = likesDislikes.Where(ld => ld.UserID == userID).FirstOrDefault();

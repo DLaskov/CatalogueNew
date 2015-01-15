@@ -46,6 +46,37 @@ namespace CatalogueNew.Models.Services
 
         public void Remove(Product product)
         {
+            var comments = this.Context.Comments.Where(c => c.ProductID == product.ProductID).ToList();
+            var ratings = this.Context.Ratings.Where(r => r.ProductID == product.ProductID).ToList();
+            var likesDislikes = this.Context.LikesDislikes.Where(ld => ld.ProductID == product.ProductID).ToList();
+            var wishlists = this.Context.Wishlists.Where(w => w.ProductID == product.ProductID).ToList();
+            var images = this.Context.Images.Where(img => img.ProductID == product.ProductID).ToList();
+
+            foreach (Comment comment in comments)
+            {
+                this.Context.Database.ExecuteSqlCommand("usp_deleteComments @id = {0}", comment.CommentID);
+            }
+
+            foreach (Rating rating in ratings)
+            {
+                this.Context.Ratings.Remove(rating);
+            }
+
+            foreach (LikesDislike likeDislike in likesDislikes)
+            {
+                this.Context.LikesDislikes.Remove(likeDislike);
+            }
+
+            foreach (Wishlist wishlist in wishlists)
+            {
+                this.Context.Wishlists.Remove(wishlist);
+            }
+
+            foreach (Image image in images)
+            {
+                this.Context.Images.Remove(image);
+            }
+
             this.Context.Products.Remove(product);
             this.Context.SaveChanges();
         }
@@ -114,7 +145,7 @@ namespace CatalogueNew.Models.Services
                             join wish in this.Context.Wishlists on prod.ProductID equals wish.ProductID
                             where userID == wish.UserID
                             orderby prod.Name
-                            select prod).Include("Images"); 
+                            select prod).Include("Images");
 
             var pagedList = new PagedList<Product>(products, page, pageSize);
             return pagedList;

@@ -35,7 +35,7 @@ namespace CatalogueNew.Web.Controllers
         public async Task<LikeDislikeWrapper> Get(int productID)
         {
             var userID = User.Identity.GetUserId();
-            LikeDislikeWrapper likeDislikeWrapper = await likeServices.IsLikeDislikeCounts(productID, userID);
+            LikeDislikeWrapper likeDislikeWrapper = await likeServices.GetLikesDislikesCount(productID, userID);
 
             return likeDislikeWrapper;
         }
