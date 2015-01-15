@@ -122,6 +122,8 @@
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\Wishlist.cs" />
     <Compile Include="Services\Rating\RatingService.cs" />
+    <Compile Include="Services\Tag\ITagService.cs" />
+    <Compile Include="Services\Tag\TagService.cs" />
     <Compile Include="Services\Wishlist\IWishlistService.cs" />
     <Compile Include="Services\Wishlist\WishlistService.cs" />
   </ItemGroup>

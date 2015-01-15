@@ -21,15 +21,17 @@ namespace CatalogueNew.Web.Controllers
         private IProductService productService;
         private IImageService imageService;
         private IWishlistService wishlistService;
+        private ITagService tagService;
 
         public ProductController(ICategoryService categoryService, IManufacturerService manufacturerService,
-            IProductService productService, IImageService imageService, IWishlistService wishlistService)
+            IProductService productService, IImageService imageService, IWishlistService wishlistService, ITagService tagService)
         {
             this.categoryService = categoryService;
             this.manufacturerService = manufacturerService;
             this.productService = productService;
             this.imageService = imageService;
             this.wishlistService = wishlistService;
+            this.tagService = tagService;
         }
 
         [Authorize(Roles = "Manager")]
@@ -342,6 +344,20 @@ namespace CatalogueNew.Web.Controllers
         public void RemoveFromWishlist(string data)
         {
             wishlistService.Remove(Int32.Parse(data));
+        }
+        [HttpPost]
+        public void AddTag(string tagName, string id)
+        {
+            try
+            {
+                int productID = Int32.Parse(id);
+                tagService.Add(tagName, productID);
+                Response.StatusCode = 200;
+            }
+            catch
+            {
+                Response.StatusCode = 500;
+            }
         }
     }
 }

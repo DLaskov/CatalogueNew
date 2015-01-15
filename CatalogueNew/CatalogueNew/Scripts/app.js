@@ -11,7 +11,7 @@
         }
         return;
     });
-
+    
     var getPage = function () {
         var a = $(this);
 
@@ -90,6 +90,47 @@
                     "' value='" + data.UniqueName + "\\" + data.ImgName + "\\" + data.MimeType + "' />"
                 $("div .form-horizontal").prepend(innerHtml);
             });
+        }
+    }
+
+    $("#addTagSpan").on("click", tag.inputForTag);
+    $("#addTag").on("click", function () {
+        var input = $(".tagInput").val();
+        if (input != "") {
+            var productID = $("#product-id").val();
+            tag.addTag(input, productID);
+        }
+    });
+
+});
+var tag = (function () {
+    function toggleInputForTag() {
+        $(".addTagDiv").fadeToggle("slow", function () {
+            if ($(".addTagDiv").is(':hidden')) {
+                $("#addTagSpan").removeClass("glyphicon-remove");
+                $("#addTagSpan").css("color", "#449d44");
+                $("#addTagSpan").addClass("glyphicon-plus");
+
+            } else {
+                $("#addTagSpan").removeClass("glyphicon-plus");
+                $("#addTagSpan").css("color", "#d9534f");
+                $("#addTagSpan").addClass("glyphicon-remove");
             }
+        })
+    };
+
+    function postTag(value, id) {
+        $.post(
+            "AddTag", 
+            { tagName: value, id: id }, 
+            function () {
+                toggleInputForTag();
+                $(".tags").append(", " + value.toLowerCase())
             }
-        });
+            );
+    };
+    return {
+        inputForTag: toggleInputForTag,
+        addTag: postTag
+    }
+})();
