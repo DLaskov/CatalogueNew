@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    'use strict'
+
     $("#registerForm").submit(function (event) {
         if ($("#Password").val() != $("#passwordConfirm").val()) {
             $("#passwordConfirm").after("<p style=\"color: red\">Password doesn't match!</p>");
@@ -29,6 +29,7 @@
         });
         return false;
     }
+
     $(".img-preview").on("click", function () {
         if (confirm("You are going to delete this image.")) {
             var src = $("img", this).attr("src");
@@ -90,9 +91,9 @@
                     "' value='" + data.UniqueName + "\\" + data.ImgName + "\\" + data.MimeType + "' />"
                 $("div .form-horizontal").prepend(innerHtml);
             });
-        }
-    }
-});
+            }
+            }
+        });
 
 $(function () {
     $('.navbar-brand').data('size', 'big');
