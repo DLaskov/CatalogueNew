@@ -47,9 +47,5 @@ namespace CatalogueNew.Models.Services
         {
             return Context.ProductsTags.Where(c => c.ProductID == productID).Include(c => c.Tag).ToList();
         }
-        //public List<Product> GetProductsByTag(int tagID)
-        //{
-        //    return 
-        //}
     }
 }

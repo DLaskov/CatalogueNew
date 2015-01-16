@@ -624,3 +624,33 @@ ul li:hover ul {
     opacity: 1;
     visibility: visible;
 }
+
+/*
+    Tags 
+*/
+
+#addTagSpan {
+    color: #449d44;
+}
+
+#addTag {
+    position: relative;
+    left: -4px;
+    top: -1px;
+    border-radius: 0;
+    padding: 3px 10px;
+    text-shadow: 1px 1px 1px #464646 !important;
+}
+
+.addTagDiv {
+    display: inline-block;
+}
+
+.tags > a {
+    margin-left: 5px;
+}
+.removeTag {
+    color: #d9534f;
+    cursor: pointer;
+    margin-left: 3px;
+}
