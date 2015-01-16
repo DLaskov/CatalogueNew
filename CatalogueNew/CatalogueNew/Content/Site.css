@@ -1,4 +1,14 @@
 ﻿@font-face {
+    font-family: Roboto-Regular;
+    src: url('../fonts/Roboto-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: Montserrat-Regular;
+    src: url('../fonts/Montserrat-Regular.ttf') format('truetype');
+}
+
+@font-face {
     font-family: OpenSans-Regular;
     src: url('../fonts/OpenSans-Regular.ttf') format('truetype');
 }
@@ -13,6 +23,7 @@ body {
     padding-left: 15px;
     padding-right: 15px;
     margin-top: 8%;
+    font-family: Roboto-Regular;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
@@ -69,7 +80,7 @@ footer {
 .navbar-brand {
     background-image: url(/Images/img/logo.png);
     position: absolute;
-    left: 47%;
+    left: 46%;
     top: 25%;
     text-indent: -9999px;
     height: 72px;
@@ -79,10 +90,16 @@ footer {
 .navbar ul {
     margin-top: 7%;
     text-transform: uppercase;
+    margin-left: -5%;
 }
 
     .navbar ul li {
         color: #fff;
+        -webkit-transition: all 0.2s;
+        -moz-transition: all 0.2s;
+        -ms-transition: all 0.2s;
+        -o-transition: all 0.2s;
+        transition: all 0.2s;
     }
 
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
@@ -93,7 +110,8 @@ footer {
 
 .navbar-default .navbar-nav > li > a {
     color: #fff;
-    font-family: OpenSans-Regular;
+    font-family: Montserrat-Regular;
+    font-size: 10pt;
 }
 
 .navbar-header {
@@ -513,6 +531,7 @@ thumbnail:hover {
 }
 
 .headline4 {
+    font-family: OpenSans-Regular;
     position: relative;
     border-color: #eee;
     border-style: solid;
@@ -538,6 +557,7 @@ thumbnail:hover {
 
 .headline2 {
     border-bottom: 1px solid #aaa;
+    font-family: OpenSans-Regular;
     margin: 15px 0;
     padding: 5px 0;
     position: relative;
@@ -559,3 +579,48 @@ thumbnail:hover {
         bottom: -13px;
         left: 26px;
     }
+
+ul li ul {
+    padding: 0;
+    position: absolute;
+    top: 48px;
+    left: 9px;
+    width: 150px;
+    list-style-type: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+    color: #fff;
+}
+
+    ul li ul li {
+        background: #7e99ab;
+        padding: 10px 20px 10px 20px;
+        color: #fff;
+        font-family: Montserrat-Regular;
+    }
+
+        ul li ul li a {
+            color: #fff;
+            font-size: 9pt;
+        }
+
+            ul li ul li a:hover {
+                color: #fff;
+                text-decoration: none;
+            }
+
+        ul li ul li:hover {
+            background: #738b9b;
+            color: #fff;
+        }
+
+ul li:hover ul {
+    display: block;
+    color: #fff;
+    opacity: 1;
+    visibility: visible;
+}

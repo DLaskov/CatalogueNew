@@ -134,7 +134,7 @@ $(window).scroll(function () {
                 marginTop: '7%'
             }, 600);
             $('.navbar-right').stop().animate({
-                marginTop: '6%'
+                marginTop: '7%'
             }, 600);
             $('.dropdown-menu').stop().animate({
                 marginTop: '0'

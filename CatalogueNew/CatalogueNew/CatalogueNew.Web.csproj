@@ -239,6 +239,9 @@
     <Content Include="Scripts\dropzone\css\dropzone.css" />
     <Content Include="Scripts\dropzone\css\stylus\dropzone.styl" />
     <Content Include="Scripts\dropzone\css\stylus\basic.styl" />
+    <Content Include="fonts\OpenSans-Regular.ttf" />
+    <Content Include="fonts\Raleway-Medium.ttf" />
+    <Content Include="fonts\DroidSans.ttf" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\dropzone\dropzone-amd-module.js" />
     <Content Include="Scripts\dropzone\dropzone-amd-module.min.js" />
