@@ -78,23 +78,23 @@ var commentsRevealingModule = (function () {
         var edit = '<div class="panel-body edit"><form id="formComment">';
         edit += '<textarea id="comment-edit" class="form-control counted" name="comment" placeholder="Add comment about the product:" rows="3" ></textarea>';
         edit += '<h6 class="pull-right" id="counter-edit-' + index + '">1000 characters remaining</h6>';
-        edit += '<button id="edit-comment" class="btn btn-info btn-xs">Edit comment</button> ';
-        edit += '<button id="cancel-edit" class="btn btn-default btn-xs">Cancel</button></form></div>';
+        edit += '<button id="edit-comment" class="btn btn-info btn-sm">Edit comment</button> ';
+        edit += '<button id="cancel-edit" class="btn btn-default btn-sm">Cancel</button></form></div>';
         var reply = '<div class="panel-body reply"><form id="formComment">';
         reply += '<textarea id="comment-reply" class="form-control counted" name="comment" placeholder="Add comment about the product:" rows="3" ></textarea>';
         reply += '<h6 class="pull-right" id="counter-reply-' + index + '">1000 characters remaining</h6>';
         reply += '<button id="submit-reply" class="btn btn-info btn-sm">Submit reply</button> ';
-        reply += '<button id="cancel-reply" class="btn btn-default btn-xs">Cancel</button></form></div>';
+        reply += '<button id="cancel-reply" class="btn btn-default btn-sm">Cancel</button></form></div>';
 
         innerHtml += edit;
-        innerHtml += '<h4 class="media-heading"><span class="info"></span><small></small></h4><p class="text-info"></p>';
+        innerHtml += '<h4 class="media-heading headline2"><span class="info"></span><small></small></h4><p class="text-info"></p>';
 
         if (isAuth === 'true') {
-            innerHtml += '<button class="btn btn-info btn-xs" id="reply">Reply</button> ';
+            innerHtml += '<button class="btn btn-info btn-sm" id="reply">Reply</button> ';
 
             if (hasRole === 'true') {
-                innerHtml += '<button class="btn btn-default btn-xs" id="edit">Edit</button> ';
-                innerHtml += '<button class="btn btn-danger btn-xs" id="delete">Delete</button>';
+                innerHtml += '<button class="btn btn-default btn-sm" id="edit">Edit</button> ';
+                innerHtml += '<button class="btn btn-danger btn-sm" id="delete">Delete</button>';
             }
 
             innerHtml += reply;

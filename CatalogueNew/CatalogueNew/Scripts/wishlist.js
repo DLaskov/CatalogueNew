@@ -76,7 +76,7 @@ var wishlistButtonBehavior = (function () {
                     var currentPage = result.Page;
                     var options =
                         {
-                            url: "/Wishlist/Index/0?page=" + currentPage,
+                            url: "?page=" + currentPage,
                             data: $("form").serialize(),
                             type: "get"
                         };
@@ -85,7 +85,7 @@ var wishlistButtonBehavior = (function () {
                         var target = a.parents(".ajax-pagination").attr("data-devtest-target");
                         $(target).replaceWith(data);
                         products = $('.product');
-                        window.location.hash = options.url;
+                        history.pushState(null, null, options.url);
                     });
                     $("#load").attr('style', 'display: none');
                 });

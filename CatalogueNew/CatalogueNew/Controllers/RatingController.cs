@@ -34,12 +34,10 @@ namespace CatalogueNew.Web.Controllers
         }
 
         [Authorize]
-        public async Task<Rating> Post([FromBody]Rating rating)
+        public Task Post([FromBody]Rating rating)
         {
             rating.UserID = User.Identity.GetUserId();
-            await ratingServices.Add(rating);
-
-            return rating;
+            return ratingServices.Add(rating);
         }
     }
 }

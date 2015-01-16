@@ -53,7 +53,7 @@
 
     </div>
     <div class="col-md-8">
-        <h2>@product.Name</h2>
+        <h2 class="headline4">@product.Name</h2>
         <div class="lead"><strong>Category: </strong>@product.Category.Name</div>
         <div class="lead"><strong>Year: </strong>@product.Year.Value</div>
         <div class="lead"><strong>Description: </strong>@product.Description</div>
@@ -112,9 +112,9 @@ else
 }
 
 <a id="scrollUp" href="#top" title="Scroll to top" style="position: fixed; z-index: 2147483647;">Scroll to top</a>
+
 <div id="comments" class="media container container-fluid">
 </div>
-
 
 @section Scripts{
     @Scripts.Render("~/bundles/product")
