@@ -80,35 +80,18 @@ namespace CatalogueNew.Models.Services
         public void Remove(User user)
         {
             var comments = this.Context.Comments.Where(c => c.UserID == user.Id).OrderByDescending(c => c.CommentID).ToList();
-            var ratings = this.Context.Ratings.Where(r => r.UserID == user.Id).ToList();
-            var roles = this.Context.UserRoles.Where(r => r.UserId == user.Id).ToList();
-            var wishlists = this.Context.Wishlists.Where(w => w.UserID == user.Id).ToList();
+
+            foreach (Comment comment in comments)
+            {
+                this.Context.Database.ExecuteSqlCommand("usp_deleteComments @id = {0}", comment.CommentID);
+            }
+
             bool cascadeDelete;
 
             do
             {
                 cascadeDelete = false;
-
-                foreach (Comment comment in comments)
-                {
-                    this.Context.Database.ExecuteSqlCommand("usp_deleteComments @id = {0}", comment.CommentID);
-                }
-
-                foreach (Rating rating in ratings)
-                {
-                    this.Context.Ratings.Remove(rating);
-                }
-
-                foreach (IdentityUserRole userRole in roles)
-                {
-                    this.Context.UserRoles.Remove(userRole);
-                }
-
-                foreach (Wishlist wishlist in wishlists)
-                {
-                    this.Context.Wishlists.Remove(wishlist);
-                }
-
+                this.Context.Database.ExecuteSqlCommand("usp_deleteRatingsWishlistsLikesByUserID @UserID = {0}", user.Id);
                 this.Context.Users.Remove(user);
 
                 try
@@ -122,7 +105,6 @@ namespace CatalogueNew.Models.Services
                 }
 
             } while (cascadeDelete);
-
         }
 
         public void AddUserRole(IdentityUserRole userRole)

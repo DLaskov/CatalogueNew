@@ -207,7 +207,7 @@ namespace CatalogueNew.Web.Controllers
 
                 productService.Modify(product);
             }
-            return RedirectToAction("Index", "Product");
+            return RedirectToAction("ProductAdministration", "Product");
         }
 
         public ActionResult Index(int? category, int? manufacturer, int page = 1)

@@ -340,7 +340,6 @@
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LikeDislikeController.cs" />
     <Compile Include="Controllers\ManufacturerController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
@@ -383,7 +382,6 @@
     <Content Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Auth\LogIn.cshtml" />
     <Content Include="Views\Auth\Register.cshtml" />
     <Content Include="Views\Category\Create.cshtml" />
@@ -424,8 +422,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Images\TempImages\" />
     <Folder Include="logs\" />
-    <Folder Include="Views\Base\" />
-    <Folder Include="Views\Like\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CatalogueNew.Models\CatalogueNew.Models.csproj">

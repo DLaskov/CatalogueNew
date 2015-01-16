@@ -13,7 +13,7 @@ namespace CatalogueNew.Models.Services
 {
     public class ManufacturerService : BaseService, IManufacturerService
     {
-        private readonly int pageSize = 1;
+        private readonly int pageSize = 10;
 
         public ManufacturerService(ICatalogueContext context)
             : base(context)
