@@ -17,5 +17,7 @@ namespace CatalogueNew.Models.Services
         PagedList<Product> GetProducts(int page, int? categoryId, int? manufacturerId);
 
         PagedList<Product> GetProducts(int page, string userID);
+
+        PagedList<Product> GetProductsByTag(int page, int tagID);
     }
 }

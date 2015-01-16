@@ -21,15 +21,17 @@ namespace CatalogueNew.Web.Controllers
         private IProductService productService;
         private IImageService imageService;
         private IWishlistService wishlistService;
+        private ITagService tagService;
 
         public ProductController(ICategoryService categoryService, IManufacturerService manufacturerService,
-            IProductService productService, IImageService imageService, IWishlistService wishlistService)
+            IProductService productService, IImageService imageService, IWishlistService wishlistService, ITagService tagService)
         {
             this.categoryService = categoryService;
             this.manufacturerService = manufacturerService;
             this.productService = productService;
             this.imageService = imageService;
             this.wishlistService = wishlistService;
+            this.tagService = tagService;
         }
 
         [Authorize(Roles = "Manager")]
@@ -50,31 +52,31 @@ namespace CatalogueNew.Web.Controllers
         public ActionResult Details(int id)
         {
             Product product = productService.Find(id);
- 
-             product = productService.Find(id);
-             if (product == null)
-             {
-                 HttpContext.Response.StatusCode = 404;
-                 return View("_NotFound");
-             }
- 
-             Wishlist wishlist = wishlistService.Find(id, User.Identity.GetUserId());
 
-             if (wishlist == null)
-             {
-                 wishlist = new Wishlist()
-                 {
-                     WishlistID = 0
-                 };
-             }
- 
-             ProductViewModel model = new ProductViewModel()
-             {
-                 Product = product,
-                 Wishlist = wishlist
-             };
- 
-             return View(model);
+            product = productService.Find(id);
+            if (product == null)
+            {
+                HttpContext.Response.StatusCode = 404;
+                return View("_NotFound");
+            }
+
+            Wishlist wishlist = wishlistService.Find(id, User.Identity.GetUserId());
+
+            if (wishlist == null)
+            {
+                wishlist = new Wishlist()
+                {
+                    WishlistID = 0
+                };
+            }
+            product.ProductsTags = tagService.FindAllTagsForProduct(id);
+            ProductViewModel model = new ProductViewModel()
+            {
+                Product = product,
+                Wishlist = wishlist
+            };
+
+            return View(model);
         }
 
         [Authorize(Roles = "Manager")]
@@ -128,7 +130,7 @@ namespace CatalogueNew.Web.Controllers
 
             foreach (var image in images)
             {
-               image.Value = image.ResizeImage();
+                image.Value = image.ResizeImage();
             }
 
             model.Product.Images = images;
@@ -342,6 +344,73 @@ namespace CatalogueNew.Web.Controllers
         public void RemoveFromWishlist(string data)
         {
             wishlistService.Remove(Int32.Parse(data));
+        }
+
+        [HttpPost]
+        public JsonResult AddTag(string tagName, string productID)
+        {
+            try
+            {
+                tagService.Add(tagName, Int32.Parse(productID));
+                Tag currentTag = tagService.Find(tagName.ToLower());
+                Response.StatusCode = 200;
+                if (User.IsInRole("Manager"))
+                {
+                    return new JsonResult() { Data = new { isInRole = "yes" , tagID = currentTag.TagID } };
+                }
+                else
+                {
+                    return new JsonResult() { Data = new { isInRole = "no", tagID = currentTag.TagID } };
+                }
+            }
+            catch
+            {
+                Response.StatusCode = 500;
+                return new JsonResult() { Data = new { Message = "Internal server error!" } };
+            }
+        }
+
+        [HttpPost]
+        public void RemoveTag(string tagID, string productID)
+        {
+            try
+            {
+                tagService.Remove(Int32.Parse(tagID), Int32.Parse(productID));
+                Response.StatusCode = 200;
+            }
+            catch
+            {
+                Response.StatusCode = 500;
+            }
+        }
+
+        public ActionResult Tag(string name, int page = 1)
+        {
+            if (name != null)
+            {
+                if (page <= 0)
+                {
+                    page = 1;
+                }
+
+                Tag tag = tagService.Find(name.ToLower());
+                var pageItems = productService.GetProductsByTag(page, tag.TagID);
+                var pagingViewModel = new PagingViewModel(pageItems.PageCount, pageItems.CurrentPage, "Index");
+
+                var productListViewModel = new ProductListViewModel(pageItems.Items.ToList(), pagingViewModel);
+
+                if (Request.IsAjaxRequest())
+                {
+                    return PartialView("_RenderProductsPartial", productListViewModel);
+                }
+
+                ViewBag.TagName = name.ToLower();
+                return View(productListViewModel);
+            }
+            else
+            {
+                return View();
+            }
         }
     }
 }

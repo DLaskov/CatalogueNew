@@ -56,6 +56,7 @@ namespace CatalogueNew.Web.Infrastructure
             kernel.Bind<IRatingService>().To<RatingService>();
             kernel.Bind<IWishlistService>().To<WishlistService>();
             kernel.Bind<ILikeDislikeService>().To<LikeDislikeService>();
+            kernel.Bind<ITagService>().To<TagService>();
         }
     }
 }

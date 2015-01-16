@@ -38,7 +38,7 @@
                 int i = 0;
                 foreach (var image in product.Images)
                 {
-                    <div class="col-md-3" >
+                    <div class="col-md-3">
                         <a data-slide-index="@i" href="">
                             <div class="img-thumbnail">
                                 <img src="@Url.Content("~/HttpImageHandler.ashx?id=" + image.ImageID)" />
@@ -61,14 +61,27 @@
             <strong>Rating: </strong>
             <input id="input-rating" class="rating" data-size="xs" data-show-clear="false" data-show-caption="false" data-step="1" />
         </div>
-        <div class="lead"><strong>Tags: </strong></div>
+        <div class="lead tags">
+            <strong>Tags: </strong>
+            <span id="addTagSpan" class="glyphicon glyphicon-plus"></span>
+            <div class="addTagDiv" style="display: none;">
+                <input type="text" class="tagInput" placeholder="Enter tag name..." maxlength="50" />
+                <button id="addTag" class="btn btn-sm btn-default btn-success">Add</button>
+            </div>
+            @foreach (ProductTag productTag in Model.Product.ProductsTags)
+            {
+                @Html.ActionLink(productTag.Tag.Name, "Tag", new { name = productTag.Tag.Name }, new { @data_tagID = productTag.TagID })
+                if (User.IsInRole("Manager"))
+                {<span class="glyphicon glyphicon-remove-circle removeTag" data-tagid="@productTag.TagID"></span>}
+            }
+        </div>
         <div class="lead">
             <a id="like" class="btn btn-sm btn-default glyphicon glyphicon-thumbs-up" href=""> Like </a>
             <a id="dislike" class="btn btn-sm btn-default glyphicon glyphicon-thumbs-down" href=""> Dislike </a>
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <input type="button" id="add-wishlist" class="btn btn-sm btn-success" value="Add To Wishlist" name="wishlist">
-                }
+            @if (User.Identity.IsAuthenticated)
+            {
+                <input type="button" id="add-wishlist" class="btn btn-sm btn-success" value="Add To Wishlist" name="wishlist">
+            }
         </div>
     </div>
 </div>

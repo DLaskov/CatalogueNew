@@ -33,11 +33,9 @@ namespace CatalogueNew.Models.Services
             return (int)rating;
         }
 
-        public async Task<int> UserRating(int productID, string userID)
+        public Task<int> UserRating(int productID, string userID)
         {
-            var result = await this.Context.Ratings.Where(r => r.ProductID == productID && r.UserID == userID).Select(r => r.Value).FirstOrDefaultAsync();
-
-            return result;
+            return this.Context.Ratings.Where(r => r.ProductID == productID && r.UserID == userID).Select(r => r.Value).FirstOrDefaultAsync();
         }
     }
 }
