@@ -1,6 +1,6 @@
 ﻿@font-face {
-	font-family: OpenSans-Regular;
-	src: url('../fonts/OpenSans-Regular.ttf') format('truetype');
+    font-family: OpenSans-Regular;
+    src: url('../fonts/OpenSans-Regular.ttf') format('truetype');
 }
 
 body {
@@ -34,11 +34,16 @@ select {
     font-size: 1.3em;
 }
 
+#glyph-manu, #glyph-cate, #glyph-user {
+    font-size: 2em;
+    text-align: center;
+}
+
 .star-rating {
     display: inline-block;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
     text-align: center;
 }
 
@@ -58,7 +63,7 @@ footer {
 }
 
 .navbar-right {
-     margin-top: 5.5%;
+    margin-top: 5.5%;
 }
 
 .navbar-brand {
@@ -66,19 +71,19 @@ footer {
     position: absolute;
     left: 47%;
     top: 25%;
-    text-indent: -9999px; 
+    text-indent: -9999px;
     height: 72px;
     width: 162px;
 }
 
-.navbar ul{
+.navbar ul {
     margin-top: 7%;
     text-transform: uppercase;
 }
 
-.navbar ul li{
-    color: #fff;
-}
+    .navbar ul li {
+        color: #fff;
+    }
 
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
     color: #fff;
@@ -114,18 +119,18 @@ img {
 }
 
 .img-preview {
-   padding: 0;
-   margin: 10px;
+    padding: 0;
+    margin: 10px;
     width: 100px;
     height: 100px;
     border: 1px solid #ddd;
     background: white;
 }
 
-.img-preview img {
+    .img-preview img {
         padding: 5px;
         max-height: 100%;
-    max-width: 100%;
+        max-width: 100%;
         height: auto;
         width: auto;
         position: absolute;
@@ -133,31 +138,31 @@ img {
         left: 50%;
         margin-right: -50%;
         transform: translate(-50%, -50%);
-}
+    }
 
-        .img-preview:hover > img  {
-    opacity: 0.5;
-}
+    .img-preview:hover > img {
+        opacity: 0.5;
+    }
 
-        .img-preview:hover::after {
+    .img-preview:hover::after {
         max-height: 100%;
         max-width: 100%;
         height: auto;
         width: auto;
-            position: absolute;
+        position: absolute;
         top: 50%;
         left: 50%;
         margin-right: -50%;
         transform: translate(-50%, -50%);
-            color: red;
-            font-size: 2em;
-            z-index: 1;
-            content: "\e088";
-            font-family: 'Glyphicons Halflings';
-            font-style: normal;
-            font-weight: normal;
-            line-height: 1;
-        }
+        color: red;
+        font-size: 2em;
+        z-index: 1;
+        content: "\e088";
+        font-family: 'Glyphicons Halflings';
+        font-style: normal;
+        font-weight: normal;
+        line-height: 1;
+    }
 
 .without-first {
     width: 100%;
@@ -166,11 +171,13 @@ img {
 
 #comment {
     width: 100%;
+    font-size: x-large;
 }
 
 #comment-reply, #comment-edit {
     max-width: 100%;
     max-height: 300px;
+    font-size: x-large;
 }
 
 .container .container-fluid {
@@ -210,6 +217,12 @@ textarea {
     margin-top: 30px;
 }
 
+#description {
+    height: 200px;
+    max-height: 300px;
+    max-width: 450px;
+}
+
 .details {
     margin-top: 30px;
 }
@@ -245,6 +258,7 @@ thumbnail:hover {
     word-wrap: break-word;
     -ms-word-break: break-all;
     word-break: break-all;
+    font-size: x-large;
 }
 
 
@@ -492,7 +506,56 @@ thumbnail:hover {
 
     #scrollUp:hover {
         bottom: 0px;
-}
+    }
+
 .star-rating {
     display: inline-block;
 }
+
+.headline4 {
+    position: relative;
+    border-color: #eee;
+    border-style: solid;
+    border-width: 5px 5px 5px 0;
+    background: #fff;
+    margin: 0 0 15px -15px;
+    padding: 5px 15px;
+    box-shadow: 1px 1px 1px rgba(0,0,0,.3);
+}
+
+    .headline4:after {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        bottom: 15px;
+        right: 15px;
+        width: 70%;
+        height: 10px;
+        background: rgba(0, 0, 0, .7);
+        box-shadow: 0 15px 10px rgba(0, 0, 0, .7);
+        transform: rotate(2deg);
+    }
+
+.headline2 {
+    border-bottom: 1px solid #aaa;
+    margin: 15px 0;
+    padding: 5px 0;
+    position: relative;
+}
+
+    .headline2:before,
+    .headline2:after {
+        content: '';
+        border-right: 20px solid #fff;
+        border-top: 15px solid #aaa;
+        bottom: -15px;
+        position: absolute;
+        left: 25px;
+    }
+
+    .headline2:after {
+        border-top-color: #fff;
+        border-right-color: transparent;
+        bottom: -13px;
+        left: 26px;
+    }

@@ -32,12 +32,10 @@ namespace CatalogueNew.Web.Controllers
             return likeDislike;
         }
 
-        public async Task<LikeDislikeWrapper> Get(int productID)
+        public Task<LikeDislikeWrapper> Get(int productID)
         {
             var userID = User.Identity.GetUserId();
-            LikeDislikeWrapper likeDislikeWrapper = await likeServices.GetLikesDislikesCount(productID, userID);
-
-            return likeDislikeWrapper;
+            return likeServices.GetLikesDislikesCount(productID, userID);
         }
     }
 }

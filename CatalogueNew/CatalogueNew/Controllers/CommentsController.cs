@@ -59,9 +59,9 @@ namespace CatalogueNew.Web.Controllers
         }
 
         [Authorize(Roles = "Admin, Manager, Moderator")]
-        public async Task Delete(int commentId)
+        public Task Delete(int commentId)
         {
-            await commentsService.Remove(commentId);
+            return commentsService.Remove(commentId);
         }
     }
 }

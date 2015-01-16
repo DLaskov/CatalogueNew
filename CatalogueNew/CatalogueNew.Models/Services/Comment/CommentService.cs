@@ -57,10 +57,12 @@ namespace CatalogueNew.Models.Services
                 }
             }
 
-            return SetChildren(commentsWrapperList, commentsByProduct);
+            SetChildren(commentsWrapperList, commentsByProduct);
+
+            return commentsWrapperList;
         }
 
-        private List<CommentWrapper> SetChildren(List<CommentWrapper> commentsWrapper, List<Comment> commentsByProduct)
+        private void SetChildren(List<CommentWrapper> commentsWrapper, List<Comment> commentsByProduct)
         {
             foreach (var commentWrapper in commentsWrapper)
             {
@@ -76,8 +78,6 @@ namespace CatalogueNew.Models.Services
                 }
                 SetChildren(commentWrapper.ChildrenComments, commentsByProduct);
             }
-
-            return commentsWrapper;
         }
     }
 }

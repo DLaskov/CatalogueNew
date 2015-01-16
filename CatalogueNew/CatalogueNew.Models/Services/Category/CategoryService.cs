@@ -14,7 +14,7 @@ namespace CatalogueNew.Models.Services
 {
     public class CategoryService : BaseService, ICategoryService
     {
-        private const int pageSize = 3;
+        private const int pageSize = 10;
 
         public CategoryService(ICatalogueContext context)
             : base(context)
