@@ -1,0 +1,18 @@
+﻿@model CatalogueNew.Web.Models.ProductListViewModel
+
+@{
+    ViewBag.Title = "Products with tag: " + ViewBag.TagName;
+}
+
+@if (Model != null)
+{
+    <h2>Products with tag: @ViewBag.TagName</h2>
+    @Html.Partial("_RenderProductsPartial", Model)
+}
+else
+{
+    <br />
+    <div class="row alert alert-danger">
+        <p class="text-center">There are no items found!</p>
+    </div>
+}

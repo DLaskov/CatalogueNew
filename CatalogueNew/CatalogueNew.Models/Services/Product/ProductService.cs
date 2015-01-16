@@ -12,12 +12,11 @@ namespace CatalogueNew.Models.Services
     public class ProductService : BaseService, IProductService
     {
         private const int pageSize = 9;
-        ITagService tagService;
 
-        public ProductService(ICatalogueContext context, ITagService tagService)
+        public ProductService(ICatalogueContext context)
             : base(context)
         {
-            this.tagService = tagService;
+
         }
 
         public IEnumerable<Product> All()
@@ -31,7 +30,7 @@ namespace CatalogueNew.Models.Services
                                where prod.ProductID == id
                                select prod).Include(x => x.Category)
                                 .Include(x => x.Manufacturer).Include("Images").FirstOrDefault();
-            product.ProductsTags = tagService.FindAllByProduct(id);
+
             return product;
         }
 
@@ -116,6 +115,17 @@ namespace CatalogueNew.Models.Services
             var products = (from prod in this.Context.Products
                             join wish in this.Context.Wishlists on prod.ProductID equals wish.ProductID
                             where userID == wish.UserID
+                            orderby prod.Name
+                            select prod).Include("Images");
+
+            var pagedList = new PagedList<Product>(products, page, pageSize);
+            return pagedList;
+        }
+        public PagedList<Product> GetProductsByTag(int page, int tagID)
+        {
+            var products = (from prod in this.Context.Products
+                            join productsTags in this.Context.ProductsTags on prod.ProductID equals productsTags.ProductID
+                            where tagID == productsTags.TagID
                             orderby prod.Name
                             select prod).Include("Images");
 

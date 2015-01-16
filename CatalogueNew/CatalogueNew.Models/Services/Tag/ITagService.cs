@@ -10,7 +10,8 @@ namespace CatalogueNew.Models.Services
     public interface ITagService
     {
         void Add(string tagName, int productID);
+        void Remove(int productID, int tagID);
         Tag Find(string tagName);
-        List<ProductTag> FindAllByProduct(int productID);
+        List<ProductTag> FindAllTagsForProduct(int productID);
     }
 }
