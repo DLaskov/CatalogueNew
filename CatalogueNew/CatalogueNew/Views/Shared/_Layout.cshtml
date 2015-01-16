@@ -22,29 +22,29 @@
             </span>
         </div>
     </div>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Web Catalogue", "Index", "Product", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Web Catalogue", "Index", "Product", new { area = "" }, new { @class = "navbar-brand hidden-xs" })
             </div>
-            <div class="navbar-collapse collapse">
+            <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Products", "Index", "Product")</li>
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li>@Html.ActionLink("Wishlist", "Index", "Wishlist")</li>
                     }
-
                     @if (User.IsInRole("Admin"))
                     {
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Administration <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
                                 <li>@Html.ActionLink("Create Product", "Create", "Product")</li>
                                 <li>@Html.ActionLink("Categories", "Index", "Category")</li>
                                 <li>@Html.ActionLink("Manufacturers", "Index", "Manufacturer")</li>
@@ -54,16 +54,14 @@
                                     <li>@Html.ActionLink("Products", "ProductAdministration", "Product")</li>
                                  }
                                 }
-                                <li>@Html.ActionLink("Upload image", "Index", "Image")</li>
                             </ul>
                         </li>
                     }
-
                 </ul>
                 @Html.Partial("_LoginPartial")
-            </div>
+            </div><!--/.nav-collapse -->
         </div>
-    </div>
+    </nav>
 
     <div class="container body-content">
         @RenderBody()

@@ -68,7 +68,10 @@
                 <input type="text" class="tagInput" placeholder="Enter tag name..." maxlength="50" />
                 <button id="addTag" class="btn btn-sm btn-default btn-success">Add</button>
             </div>
-            tagove, tagove, tagove kolkoto shtesh, tagove
+            @foreach (ProductTag productTag in Model.Product.ProductsTags)
+            {
+                <a href="#">@productTag.Tag.Name</a> 
+            }
         </div>
         <div class="lead">
             <a id="like" class="btn btn-sm btn-default glyphicon glyphicon-thumbs-up" href=""> Like </a>

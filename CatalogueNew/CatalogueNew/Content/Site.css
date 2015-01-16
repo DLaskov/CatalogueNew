@@ -1,4 +1,9 @@
-﻿body {
+﻿@font-face {
+	font-family: OpenSans-Regular;
+	src: url('../fonts/OpenSans-Regular.ttf') format('truetype');
+}
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -7,6 +12,7 @@
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    margin-top: 8%;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
@@ -42,6 +48,51 @@ footer {
 
 .field-validation-error > span {
     color: red;
+}
+
+
+.navbar {
+    background: url(/Images/img/bg.png) repeat;
+    border-bottom: 5px solid #7e99ab;
+    height: 150px;
+}
+
+.navbar-right {
+     margin-top: 5.5%;
+}
+
+.navbar-brand {
+    background-image: url(/Images/img/logo.png);
+    position: absolute;
+    left: 47%;
+    top: 25%;
+    text-indent: -9999px; 
+    height: 72px;
+    width: 162px;
+}
+
+.navbar ul{
+    margin-top: 7%;
+    text-transform: uppercase;
+}
+
+.navbar ul li{
+    color: #fff;
+}
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+    color: #fff;
+    background-color: #7e99ab;
+    height: 65px;
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: #fff;
+    font-family: OpenSans-Regular;
+}
+
+.navbar-header {
+    width: 100%;
 }
 
 #formComment {

@@ -226,6 +226,8 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Images\bx_loader.gif" />
     <Content Include="Images\controls.png" />
+    <Content Include="Images\img\bg.png" />
+    <Content Include="Images\img\logo.png" />
     <Content Include="Images\no_pic_small.gif" />
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\wishlist.js" />
@@ -339,7 +341,6 @@
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\LikeDislikeController.cs" />
     <Compile Include="Controllers\ManufacturerController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
@@ -398,7 +399,6 @@
     <Content Include="Views\Manufacturer\Details.cshtml" />
     <Content Include="Views\Manufacturer\Edit.cshtml" />
     <Content Include="Views\Manufacturer\Index.cshtml" />
-    <Content Include="Views\Image\Index.cshtml" />
     <Content Include="Views\Shared\_PagingPartial.cshtml" />
     <Content Include="Views\Auth\Manage.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />

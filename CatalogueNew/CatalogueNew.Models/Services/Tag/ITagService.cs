@@ -11,6 +11,6 @@ namespace CatalogueNew.Models.Services
     {
         void Add(string tagName, int productID);
         Tag Find(string tagName);
-        Task<List<ProductTag>> FindAllByProductAsync(int productID);
+        List<ProductTag> FindAllByProduct(int productID);
     }
 }

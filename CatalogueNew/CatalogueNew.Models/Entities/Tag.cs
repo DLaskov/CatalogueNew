@@ -2,6 +2,7 @@ namespace CatalogueNew.Models.Entities
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
@@ -9,7 +10,7 @@ namespace CatalogueNew.Models.Entities
     public class Tag
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [DisplayName("Name")]
         public int TagID { get; set; }
 
         [Required]

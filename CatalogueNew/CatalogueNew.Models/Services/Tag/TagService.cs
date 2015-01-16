@@ -36,9 +36,9 @@ namespace CatalogueNew.Models.Services
             return Context.Tags.Where(c => c.Name == tagName).SingleOrDefault();      
         }
 
-        public async Task<List<ProductTag>> FindAllByProductAsync(int productID)
+        public List<ProductTag> FindAllByProduct(int productID)
         {
-            return await Context.ProductsTags.Where(c => c.ProductID == productID).ToListAsync();
+            return Context.ProductsTags.Where(c => c.ProductID == productID).Include(c => c.Tag).ToList();
         }
     }
 }
