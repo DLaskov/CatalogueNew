@@ -503,9 +503,9 @@ thumbnail:hover {
     background-image: url("../Images/top.png");
     bottom: 20px;
     right: 20px;
-    width: 38px;    /* Width of image */
-    height: 38px;   /* Height of image */
-    }
+    width: 38px; /* Width of image */
+    height: 38px; /* Height of image */
+}
 
 .star-rating {
     display: inline-block;
@@ -575,7 +575,6 @@ ul li ul {
 
     ul li ul li {
         background: #7e99ab;
-        padding: 10px 20px 10px 20px;
         color: #fff;
         font-family: Montserrat-Regular;
     }
@@ -583,6 +582,10 @@ ul li ul {
         ul li ul li a {
             color: #fff;
             font-size: 9pt;
+            width: 100%;
+            color: #fff;
+            display:block;
+            padding: 10px 20px 10px 20px;
         }
 
             ul li ul li a:hover {
