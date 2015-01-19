@@ -111,6 +111,7 @@ footer {
     -ms-transition: all 0.5s;
     -o-transition: all 0.5s;
     transition: all 0.5s;
+    cursor: pointer;
 }
 
 .navbar-default .navbar-nav > li > a {
@@ -703,4 +704,8 @@ ul li:hover ul {
     color: #d9534f;
     cursor: pointer;
     margin-left: 3px;
+}
+
+.main-parent {
+    cursor: pointer;
 }
