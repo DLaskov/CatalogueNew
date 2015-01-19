@@ -53,7 +53,6 @@ namespace CatalogueNew.Web.Controllers
         {
             Product product = productService.Find(id);
 
-            product = productService.Find(id);
             if (product == null)
             {
                 HttpContext.Response.StatusCode = 404;
@@ -371,6 +370,7 @@ namespace CatalogueNew.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Manager")]
         public void RemoveTag(string tagID, string productID)
         {
             try
@@ -392,10 +392,14 @@ namespace CatalogueNew.Web.Controllers
                 {
                     page = 1;
                 }
-
-                Tag tag = tagService.Find(name.ToLower());
+                string nameLower = name.ToLower();
+                Tag tag = tagService.Find(nameLower);
+                if (tag == null)
+                {
+                    return View();
+                }
                 var pageItems = productService.GetProductsByTag(page, tag.TagID);
-                var pagingViewModel = new PagingViewModel(pageItems.PageCount, pageItems.CurrentPage, "Index");
+                var pagingViewModel = new PagingViewModel(pageItems.PageCount, pageItems.CurrentPage, "Tag", nameLower);
 
                 var productListViewModel = new ProductListViewModel(pageItems.Items.ToList(), pagingViewModel);
 
@@ -404,7 +408,7 @@ namespace CatalogueNew.Web.Controllers
                     return PartialView("_RenderProductsPartial", productListViewModel);
                 }
 
-                ViewBag.TagName = name.ToLower();
+                ViewBag.TagName = nameLower;
                 return View(productListViewModel);
             }
             else

@@ -505,7 +505,7 @@ thumbnail:hover {
     right: 20px;
     width: 38px; /* Width of image */
     height: 38px; /* Height of image */
-}
+    }
 
 .star-rating {
     display: inline-block;
@@ -516,21 +516,11 @@ thumbnail:hover {
     position: relative;
     border-color: #eee;
     border-style: solid;
-    border-width: 5px 0 5px 0;
+    border-width: 5px;
     background: #fff;
     margin: 30px 0 15px -15px;
     padding: 5px 15px;
 }
-
-    .headline4:after {
-        content: "";
-        position: absolute;
-        z-index: -1;
-        bottom: 15px;
-        right: 15px;
-        width: 70%;
-        height: 10px;
-    }
 
 .headline2 {
     border-bottom: 1px solid #aaa;
