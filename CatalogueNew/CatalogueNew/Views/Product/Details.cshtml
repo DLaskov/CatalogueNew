@@ -87,6 +87,9 @@
     </div>
 </div>
 
+<div id="comments" class="media container container-fluid">
+</div>
+
 @if (User.Identity.IsAuthenticated)
 {
     <div class="row">
@@ -115,9 +118,6 @@ else
 }
 
 <a id="scrollUp" href="#top" title="Scroll to top" style="position: fixed; z-index: 2147483647;">Scroll to top</a>
-
-<div id="comments" class="media container container-fluid">
-</div>
 
 @section Scripts{
     @Scripts.Render("~/bundles/product")

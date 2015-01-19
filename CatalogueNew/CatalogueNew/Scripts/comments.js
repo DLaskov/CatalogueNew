@@ -221,6 +221,7 @@ var commentsRevealingModule = (function () {
             data: JSON.stringify(comment),
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
+                $("#comment").val('');
                 getCommentsByProduct();
             },
             error: function () { }
