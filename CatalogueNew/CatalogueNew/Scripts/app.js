@@ -132,7 +132,11 @@ $(window).scroll(function () {
             $('.navbar-right').stop().animate({
                 marginTop: '0'
             }, 600);
+            $('.body-content').stop().animate({
+                marginTop: '40px'
+            }, 600);
             $('.dropdown-menu ul').removeAttr('style');
+
 
             $(function () {
                 $('.navbar-nav a').hover(function () {
@@ -162,6 +166,9 @@ $(window).scroll(function () {
             $('.dropdown-menu').stop().animate({
                 marginTop: '0'
             }, 0);
+            $('.body-content').stop().animate({
+                marginTop: '120px'
+            }, 600);
             $(function () {
                 $('.main-parent').hover(function () {
                     $(this).css('height', '65px');
