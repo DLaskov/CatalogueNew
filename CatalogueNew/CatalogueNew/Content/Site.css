@@ -189,13 +189,13 @@ img {
 
 #comment {
     width: 100%;
-    font-size: x-large;
+    font-size: large;
 }
 
 #comment-reply, #comment-edit {
     max-width: 100%;
     max-height: 300px;
-    font-size: x-large;
+    font-size: large;
 }
 
 .container .container-fluid {
@@ -276,7 +276,7 @@ thumbnail:hover {
     word-wrap: break-word;
     -ms-word-break: break-all;
     word-break: break-all;
-    font-size: x-large;
+    font-size: large;
 }
 
 
@@ -535,7 +535,7 @@ thumbnail:hover {
     position: relative;
     border-color: #eee;
     border-style: solid;
-    border-width: 5px 5px 5px 0;
+    border-width: 5px 5px 5px 5px 0;
     background: #fff;
     margin: 0 0 15px -15px;
     padding: 5px 15px;
@@ -551,7 +551,7 @@ thumbnail:hover {
         width: 70%;
         height: 10px;
         background: rgba(0, 0, 0, .7);
-        box-shadow: 0 15px 10px rgba(0, 0, 0, .7);
+        box-shadow: 0 0 10px rgba(0, 0, 0, .7);
         transform: rotate(2deg);
     }
 
