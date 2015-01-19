@@ -19,6 +19,8 @@ namespace CatalogueNew.Web.Models
 
         public int Id { get; set; }
 
+        public string TagName { get; set; }
+
         public PagingViewModel(int count, int page, string path)
         {
             this.Count = count;
@@ -32,6 +34,14 @@ namespace CatalogueNew.Web.Models
             : this(count, page, path)
         {
             this.Id = id;
+
+            CalculatePages();
+        }
+
+        public PagingViewModel(int count, int page, string path, string tagName)
+            : this(count, page, path)
+        {
+            this.TagName = tagName;
 
             CalculatePages();
         }
