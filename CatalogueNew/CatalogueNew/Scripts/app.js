@@ -25,9 +25,9 @@
         $.ajax(options).done(function (data) {
             var target = a.parents(".ajax-pagination").attr("data-devtest-target");
             $(target).replaceWith(data);
-            var array = options.url.split('?');
+            var array = options.url.split('/');
             var lastsegment = array[array.length - 1];
-            history.pushState(null, null, "?" + lastsegment);
+            history.pushState(null, null, "/" + lastsegment);
         });
         return false;
     }

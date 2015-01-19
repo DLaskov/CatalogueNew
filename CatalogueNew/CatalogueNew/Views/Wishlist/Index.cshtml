@@ -4,7 +4,7 @@
     ViewBag.Title = "Wishlist";
 }
 
-<h2>Wishlist</h2>
+<h2 class="headline4">Wishlist</h2>
 @if (Model != null)
 {
     @Html.Partial("_RenderProductsPartial", Model)
@@ -15,7 +15,6 @@
 }
 else
 {
-    <div class="row alert alert-danger">
-        <p class="text-center">There are no items in your Wishlist!</p>
-    </div>
+    @Html.Partial("_NotFound")
+    return;
 }

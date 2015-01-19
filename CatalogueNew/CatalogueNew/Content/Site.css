@@ -535,25 +535,12 @@ thumbnail:hover {
     position: relative;
     border-color: #eee;
     border-style: solid;
-    border-width: 5px 5px 5px 0;
+    border-width: 5px;
     background: #fff;
     margin: 0 0 15px -15px;
     padding: 5px 15px;
     box-shadow: 1px 1px 1px rgba(0,0,0,.3);
 }
-
-    .headline4:after {
-        content: "";
-        position: absolute;
-        z-index: -1;
-        bottom: 15px;
-        right: 15px;
-        width: 70%;
-        height: 10px;
-        background: rgba(0, 0, 0, .7);
-        box-shadow: 0 15px 10px rgba(0, 0, 0, .7);
-        transform: rotate(2deg);
-    }
 
 .headline2 {
     border-bottom: 1px solid #aaa;

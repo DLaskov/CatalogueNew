@@ -28,8 +28,8 @@ namespace CatalogueNew.Models.Services
         {
             Product product = (from prod in this.Context.Products
                                where prod.ProductID == id
-                               select prod).Include(x => x.Category)
-                                .Include(x => x.Manufacturer).Include("Images").FirstOrDefault();
+                               select prod).Include(x => x.Category).Include(x => x.Manufacturer)
+                               .Include("Images").Include(x => x.ProductsTags).FirstOrDefault();
 
             return product;
         }
