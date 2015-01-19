@@ -6,18 +6,18 @@
     {
         @Html.AntiForgeryToken()
 
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                @Html.ActionLink("Hello, " + User.Identity.GetUserName() + "!", "Manage", "Auth", routeValues: null, htmlAttributes: new { title = "Manage" })
-            </li>
-            <li><a href="@Url.Action("LogOut", "Auth")">Log off</a></li>
-        </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li class="pull-right">
+            @Html.ActionLink("Hello, " + User.Identity.GetUserName() + "!", "Manage", "Auth", routeValues: null, htmlAttributes: new { title = "Manage", @class="main-parent" })
+        </li>
+        <li><a class="main-parent" href="@Url.Action("LogOut", "Auth")">Log off</a></li>
+    </ul>
     }
 }
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li><a href=@Url.Action("Register", "Auth")>Register</a></li>
-        <li><a href="@Url.Action("LogIn", "Auth")">Log In</a></li>
+        <li><a class="main-parent" href=@Url.Action("Register", "Auth")>Register</a></li>
+        <li><a class="main-parent" href="@Url.Action("LogIn", "Auth")">Log In</a></li>
     </ul>
 }
