@@ -396,6 +396,7 @@ namespace CatalogueNew.Web.Controllers
                 Tag tag = tagService.Find(nameLower);
                 if (tag == null)
                 {
+                    Response.StatusCode = 404;
                     return View();
                 }
                 var pageItems = productService.GetProductsByTag(page, tag.TagID);
@@ -413,6 +414,7 @@ namespace CatalogueNew.Web.Controllers
             }
             else
             {
+                Response.StatusCode = 404;
                 return View();
             }
         }
