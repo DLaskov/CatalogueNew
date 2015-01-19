@@ -48,7 +48,8 @@
                     "~/Scripts/wishlist.js",
                     "~/Scripts/moment.min.js",
                     "~/Scripts/moment-with-locales.min.js",
-                    "~/Scripts/jquery.scrollUp.min.js"));
+                    "~/Scripts/jquery.scrollUp.min.js",
+                    "~/Scripts/scrollUp.js"));
         }
     }
 }
