@@ -106,6 +106,11 @@ footer {
     color: #fff;
     background-color: #7e99ab;
     height: 65px;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
 }
 
 .navbar-default .navbar-nav > li > a {
@@ -189,13 +194,13 @@ img {
 
 #comment {
     width: 100%;
-    font-size: x-large;
+    font-size: large;
 }
 
 #comment-reply, #comment-edit {
     max-width: 100%;
     max-height: 300px;
-    font-size: x-large;
+    font-size: large;
 }
 
 .container .container-fluid {
@@ -276,7 +281,7 @@ thumbnail:hover {
     word-wrap: break-word;
     -ms-word-break: break-all;
     word-break: break-all;
-    font-size: x-large;
+    font-size: large;
 }
 
 
@@ -495,35 +500,11 @@ thumbnail:hover {
 
 #scrollUp {
     display: none;
-    bottom: -10px;
-    right: 30px;
-    width: 70px;
-    height: 70px;
-    padding: 10px 5px;
-    font-family: sans-serif;
-    font-size: 14px;
-    line-height: 20px;
-    text-align: center;
-    text-decoration: none;
-    text-shadow: 0 1px 0 #fff;
-    color: #828282;
-    -webkit-box-shadow: 0 0px 2px 1px rgba(0,0,0,0.2);
-    -moz-box-shadow: 0 0px 2px 1px rgba(0,0,0,0.2);
-    box-shadow: 0 0px 2px 1px rgba(0,0,0,0.2);
-    background-color: #E6E6E6;
-    background-image: -moz-linear-gradient(top,#ebebeb,#dedede);
-    background-image: -webkit-gradient(linear,0 0,0 100%,from(#ebebeb),to(#dedede));
-    background-image: -webkit-linear-gradient(top,#ebebeb,#dedede);
-    background-image: -o-linear-gradient(top,#ebebeb,#dedede);
-    background-image: linear-gradient(to bottom,#ebebeb,#dedede);
-    background-repeat: repeat-x;
-    -webkit-transition: bottom 150ms linear;
-    -moz-transition: bottom 150ms linear;
-    transition: bottom 150ms linear;
-}
-
-    #scrollUp:hover {
-        bottom: 0px;
+    background-image: url("../Images/top.png");
+    bottom: 20px;
+    right: 20px;
+    width: 38px; /* Width of image */
+    height: 38px; /* Height of image */
     }
 
 .star-rating {
@@ -537,9 +518,8 @@ thumbnail:hover {
     border-style: solid;
     border-width: 5px;
     background: #fff;
-    margin: 0 0 15px -15px;
+    margin: 30px 0 15px -15px;
     padding: 5px 15px;
-    box-shadow: 1px 1px 1px rgba(0,0,0,.3);
 }
 
 .headline2 {
@@ -585,7 +565,6 @@ ul li ul {
 
     ul li ul li {
         background: #7e99ab;
-        padding: 10px 20px 10px 20px;
         color: #fff;
         font-family: Montserrat-Regular;
     }
@@ -593,6 +572,10 @@ ul li ul {
         ul li ul li a {
             color: #fff;
             font-size: 9pt;
+            width: 100%;
+            color: #fff;
+            display:block;
+            padding: 10px 20px 10px 20px;
         }
 
             ul li ul li a:hover {
@@ -610,6 +593,83 @@ ul li:hover ul {
     color: #fff;
     opacity: 1;
     visibility: visible;
+}
+
+.handle img {
+    position: relative;
+    z-index: 99;
+    bottom: 24px;
+}
+
+@media screen and (max-width: 786px) {
+
+    .navbar {
+        background: url(/Images/img/bg.png) repeat;
+        border-bottom: 5px solid #7e99ab;
+        height: 60px;
+    }
+
+    .navbar-collapse {
+        background: url(/Images/img/bg.png) repeat;
+        padding-left: 0;
+        border-top: none;
+    }
+
+
+    .navbar-right {
+        margin-top: 5.5%;
+    }
+
+    .navbar ul {
+        margin-top: 2%;
+        text-transform: uppercase;
+        margin-left: 0;
+    }
+
+        .navbar ul li {
+            color: #fff;
+            -webkit-transition: all 0.2s;
+            -moz-transition: all 0.2s;
+            -ms-transition: all 0.2s;
+            -o-transition: all 0.2s;
+            transition: all 0.2s;
+        }
+
+    .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+        color: #fff;
+        background-color: #7e99ab;
+        height: 40px;
+        -webkit-transition: all 0.2s;
+        -moz-transition: all 0.2s;
+        -ms-transition: all 0.2s;
+        -o-transition: all 0.2s;
+        transition: all 0.2s;
+    }
+
+    .navbar-default .navbar-nav > li > a {
+        color: #fff;
+        font-family: Montserrat-Regular;
+        font-size: 10pt;
+    }
+
+    .navbar-header {
+        width: 100%;
+    }
+
+    ul li ul {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 100%;
+        list-style-type: none;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        display: none;
+        opacity: 0;
+        visibility: hidden;
+        color: #fff;
+    }
 }
 
 /*
@@ -636,6 +696,7 @@ ul li:hover ul {
 .tags > a {
     margin-left: 5px;
 }
+
 .removeTag {
     color: #d9534f;
     cursor: pointer;

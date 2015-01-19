@@ -26,16 +26,29 @@ namespace CatalogueNew.Models.Services
             }
         }
 
-        public async Task<int> TotalRating(int productID)
+        private async Task<List<Rating>> All(int productID)
         {
-            var rating = await this.Context.Ratings.Where(r => r.ProductID == productID).AverageAsync(r => r.Value);
-
-            return (int)rating;
+            return await this.Context.Ratings.Where(r => r.ProductID == productID).ToListAsync();
         }
 
-        public Task<int> UserRating(int productID, string userID)
+        public async Task<int> TotalRating(int productID)
         {
-            return this.Context.Ratings.Where(r => r.ProductID == productID && r.UserID == userID).Select(r => r.Value).FirstOrDefaultAsync();
+            var ratings = await this.All(productID);
+
+            if (ratings.Count == 0)
+            {
+                return 0;
+            }
+
+            return (int)Math.Round(ratings.Average(r => r.Value));
+
+        }
+
+        public async Task<int> UserRating(int productID, string userID)
+        {
+            var ratings = await this.All(productID);
+
+            return ratings.Where(r => r.UserID == userID).Select(r => r.Value).FirstOrDefault();
         }
     }
 }
