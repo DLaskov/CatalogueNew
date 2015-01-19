@@ -163,7 +163,7 @@ $(window).scroll(function () {
                 marginTop: '0'
             }, 0);
             $(function () {
-                $('.navbar-nav a').hover(function () {
+                $('.main-parent').hover(function () {
                     $(this).css('height', '65px');
                 },
                 function () {

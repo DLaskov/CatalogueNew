@@ -547,7 +547,7 @@ thumbnail:hover {
         left: 26px;
     }
 
-ul li ul {
+.dropdown ul {
     padding: 0;
     position: absolute;
     top: 48px;
@@ -563,13 +563,13 @@ ul li ul {
     color: #fff;
 }
 
-    ul li ul li {
+    .dropdown ul li {
         background: #7e99ab;
         color: #fff;
         font-family: Montserrat-Regular;
     }
 
-        ul li ul li a {
+        .dropdown ul li a {
             color: #fff;
             font-size: 9pt;
             width: 100%;
@@ -578,12 +578,12 @@ ul li ul {
             padding: 10px 20px 10px 20px;
         }
 
-            ul li ul li a:hover {
+            .dropdown ul li a:hover {
                 color: #fff;
                 text-decoration: none;
             }
 
-        ul li ul li:hover {
+        .dropdown ul li:hover {
             background: #738b9b;
             color: #fff;
         }
