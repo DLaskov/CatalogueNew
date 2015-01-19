@@ -54,7 +54,6 @@
     -webkit-box-shadow: 0 0 5px #ccc;
     box-shadow: 0 0 5px #ccc;
     border: 5px solid #fff;
-    left: -5px;
     background: #fff;
     height: 215px !important;
     /*fix other elements on the page moving (on Chrome)*/
@@ -124,6 +123,7 @@
 /* DIRECTION CONTROLS (NEXT / PREV) */
 
 .bx-wrapper .bx-prev {
+    left: 10px;
     background: url(../Images/controls.png) no-repeat 0 -32px;
 }
 
