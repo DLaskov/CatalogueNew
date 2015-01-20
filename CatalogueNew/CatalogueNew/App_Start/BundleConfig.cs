@@ -50,6 +50,11 @@
                     "~/Scripts/moment-with-locales.min.js",
                     "~/Scripts/jquery.scrollUp.min.js",
                     "~/Scripts/scrollUp.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/editUser").Include(
+                "~/Scripts/checkboxes.js",
+                "~/Scripts/radio-buttons.js",
+                "~/Scripts/bootstrap-datepicker.js"));
         }
     }
 }

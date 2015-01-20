@@ -231,6 +231,8 @@
     <Content Include="Images\no_pic_small.gif" />
     <Content Include="Images\top.png" />
     <Content Include="Scripts\app.js" />
+    <Content Include="Scripts\checkboxes.js" />
+    <Content Include="Scripts\radio-buttons.js" />
     <Content Include="Scripts\scrollUp.js" />
     <Content Include="Scripts\wishlist.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />

@@ -710,3 +710,7 @@ ul li:hover ul {
 .main-parent {
     cursor: pointer;
 }
+
+.editUser {
+    display: inline-block;
+}
