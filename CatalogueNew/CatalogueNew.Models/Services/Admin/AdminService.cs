@@ -17,10 +17,11 @@ namespace CatalogueNew.Models.Services
     public class AdminService : BaseService, IAdminService
     {
         private const int pageSize = 10;
-
-        public AdminService(ICatalogueContext context)
+        private UserManager<User> userManager;
+        public AdminService(ICatalogueContext context, UserManager<User> userManager)
             : base(context)
         {
+            this.userManager = userManager;
         }
 
         public IEnumerable<User> GetAll()
@@ -80,31 +81,16 @@ namespace CatalogueNew.Models.Services
         public void Remove(User user)
         {
             var comments = this.Context.Comments.Where(c => c.UserID == user.Id).OrderByDescending(c => c.CommentID).ToList();
-
             foreach (Comment comment in comments)
             {
                 this.Context.Database.ExecuteSqlCommand("usp_deleteComments @id = {0}", comment.CommentID);
             }
+            this.Context.Database.ExecuteSqlCommand("usp_deleteRatingsWishlistsLikesByUserID @UserID = {0}", user.Id);
+            this.Context.SaveChanges();
+            User tempUser = userManager.FindById(user.Id);
+            userManager.Delete(tempUser);
+            this.Context.SaveChanges();
 
-            bool cascadeDelete;
-
-            do
-            {
-                cascadeDelete = false;
-                this.Context.Database.ExecuteSqlCommand("usp_deleteRatingsWishlistsLikesByUserID @UserID = {0}", user.Id);
-                this.Context.Users.Remove(user);
-
-                try
-                {
-                    this.Context.SaveChanges();
-                }
-                catch (DbUpdateConcurrencyException ex)
-                {
-                    cascadeDelete = true;
-                    ex.Entries.Single().Reload();
-                }
-
-            } while (cascadeDelete);
         }
 
         public void AddUserRole(IdentityUserRole userRole)

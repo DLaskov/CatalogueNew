@@ -29,7 +29,7 @@ namespace CatalogueNew.Models.Services
             Product product = (from prod in this.Context.Products
                                where prod.ProductID == id
                                select prod).Include(x => x.Category).Include(x => x.Manufacturer)
-                               .Include("Images").Include(x => x.ProductsTags).FirstOrDefault();
+                               .Include(p => p.Images).Include(x => x.ProductsTags.Select( pt => pt.Tag)).FirstOrDefault();
 
             return product;
         }

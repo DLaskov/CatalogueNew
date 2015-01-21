@@ -1,17 +1,5 @@
 ﻿$(document).ready(function () {
 
-    $("#registerForm").submit(function (event) {
-        if ($("#Password").val() != $("#passwordConfirm").val()) {
-            $("#passwordConfirm").after("<p style=\"color: red\">Password doesn't match!</p>");
-            event.preventDefault();
-        }
-        if ($("#UserName").val() == $("#Password").val()) {
-            $("#Password").after("<p style=\"color: red\">Password must be different from username!</p>");
-            event.preventDefault();
-        }
-        return;
-    });
-
     var getPage = function () {
         var a = $(this);
 
@@ -93,142 +81,77 @@
                     "' value='" + data.UniqueName + "\\" + data.ImgName + "\\" + data.MimeType + "' />"
                 $("div .form-horizontal").prepend(innerHtml);
             });
-            }
-            }
-
-    $("#addTagSpan").on("click", tag.inputForTag);
-    $("#addTag").on("click", function () {
-        var input = $(".tagInput").val();
-        if (input != "") {
-            var productID = $("#product-id").val();
-            tag.addTag(input, productID);
         }
-        });
-    $(".removeTag").on("click", function () {
-        if (confirm("You are going to delete this tag.")) {
-            tag.removeTag($(this).attr("data-tagID"), $("#product-id").val());
-            $(this).remove();
+    }
+
+    $(function () {
+        $('.navbar-brand').data('size', 'big');
+    });
+
+    $(window).scroll(function () {
+        if ($(document).scrollTop() > 0) {
+            if ($('.navbar-brand').data('size') == 'big') {
+                $('.navbar-brand').data('size', 'small');
+                $('.navbar-brand').stop().animate({
+                    height: '0px',
+                    padding: '0'
+                }, 600);
+                $('.navbar').stop().animate({
+                    height: '50px'
+                }, 600);
+                $('.navbar ul').stop().animate({
+                    marginTop: '0'
+                }, 600);
+                $('.navbar-right').stop().animate({
+                    marginTop: '0'
+                }, 600);
+                $('.body-content').stop().animate({
+                    marginTop: '40px'
+                }, 600);
+                $('.dropdown-menu ul').removeAttr('style');
+
+
+                $(function () {
+                    $('.navbar-nav a').hover(function () {
+                        $(this).css('height', '5%');
+                    },
+                    function () {
+                        $(this).css('height', '5%');
+                    });
+                });
+            }
+        }
+        else {
+            if ($('.navbar-brand').data('size') == 'small' && $(window).width() > 768) {
+                $('.navbar-brand').data('size', 'big');
+                $('.navbar-brand').stop().animate({
+                    height: '72px'
+                }, 600);
+                $('.navbar').stop().animate({
+                    height: '150px'
+                }, 600);
+                $('.navbar ul').stop().animate({
+                    marginTop: '7%'
+                }, 600);
+                $('.navbar-right').stop().animate({
+                    marginTop: '7%'
+                }, 600);
+                $('.dropdown-menu').stop().animate({
+                    marginTop: '0'
+                }, 0);
+                $('.body-content').stop().animate({
+                    marginTop: '120px'
+                }, 600);
+                $(function () {
+                    $('.main-parent').hover(function () {
+                        $(this).css('height', '65px');
+                    },
+                    function () {
+                        $(this).css('height', '65px');
+                    });
+                });
+            }
         }
     });
 
-$(function () {
-    $('.navbar-brand').data('size', 'big');
 });
-
-$(window).scroll(function () {
-    if ($(document).scrollTop() > 0) {
-        if ($('.navbar-brand').data('size') == 'big') {
-            $('.navbar-brand').data('size', 'small');
-            $('.navbar-brand').stop().animate({
-                height: '0px',
-                padding: '0'
-            }, 600);
-            $('.navbar').stop().animate({
-                height: '50px'
-            }, 600);
-            $('.navbar ul').stop().animate({
-                marginTop: '0'
-            }, 600);
-            $('.navbar-right').stop().animate({
-                marginTop: '0'
-            }, 600);
-            $('.body-content').stop().animate({
-                marginTop: '40px'
-            }, 600);
-            $('.dropdown-menu ul').removeAttr('style');
-
-
-            $(function () {
-                $('.navbar-nav a').hover(function () {
-                    $(this).css('height', '5%');
-                },
-                function () {
-                    $(this).css('height', '5%');
-                });
-            });
-        }
-    }
-    else {
-        if ($('.navbar-brand').data('size') == 'small' && $(window).width() > 768) {
-            $('.navbar-brand').data('size', 'big');
-            $('.navbar-brand').stop().animate({
-                height: '72px'
-            }, 600);
-            $('.navbar').stop().animate({
-                height: '150px'
-            }, 600);
-            $('.navbar ul').stop().animate({
-                marginTop: '7%'
-            }, 600);
-            $('.navbar-right').stop().animate({
-                marginTop: '7%'
-            }, 600);
-            $('.dropdown-menu').stop().animate({
-                marginTop: '0'
-            }, 0);
-            $('.body-content').stop().animate({
-                marginTop: '120px'
-            }, 600);
-            $(function () {
-                $('.main-parent').hover(function () {
-                    $(this).css('height', '65px');
-                },
-                function () {
-                    $(this).css('height', '65px');
-                });
-            });
-        }
-    }
-});
-
-});
-
-var tag = (function () {
-    function toggleInputForTag() {
-        $(".addTagDiv").fadeToggle("slow", function () {
-            if ($(".addTagDiv").is(':hidden')) {
-                $("#addTagSpan").removeClass("glyphicon-remove");
-                $("#addTagSpan").css("color", "#449d44");
-                $("#addTagSpan").addClass("glyphicon-plus");
-                $(".tagInput").val("");
-
-            } else {
-                $("#addTagSpan").removeClass("glyphicon-plus");
-                $("#addTagSpan").css("color", "#d9534f");
-                $("#addTagSpan").addClass("glyphicon-remove");
-            }
-        })
-    };
-
-    function postTag(value, id) {
-        $.post(
-            "AddTag",
-            { tagName: value, productID: id },
-            function (data) {
-                toggleInputForTag();
-                $(".tags").append("<a href='/Product/Tag?name=" + value.toLowerCase() + "' data-tagID=" + data.tagID + ">" + value.toLowerCase() + "</a>")
-                if (data.isInRole == "yes") {
-                    $(".tags").append("<span class='glyphicon glyphicon-remove-circle removeTag' data-tagID=" + data.tagID + "></span>")
-                }
-            }
-            );
-    };
-
-    function removeTag(tagID, productID) {
-        $.post(
-            "RemoveTag",
-            {
-                tagID: tagID,
-                productID: productID
-            },
-            function () {
-                $("a[data-tagID=" + tagID + "]").remove();
-            }
-            );
-    }
-    return {
-        inputForTag: toggleInputForTag,
-        addTag: postTag,
-        removeTag: removeTag
-    }
-})();

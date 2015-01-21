@@ -68,7 +68,7 @@ namespace CatalogueNew.Web.Controllers
                     WishlistID = 0
                 };
             }
-            product.ProductsTags = tagService.FindAllTagsForProduct(id);
+
             ProductViewModel model = new ProductViewModel()
             {
                 Product = product,
@@ -348,24 +348,16 @@ namespace CatalogueNew.Web.Controllers
         [HttpPost]
         public JsonResult AddTag(string tagName, string productID)
         {
-            try
+            tagService.Add(tagName, Int32.Parse(productID));
+            Tag currentTag = tagService.Find(tagName.ToLower());
+            Response.StatusCode = 200;
+            if (User.IsInRole("Manager"))
             {
-                tagService.Add(tagName, Int32.Parse(productID));
-                Tag currentTag = tagService.Find(tagName.ToLower());
-                Response.StatusCode = 200;
-                if (User.IsInRole("Manager"))
-                {
-                    return new JsonResult() { Data = new { isInRole = "yes" , tagID = currentTag.TagID } };
-                }
-                else
-                {
-                    return new JsonResult() { Data = new { isInRole = "no", tagID = currentTag.TagID } };
-                }
+                return new JsonResult() { Data = new { isInRole = "yes", tagID = currentTag.TagID } };
             }
-            catch
+            else
             {
-                Response.StatusCode = 500;
-                return new JsonResult() { Data = new { Message = "Internal server error!" } };
+                return new JsonResult() { Data = new { isInRole = "no", tagID = currentTag.TagID } };
             }
         }
 
@@ -373,15 +365,7 @@ namespace CatalogueNew.Web.Controllers
         [Authorize(Roles = "Manager")]
         public void RemoveTag(string tagID, string productID)
         {
-            try
-            {
-                tagService.Remove(Int32.Parse(tagID), Int32.Parse(productID));
-                Response.StatusCode = 200;
-            }
-            catch
-            {
-                Response.StatusCode = 500;
-            }
+            tagService.Remove(Int32.Parse(tagID), Int32.Parse(productID));
         }
 
         public ActionResult Tag(string name, int page = 1)

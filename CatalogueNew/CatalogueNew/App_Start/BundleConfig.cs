@@ -16,6 +16,9 @@
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
+            bundles.Add(new ScriptBundle("~/bundles/validator").Include(
+                        "~/Scripts/validator.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
@@ -25,7 +28,6 @@
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                //"~/Content/bootstrap.readable.min.css",
                       "~/Content/bootstrap-theme.min.css",
                       "~/Content/catalogue.css",
                       "~/Content/star-rating.min.css",
@@ -41,6 +43,7 @@
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/product").Include(
+                    "~/Scripts/tag.js",
                     "~/Scripts/like-dislike.js",
                     "~/Scripts/comments.js",
                     "~/Scripts/star-rating.min.js",

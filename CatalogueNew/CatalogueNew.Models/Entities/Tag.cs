@@ -14,6 +14,7 @@ namespace CatalogueNew.Models.Entities
         public int TagID { get; set; }
 
         [Required]
+        [MinLength(3)]
         [StringLength(50)]
         public string Name { get; set; }
     }

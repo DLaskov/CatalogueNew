@@ -5373,7 +5373,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
             padding: 6px 12px;
             margin-left: -1px;
             line-height: 1.42857143;
-            color: #337ab7;
+            color: #7E99AB;
             text-decoration: none;
             background-color: #fff;
             border: 1px solid #ddd;
@@ -5410,8 +5410,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
         z-index: 2;
         color: #fff;
         cursor: default;
-        background-color: #337ab7;
-        border-color: #337ab7;
+        background-color: #7E99AB;
+        border-color: #7E99AB;
     }
 
     .pagination > .disabled > span,
@@ -5694,6 +5694,7 @@ a.badge:focus {
 
 .thumbnail {
     display: block;
+    margin-bottom: 20px;
     height: 215px !important;
     line-height: 1.42857143;
     position: relative;

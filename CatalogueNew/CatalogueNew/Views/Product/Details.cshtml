@@ -66,12 +66,12 @@
             <strong>Tags: </strong>
             <span id="addTagSpan" class="glyphicon glyphicon-plus"></span>
             <div class="addTagDiv" style="display: none;">
-                <input type="text" class="tagInput" placeholder="Enter tag name..." maxlength="50" />
+                <input type="text" class="tagInput" placeholder="Enter tag name..." maxlength="50"/>
                 <button id="addTag" class="btn btn-sm btn-default btn-success">Add</button>
             </div>
             @foreach (ProductTag productTag in Model.Product.ProductsTags)
             {
-                @Html.ActionLink(productTag.Tag.Name, "Tag", new { name = productTag.Tag.Name }, new { @data_tagID = productTag.TagID })
+                @Html.ActionLink(productTag.Tag.Name, "Tag", new { name = productTag.Tag.Name }, new { @class = "tag" , @data_tagID = productTag.TagID })
                 if (User.IsInRole("Manager"))
                 {<span class="glyphicon glyphicon-remove-circle removeTag" data-tagid="@productTag.TagID"></span>}
             }
