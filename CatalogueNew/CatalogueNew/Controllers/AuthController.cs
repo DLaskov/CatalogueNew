@@ -174,11 +174,11 @@ namespace CatalogueNew.Web.Controllers
         {
             var user = authService.GetUserById(User.Identity.GetUserId());
 
-            user.Email = model.Email;
-            user.FirstName = model.FirstName;
-            user.LastName = model.LastName;
-            user.BirthDate = model.BirthDate;
-            user.Gender = model.Gender;
+            user.Email = model.User.Email;
+            user.FirstName = model.User.FirstName;
+            user.LastName = model.User.LastName;
+            user.BirthDate = model.User.BirthDate;
+            user.Gender = model.User.Gender;
 
             if (ModelState.IsValid)
             {

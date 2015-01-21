@@ -2,18 +2,12 @@
 using CatalogueNew.Models.Infrastructure;
 using CatalogueNew.Models.Services;
 using CatalogueNew.Web.Models;
-using Microsoft.AspNet.Identity.EntityFramework;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Net;
-using System.Web;
 using System.Web.Mvc;
 
 namespace CatalogueNew.Web.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Manager")]
     public class AdminController : Controller
     {
         private IAdminService adminServices;
@@ -56,28 +50,29 @@ namespace CatalogueNew.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditUser(UserViewModels userViewModel)
         {
-            UserRole userRoles = GetUserRoles(userViewModel);
-
             if (ModelState.IsValid)
             {
-                User user = new User()
+                UserRole userRoles = GetUserRoles(userViewModel);
+                var user = adminServices.Find(userViewModel.User.Id);
+
+                user.UserName = userViewModel.User.UserName;
+                user.Email = userViewModel.User.Email;
+                user.FirstName = userViewModel.User.FirstName;
+                user.LastName = userViewModel.User.LastName;
+                user.Gender = userViewModel.User.Gender;
+                user.BirthDate = userViewModel.User.BirthDate;
+
+                var isModify = adminServices.Modify(user);
+
+                if (isModify)
                 {
-                    Id = userViewModel.User.Id,
-                    UserName = userViewModel.User.UserName,
-                    Email = userViewModel.User.Email,
-                    FirstName = userViewModel.User.FirstName,
-                    LastName = userViewModel.User.LastName,
-                    Gender = userViewModel.User.Gender,
-                    BirthDate = userViewModel.User.BirthDate,
-                    PasswordHash = userViewModel.User.PasswordHash,
-                    SecurityStamp = userViewModel.User.SecurityStamp
-                };
-
-                adminServices.Modify(user);
-                adminServices.ModifyUserRoles(user, userRoles);
-
-                return RedirectToAction(RedirectURL);
+                    adminServices.ModifyUserRoles(user, userRoles);
+                    return RedirectToAction(RedirectURL);
+                }
             }
+
+            var userModel = adminServices.GetUserWhitRoles(userViewModel.User.Id).FirstOrDefault();
+            userViewModel.UserRole = userModel.Value;
 
             return View(userViewModel);
         }

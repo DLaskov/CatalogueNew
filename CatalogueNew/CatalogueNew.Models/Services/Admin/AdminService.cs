@@ -2,14 +2,9 @@
 using CatalogueNew.Models.Infrastructure;
 using CatalogueNew.Web.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using Microsoft.AspNet.Identity;
-using System.Data.Entity.Validation;
-using System.Diagnostics;
-using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
 
 namespace CatalogueNew.Models.Services
@@ -34,10 +29,19 @@ namespace CatalogueNew.Models.Services
             return this.Context.Users.Find(id);
         }
 
-        public void Modify(User user)
+        public bool Modify(User user)
         {
-            this.Context.Entry(user).State = EntityState.Modified;
-            this.Context.SaveChanges();
+            var checkUser = this.Context.Users.Where(ur => ur.UserName == user.UserName && ur.Id != user.Id).FirstOrDefault();
+            var checkEmail = this.Context.Users.Where(ur => ur.Email == user.Email && ur.Id != user.Id).FirstOrDefault();
+
+            if(checkUser == null && checkEmail == null)
+            {
+                this.Context.Entry(user).State = EntityState.Modified;
+                this.Context.SaveChanges();
+                return true;
+            }
+            return false;
+   
         }
 
         public void ModifyUserRoles(User user, UserRole userRole)

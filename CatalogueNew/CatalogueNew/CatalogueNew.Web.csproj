@@ -234,6 +234,8 @@
     <Content Include="Scripts\deleteConfirm.js" />
     <Content Include="Scripts\validator.js" />
     <Content Include="Scripts\tag.js" />
+    <Content Include="Scripts\checkboxes.js" />
+    <Content Include="Scripts\radio-buttons.js" />
     <Content Include="Scripts\scrollUp.js" />
     <Content Include="Scripts\wishlist.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />

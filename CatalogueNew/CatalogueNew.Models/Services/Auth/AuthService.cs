@@ -17,8 +17,13 @@ namespace CatalogueNew.Models.Services
 
         public void ModifyUser(User user)
         {
-            this.Context.Entry(user).State = EntityState.Modified;
-            this.Context.SaveChanges();
+            var checkEmail = this.Context.Users.FirstOrDefault(ur => ur.Email == user.Email && ur.Id != user.Id);
+
+            if (checkEmail == null)
+            {
+                this.Context.Entry(user).State = EntityState.Modified;
+                this.Context.SaveChanges();
+            }
         }
 
         public User GetUserById(string id)
