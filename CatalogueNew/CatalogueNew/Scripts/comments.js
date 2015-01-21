@@ -12,7 +12,7 @@ var commentsRevealingModule = (function () {
         var productId = $("#product-id").val();
 
         $.ajax({
-            url: 'http://localhost:38006/api/Comments?productId=' + productId,
+            url: '/api/Comments?productId=' + productId,
             type: 'GET',
             dataType: 'json',
             success: function (data) {
@@ -121,7 +121,7 @@ var commentsRevealingModule = (function () {
         }
 
         $.ajax({
-            url: 'http://localhost:38006/api/Comments',
+            url: '/api/Comments',
             type: 'POST',
             data: JSON.stringify(comment),
             contentType: 'application/json; charset=utf-8',
@@ -182,7 +182,7 @@ var commentsRevealingModule = (function () {
         }
 
         $.ajax({
-            url: 'http://localhost:38006/api/Comments',
+            url: '/api/Comments',
             type: 'PUT',
             data: JSON.stringify(comment),
             contentType: 'application/json; charset=utf-8',
@@ -198,7 +198,7 @@ var commentsRevealingModule = (function () {
         var commentId = $(this).parent().find("input").val();
 
         $.ajax({
-            url: 'http://localhost:38006/api/Comments?commentId=' + commentId,
+            url: '/api/Comments?commentId=' + commentId,
             type: 'DELETE',
             dataType: 'json',
             success: function () {
@@ -216,7 +216,7 @@ var commentsRevealingModule = (function () {
         };
 
         $.ajax({
-            url: 'http://localhost:38006/api/Comments',
+            url: '/api/Comments',
             type: 'POST',
             data: JSON.stringify(comment),
             contentType: 'application/json; charset=utf-8',

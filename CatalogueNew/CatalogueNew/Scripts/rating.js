@@ -21,7 +21,7 @@ var ratingRevealingModule = (function () {
         }
 
         $.ajax({
-            url: 'http://localhost:38006/api/Rating',
+            url: '/api/Rating',
             type: 'POST',
             data: JSON.stringify(rating),
             contentType: 'application/json; charset=utf-8',
@@ -34,7 +34,7 @@ var ratingRevealingModule = (function () {
 
     function getProductRating(productID) {
         $.ajax({
-            url: 'http://localhost:38006/api/Rating?&productID=' + productID,
+            url: '/api/Rating?&productID=' + productID,
             type: 'GET',
             dataType: 'json',
             success: function (data) {

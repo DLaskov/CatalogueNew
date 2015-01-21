@@ -22,7 +22,7 @@ var likeRevealingModule = (function () {
         }
 
         $.ajax({
-            url: 'http://localhost:38006/api/LikeDislike',
+            url: '/api/LikeDislike',
             type: 'POST',
             data: JSON.stringify(like),
             contentType: 'application/json; charset=utf-8',
@@ -48,7 +48,7 @@ var likeRevealingModule = (function () {
         }
 
         $.ajax({
-            url: 'http://localhost:38006/api/LikeDislike',
+            url: '/api/LikeDislike',
             type: 'POST',
             data: JSON.stringify(dislike),
             contentType: 'application/json; charset=utf-8',
@@ -61,7 +61,7 @@ var likeRevealingModule = (function () {
 
     function getLikesDislikes() {
         $.ajax({
-            url: 'http://localhost:38006/api/LikeDislike?&productID=' + $productID,
+            url: '/api/LikeDislike?&productID=' + $productID,
             type: 'GET',
             dataType: 'json',
             success: function (data) {
