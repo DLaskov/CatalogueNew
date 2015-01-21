@@ -343,6 +343,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AppController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
@@ -360,6 +361,7 @@
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
     <Compile Include="Infrastructure\NinjectResolver.cs" />
     <Compile Include="Infrastructure\NinjectScope.cs" />
+    <Compile Include="Models\AppUserClaims.cs" />
     <Compile Include="Models\CategoryListViewModel.cs" />
     <Compile Include="Models\CategorySelectListViewModel.cs" />
     <Compile Include="Models\CategoryViewModel.cs" />
