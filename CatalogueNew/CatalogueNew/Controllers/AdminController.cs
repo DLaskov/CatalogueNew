@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace CatalogueNew.Web.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Manager")]
     public class AdminController : Controller
     {
         private IAdminService adminServices;
