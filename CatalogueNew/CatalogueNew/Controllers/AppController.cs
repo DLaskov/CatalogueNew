@@ -6,20 +6,16 @@ using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 
-namespace CatalogueNew.Web.Views
+namespace CatalogueNew.Web.Controllers
 {
-    public abstract class AppViewPage<LogInViewModel> : WebViewPage<LogInViewModel>
+    public abstract class AppController : Controller
     {
-        protected AppUserClaims CurrentUser
+        public AppUserClaims CurrentUser
         {
             get
             {
                 return new AppUserClaims(this.User as ClaimsPrincipal);
             }
         }
-    }
-
-    public abstract class AppViewPage : AppViewPage<dynamic>
-    {
     }
 }
