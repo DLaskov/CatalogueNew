@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Data.Entity.Infrastructure;
+using Microsoft.AspNet.Identity;
 
 namespace CatalogueNew.Models.Services
 {

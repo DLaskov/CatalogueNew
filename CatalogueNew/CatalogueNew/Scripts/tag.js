@@ -7,19 +7,15 @@
             alert("Tag must contain 3 to 50 letters!");
             return;
         }
-
         var regex = /^([a-zA-Z]+ ?)+[a-zA-Z]$/;
         if (regex.test(input)) {
-            var otherTags = [];
-            $.find(".tag").forEach(function () {
-                otherTags.push($(this).text());
+            $.find(".tag").forEach(function (element, index, array) {
+                if(element.innerText == input) input = "";
             })
-            otherTags.forEach(function (currentValue) {
-                if (currentValue == input) {
-                    tag.inputForTag();
-                    return;
-                }
-            })
+            if (input == "") {
+                tag.inputForTag();
+                return;
+            }
             var productID = $("#product-id").val();
             tag.addTag(input, productID);
         } else {
