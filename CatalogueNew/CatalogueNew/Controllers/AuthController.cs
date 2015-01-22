@@ -15,7 +15,6 @@ using System.Web.Mvc;
 
 namespace CatalogueNew.Web.Controllers
 {
-    [AllowAnonymous]
     public class AuthController : Controller
     {
         private UserManager<User> userManager;
@@ -31,6 +30,7 @@ namespace CatalogueNew.Web.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult LogIn(string returnUrl)
         {
             var model = new LogInViewModel
@@ -42,6 +42,7 @@ namespace CatalogueNew.Web.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult> LogIn(LogInViewModel model)
         {
             bool passwordMatch = true;
@@ -96,12 +97,14 @@ namespace CatalogueNew.Web.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             UserValidator(userManager);
@@ -159,6 +162,7 @@ namespace CatalogueNew.Web.Controllers
             };
         }
 
+        [Authorize]
         public ActionResult Manage(string message)
         {
             var user = authService.GetUserById(User.Identity.GetUserId());
@@ -169,6 +173,7 @@ namespace CatalogueNew.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Manage(ManageUserViewModel model)
         {

@@ -13,7 +13,6 @@ using Microsoft.AspNet.Identity;
 
 namespace CatalogueNew.Web.Controllers
 {
-    [AllowAnonymous]
     public class ProductController : Controller
     {
         private ICategoryService categoryService;
@@ -54,6 +53,7 @@ namespace CatalogueNew.Web.Controllers
             return View(productListViewModel);
         }
 
+        [AllowAnonymous]
         public ActionResult Details(int id)
         {
             Product product = productService.Find(id);
@@ -216,6 +216,7 @@ namespace CatalogueNew.Web.Controllers
             return RedirectToAction("ProductAdministration", "Product");
         }
 
+        [AllowAnonymous]
         public ActionResult Index(int? category, int? manufacturer, int page = 1)
         {
             if (User.Identity.IsAuthenticated)
@@ -236,6 +237,7 @@ namespace CatalogueNew.Web.Controllers
             return View(productListViewModels);
         }
 
+        [AllowAnonymous]
         public ActionResult ManufacturersCategoriesSelectList()
         {
             var manufacturersList = new List<SelectListItem>();
@@ -356,6 +358,7 @@ namespace CatalogueNew.Web.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public JsonResult AddTag(string tagName, string productID)
         {
             if (User.Identity.IsAuthenticated)
@@ -372,8 +375,11 @@ namespace CatalogueNew.Web.Controllers
                     return new JsonResult() { Data = new { isInRole = "no", tagID = currentTag.TagID } };
                 }
             }
-            Response.StatusCode = 403;
-            return new JsonResult();
+            else
+            {
+                Response.StatusCode = 403;
+                return new JsonResult();
+            }
         }
 
         [HttpPost]
