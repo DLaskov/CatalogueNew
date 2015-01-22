@@ -116,7 +116,18 @@
                     @Html.LabelFor(m => m.User.BirthDate, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
                         <div class="input-group-sm">
-                            @Html.TextBoxFor(model => model.User.BirthDate, new { @class = "form-control datepicker", placeholder = "Enter Drop-off date here..." })
+
+                            @if (Model.User.BirthDate.HasValue)
+                            {
+                                string stringFormat = Model.User.BirthDate.ToString().Substring(0, 9);
+                                <input type="hidden" hidden id="stringFormat" value="@stringFormat" />
+                                @Html.TextBoxFor(model => model.User.BirthDate, new { @class = "form-control datepicker", placeholder = stringFormat, value = stringFormat })
+                            }
+                            else
+                            {
+                                @Html.TextBoxFor(model => model.User.BirthDate, new { @class = "form-control datepicker", placeholder = "Enter Drop-off date here..." })
+                            }
+
                             @Html.ValidationMessageFor(model => model.User.BirthDate)
                         </div>
                     </div>
@@ -140,7 +151,12 @@
     <script src="~/Scripts/bootstrap-datepicker.js"></script>
     <script type="text/javascript">
         $(function () {
-            $('.datepicker').datepicker();
+            $(function () {
+                var $strFormat = $('#stringFormat').val();
+                var $datePicker = $('.datepicker');
+                $datePicker.datepicker();
+                $datePicker.val($strFormat);
+            });
         });
     </script>
 }
