@@ -11,12 +11,16 @@ namespace CatalogueNew.Models.Services
 {
     public class ProductService : BaseService, IProductService
     {
-        private const int pageSize = 9;
 
         public ProductService(ICatalogueContext context)
             : base(context)
         {
 
+        }
+
+        public int GetProductsPerPage(string id)
+        {
+            return this.Context.Users.Where(u => u.Id == id).Select(c => c.ProductsPerPage).Single();
         }
 
         public IEnumerable<Product> All()
@@ -59,7 +63,7 @@ namespace CatalogueNew.Models.Services
             this.Context.SaveChanges();
         }
 
-        public PagedList<Product> GetProductsByManufacturer(int page, int manufacturerID)
+        public PagedList<Product> GetProductsByManufacturer(int page, int manufacturerID, int pageSize)
         {
             var pagedList = new PagedList<Product>(this.Context
                 .Products
@@ -69,7 +73,7 @@ namespace CatalogueNew.Models.Services
             return pagedList;
         }
 
-        public PagedList<Product> GetProducts(int page)
+        public PagedList<Product> GetProducts(int page, int pageSize)
         {
             var products = this.Context.Products.OrderBy(c => c.Name).Include("Images");
 
@@ -77,7 +81,7 @@ namespace CatalogueNew.Models.Services
             return pagedList;
         }
 
-        public PagedList<Product> GetProducts(int page, int? categoryId, int? manufacturerId)
+        public PagedList<Product> GetProducts(int page, int? categoryId, int? manufacturerId, int pageSize)
         {
             if (categoryId != null && manufacturerId != null)
             {
@@ -110,7 +114,7 @@ namespace CatalogueNew.Models.Services
             }
         }
 
-        public PagedList<Product> GetProducts(int page, string userID)
+        public PagedList<Product> GetProducts(int page, string userID, int pageSize)
         {
             var products = (from prod in this.Context.Products
                             join wish in this.Context.Wishlists on prod.ProductID equals wish.ProductID
@@ -121,7 +125,7 @@ namespace CatalogueNew.Models.Services
             var pagedList = new PagedList<Product>(products, page, pageSize);
             return pagedList;
         }
-        public PagedList<Product> GetProductsByTag(int page, int tagID)
+        public PagedList<Product> GetProductsByTag(int page, int tagID, int pageSize)
         {
             var products = (from prod in this.Context.Products
                             join productsTags in this.Context.ProductsTags on prod.ProductID equals productsTags.ProductID

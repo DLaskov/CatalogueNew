@@ -179,6 +179,7 @@ namespace CatalogueNew.Web.Controllers
             user.LastName = model.User.LastName;
             user.BirthDate = model.User.BirthDate;
             user.Gender = model.User.Gender;
+            user.ProductsPerPage = model.User.ProductsPerPage;
 
             if (ModelState.IsValid)
             {

@@ -38,6 +38,10 @@ namespace CatalogueNew.Models.Entities
 
         public GenderType? Gender { get; set; }
 
+        [Range(1,50)]
+        [Display(Name = "How many products per page you want to view")]
+        public int ProductsPerPage { get; set; }
+
         public virtual ICollection<Wishlist> Wishlists { get; set; }
 
     }

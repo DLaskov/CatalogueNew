@@ -22,7 +22,7 @@
             alert("Invalid tag name!");
         }
     });
-    $("body").on("click", ".removeTag", function () {
+    $("div .tags").on("click", ".removeTag", function () {
         if (confirm("You are going to delete this tag.")) {
             tag.removeTag($(this).attr("data-tagID"), $("#product-id").val());
             $(this).remove();

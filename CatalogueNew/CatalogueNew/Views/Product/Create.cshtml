@@ -10,8 +10,7 @@ else
 }
 }
 @section AddToHead {
-    <link href="~/scripts/dropzone/css/basic.css" rel="stylesheet" />
-    <link href="~/scripts/dropzone/css/dropzone.css" rel="stylesheet" />
+    @Styles.Render("~/bundles/dropzone.css")
 }
 <h2>@ViewBag.Title</h2>
 
@@ -116,4 +115,5 @@ else
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/images.js")
 }

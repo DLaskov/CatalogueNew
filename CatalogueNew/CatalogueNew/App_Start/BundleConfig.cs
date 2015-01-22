@@ -8,23 +8,22 @@
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-            "~/Scripts/jquery-{version}.js",
-            "~/Scripts/jquery-ui-{version}.js",
+            "~/Scripts/lib/jquery-{version}.js",
+            "~/Scripts/lib/jquery-ui-{version}.js",
             "~/Scripts/app.js",
-            "~/Scripts/jquery.unobtrusive-ajax.min.js"));
+            "~/Scripts/lib/jquery.unobtrusive-ajax.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
+                        "~/Scripts/lib/jquery.validate*"));
 
             bundles.Add(new ScriptBundle("~/bundles/validator").Include(
                         "~/Scripts/validator.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-*"));
+                        "~/Scripts/lib/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.min.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/lib/bootstrap.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
@@ -32,14 +31,18 @@
                       "~/Content/catalogue.css",
                       "~/Content/star-rating.min.css",
                       "~/Content/Site.css"));
+            bundles.Add(new StyleBundle("~/bundles/dropzone.css").Include(
+                      "~/Scripts/lib/dropzone/css/basic.css",
+                      "~/Scripts/lib/dropzone/css/dropzone.css"
+                ));
 
             bundles.Add(new ScriptBundle("~/bundles/dropzonescripts").Include(
-                     "~/Scripts/dropzone/dropzone.js"));
+                     "~/Scripts/lib/dropzone/dropzone.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/sliderjs").Include(
-                     "~/Scripts/jquery.easing.1.3.js",
-                     "~/Scripts/jquery.fitvids.js",
-                     "~/Scripts/jquery.bxslider.js"
+                     "~/Scripts/lib/jquery.easing.1.3.js",
+                     "~/Scripts/lib/jquery.fitvids.js",
+                     "~/Scripts/lib/jquery.bxslider.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/product").Include(
@@ -49,15 +52,18 @@
                     "~/Scripts/star-rating.min.js",
                     "~/Scripts/rating.js",
                     "~/Scripts/wishlist.js",
-                    "~/Scripts/moment.min.js",
-                    "~/Scripts/moment-with-locales.min.js",
-                    "~/Scripts/jquery.scrollUp.min.js",
+                    "~/Scripts/lib/moment.min.js",
+                    "~/Scripts/lib/moment-with-locales.min.js",
+                    "~/Scripts/lib/jquery.scrollUp.min.js",
                     "~/Scripts/scrollUp.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/editUser").Include(
                 "~/Scripts/checkboxes.js",
                 "~/Scripts/radio-buttons.js",
-                "~/Scripts/bootstrap-datepicker.js"));
+                "~/Scripts/lib/bootstrap-datepicker.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/images.js").Include(
+                "~/Scripts/imagesUploadDelete.js"));
         }
     }
 }

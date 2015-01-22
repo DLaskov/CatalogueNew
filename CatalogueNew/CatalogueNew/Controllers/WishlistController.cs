@@ -15,6 +15,7 @@ namespace CatalogueNew.Web.Controllers
 
         private WishlistService wishlistService;
         private ProductService productService;
+        private int pageSize = 9;
 
         public WishlistController(WishlistService wishlistService, ProductService productService)
         {
@@ -30,7 +31,7 @@ namespace CatalogueNew.Web.Controllers
             }
 
             string userID = User.Identity.GetUserId();
-            var pageItems = productService.GetProducts(page, userID);
+            var pageItems = productService.GetProducts(page, userID, productService.GetProductsPerPage(userID));
             var pagingViewModel = new PagingViewModel(pageItems.PageCount, pageItems.CurrentPage, "Index");
 
             var productListViewModel = new ProductListViewModel(pageItems.Items.ToList(), pagingViewModel);
@@ -51,7 +52,7 @@ namespace CatalogueNew.Web.Controllers
             wishlistService.Remove(productID, userID);
 
             int pageNumber = Int32.Parse(page);
-            var pageItems = productService.GetProducts(pageNumber, userID);
+            var pageItems = productService.GetProducts(pageNumber, userID, pageSize);
 
             return Json(new { Page = pageItems.Items.Count() <= 0 ? pageItems.CurrentPage - 1 : pageItems.CurrentPage });
         }

@@ -7,5 +7,6 @@ namespace CatalogueNew.Models.Services
     public interface ICategoryService : ICommonService<Category>
     {
         PagedList<Category> GetCategories(int page);
+        IEnumerable<Category> All();
     }
 }

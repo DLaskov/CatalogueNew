@@ -6,7 +6,6 @@ namespace CatalogueNew.Models.Services
      where T : class
     {
         void Add(T entity);
-        IEnumerable<T> All();
         void Remove(int id);
         void Remove(T entity);
         T Find(int id);

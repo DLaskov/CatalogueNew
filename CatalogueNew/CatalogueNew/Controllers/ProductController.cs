@@ -22,6 +22,7 @@ namespace CatalogueNew.Web.Controllers
         private IImageService imageService;
         private IWishlistService wishlistService;
         private ITagService tagService;
+        private int pageSize = Int32.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["PageSize"]);
 
         public ProductController(ICategoryService categoryService, IManufacturerService manufacturerService,
             IProductService productService, IImageService imageService, IWishlistService wishlistService, ITagService tagService)
@@ -37,7 +38,11 @@ namespace CatalogueNew.Web.Controllers
         [Authorize(Roles = "Manager")]
         public ActionResult ProductAdministration(int page = 1)
         {
-            PagedList<Product> pageItems = productService.GetProducts(page);
+            if (User.Identity.IsAuthenticated)
+            {
+                pageSize = productService.GetProductsPerPage(User.Identity.GetUserId());
+            }
+            PagedList<Product> pageItems = productService.GetProducts(page, pageSize);
             var pagingViewModel = new PagingViewModel(pageItems.PageCount, pageItems.CurrentPage, "ProductAdministration");
 
             var productListViewModel = new ProductListViewModel()
@@ -213,7 +218,12 @@ namespace CatalogueNew.Web.Controllers
 
         public ActionResult Index(int? category, int? manufacturer, int page = 1)
         {
-            var pageItems = productService.GetProducts(page, category, manufacturer);
+            if (User.Identity.IsAuthenticated)
+            {
+                pageSize = productService.GetProductsPerPage(User.Identity.GetUserId());
+            }
+
+            var pageItems = productService.GetProducts(page, category, manufacturer, pageSize);
             var pagingViewModel = new PagingViewModel(pageItems.PageCount, pageItems.CurrentPage, "Index");
 
             var productListViewModels = new ProductListViewModel(pageItems.Items.ToList(), pagingViewModel);
@@ -266,7 +276,7 @@ namespace CatalogueNew.Web.Controllers
             {
                 if (file != null && file.ContentLength > 0)
                 {
-                    var originalDirectory = new DirectoryInfo(string.Format("{0}Images\\TempImages", Server.MapPath(@"\")));
+                    var originalDirectory = Server.MapPath("~/Images/TempImages/");
                     string pathString = originalDirectory.ToString();
                     bool isExists = Directory.Exists(pathString);
 
@@ -348,17 +358,22 @@ namespace CatalogueNew.Web.Controllers
         [HttpPost]
         public JsonResult AddTag(string tagName, string productID)
         {
-            tagService.Add(tagName, Int32.Parse(productID));
-            Tag currentTag = tagService.Find(tagName.ToLower());
-            Response.StatusCode = 200;
-            if (User.IsInRole("Manager"))
+            if (User.Identity.IsAuthenticated)
             {
-                return new JsonResult() { Data = new { isInRole = "yes", tagID = currentTag.TagID } };
+                tagService.Add(tagName, Int32.Parse(productID));
+                Tag currentTag = tagService.Find(tagName.ToLower());
+                Response.StatusCode = 200;
+                if (User.IsInRole("Manager"))
+                {
+                    return new JsonResult() { Data = new { isInRole = "yes", tagID = currentTag.TagID } };
+                }
+                else
+                {
+                    return new JsonResult() { Data = new { isInRole = "no", tagID = currentTag.TagID } };
+                }
             }
-            else
-            {
-                return new JsonResult() { Data = new { isInRole = "no", tagID = currentTag.TagID } };
-            }
+            Response.StatusCode = 403;
+            return new JsonResult();
         }
 
         [HttpPost]
@@ -383,7 +398,11 @@ namespace CatalogueNew.Web.Controllers
                     Response.StatusCode = 404;
                     return View();
                 }
-                var pageItems = productService.GetProductsByTag(page, tag.TagID);
+                if (User.Identity.IsAuthenticated)
+                {
+                    pageSize = productService.GetProductsPerPage(User.Identity.GetUserId());
+                }
+                var pageItems = productService.GetProductsByTag(page, tag.TagID, pageSize);
                 var pagingViewModel = new PagingViewModel(pageItems.PageCount, pageItems.CurrentPage, "Tag", nameLower);
 
                 var productListViewModel = new ProductListViewModel(pageItems.Items.ToList(), pagingViewModel);

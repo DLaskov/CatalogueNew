@@ -10,14 +10,16 @@ namespace CatalogueNew.Models.Services
 {
     public interface IProductService : ICommonService<Product>
     {
-        PagedList<Product> GetProducts(int page);
+        int GetProductsPerPage(string id);
 
-        PagedList<Product> GetProductsByManufacturer(int page, int manufacturerID);
+        PagedList<Product> GetProducts(int page, int pageSize);
 
-        PagedList<Product> GetProducts(int page, int? categoryId, int? manufacturerId);
+        PagedList<Product> GetProductsByManufacturer(int page, int manufacturerID, int pageSize);
 
-        PagedList<Product> GetProducts(int page, string userID);
+        PagedList<Product> GetProducts(int page, int? categoryId, int? manufacturerId, int pageSize);
 
-        PagedList<Product> GetProductsByTag(int page, int tagID);
+        PagedList<Product> GetProducts(int page, string userID, int pageSize);
+
+        PagedList<Product> GetProductsByTag(int page, int tagID, int pageSize);
     }
 }
