@@ -14,8 +14,6 @@ namespace CatalogueNew.Models.Services
 
         PagedList<Product> GetProducts(int page, int pageSize);
 
-        PagedList<Product> GetProductsByManufacturer(int page, int manufacturerID, int pageSize);
-
         PagedList<Product> GetProducts(int page, int? categoryId, int? manufacturerId, int pageSize);
 
         PagedList<Product> GetProducts(int page, string userID, int pageSize);

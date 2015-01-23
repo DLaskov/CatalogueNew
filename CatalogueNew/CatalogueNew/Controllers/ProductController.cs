@@ -41,6 +41,7 @@ namespace CatalogueNew.Web.Controllers
             {
                 pageSize = productService.GetProductsPerPage(User.Identity.GetUserId());
             }
+
             PagedList<Product> pageItems = productService.GetProducts(page, pageSize);
             var pagingViewModel = new PagingViewModel(pageItems.PageCount, pageItems.CurrentPage, "ProductAdministration");
 
@@ -358,27 +359,19 @@ namespace CatalogueNew.Web.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize]
         public JsonResult AddTag(string tagName, string productID)
         {
-            if (User.Identity.IsAuthenticated)
+            tagService.Add(tagName, Int32.Parse(productID));
+            Tag currentTag = tagService.Find(tagName.ToLower());
+            Response.StatusCode = 200;
+            if (User.IsInRole("Manager"))
             {
-                tagService.Add(tagName, Int32.Parse(productID));
-                Tag currentTag = tagService.Find(tagName.ToLower());
-                Response.StatusCode = 200;
-                if (User.IsInRole("Manager"))
-                {
-                    return new JsonResult() { Data = new { isInRole = "yes", tagID = currentTag.TagID } };
-                }
-                else
-                {
-                    return new JsonResult() { Data = new { isInRole = "no", tagID = currentTag.TagID } };
-                }
+                return new JsonResult() { Data = new { isInRole = "yes", tagID = currentTag.TagID } };
             }
             else
             {
-                Response.StatusCode = 403;
-                return new JsonResult();
+                return new JsonResult() { Data = new { isInRole = "no", tagID = currentTag.TagID } };
             }
         }
 

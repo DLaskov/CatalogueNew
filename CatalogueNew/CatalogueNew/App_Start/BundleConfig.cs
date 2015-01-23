@@ -13,8 +13,9 @@
             "~/Scripts/app.js",
             "~/Scripts/lib/jquery.unobtrusive-ajax.min.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/lib/jquery.validate*"));
+            bundles.Add(new ScriptBundle("~/bundles/input.js").Include(
+                        "~/Scripts/lib/jquery.validate*",
+                        "~/Scripts/lib/bootstrap-datepicker.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/validator").Include(
                         "~/Scripts/validator.js"));
@@ -59,8 +60,7 @@
 
             bundles.Add(new ScriptBundle("~/bundles/editUser").Include(
                 "~/Scripts/checkboxes.js",
-                "~/Scripts/radio-buttons.js",
-                "~/Scripts/lib/bootstrap-datepicker.js"));
+                "~/Scripts/radio-buttons.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/images.js").Include(
                 "~/Scripts/imagesUploadDelete.js"));

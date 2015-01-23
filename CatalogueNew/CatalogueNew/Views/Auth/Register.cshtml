@@ -50,7 +50,7 @@
         </div>
         <div class="form-group">
             <label for="@Html.IdFor(x => x.BirthDate)">Birth date </label>
-            <input type="date" class="form-control" id="@Html.IdFor(x => x.BirthDate)" name="@Html.IdFor(x => x.BirthDate)" />
+            @Html.TextBoxFor(x => x.BirthDate, new { @class = "form-control datepicker"})
         </div>
         <div class="form-group">
             <label for="@Html.IdFor(x => x.Gender)">Gender </label>
@@ -67,5 +67,14 @@
     </div>
 }
 @section Scripts {
-@Scripts.Render("~/bundles/validator")
+<link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+@Scripts.Render("~/bundles/input.js")
+<script type="text/javascript">
+        $(function () {
+            var $strFormat = $('#stringFormat').val();
+            var $datePicker = $('.datepicker');
+            $datePicker.datepicker();
+            $datePicker.val($strFormat);
+        });
+</script>
 }

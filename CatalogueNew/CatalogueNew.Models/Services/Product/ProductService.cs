@@ -63,16 +63,6 @@ namespace CatalogueNew.Models.Services
             this.Context.SaveChanges();
         }
 
-        public PagedList<Product> GetProductsByManufacturer(int page, int manufacturerID, int pageSize)
-        {
-            var pagedList = new PagedList<Product>(this.Context
-                .Products
-                .Where(mn => mn.ManufacturerID == manufacturerID)
-                .OrderBy(c => c.Name), page, pageSize);
-
-            return pagedList;
-        }
-
         public PagedList<Product> GetProducts(int page, int pageSize)
         {
             var products = this.Context.Products.OrderBy(c => c.Name).Include("Images");
