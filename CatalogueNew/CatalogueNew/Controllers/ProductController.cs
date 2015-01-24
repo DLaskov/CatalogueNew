@@ -22,7 +22,7 @@ namespace CatalogueNew.Web.Controllers
         private IImageService imageService;
         private IWishlistService wishlistService;
         private ITagService tagService;
-        private int productsPerPage = Int32.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["PageSize"]);
+        private int productsPerPage;
 
         public ProductController(ICategoryService categoryService, IManufacturerService manufacturerService,
             IProductService productService, IImageService imageService, IWishlistService wishlistService, ITagService tagService)
@@ -33,6 +33,7 @@ namespace CatalogueNew.Web.Controllers
             this.imageService = imageService;
             this.wishlistService = wishlistService;
             this.tagService = tagService;
+            this.productsPerPage = Int32.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["PageSize"]);
         }
 
         protected override void OnAuthentication(System.Web.Mvc.Filters.AuthenticationContext filterContext)

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Caching;
 using Microsoft.AspNet.Identity;
 
 namespace CatalogueNew.Web.Controllers
@@ -15,12 +16,31 @@ namespace CatalogueNew.Web.Controllers
 
         private WishlistService wishlistService;
         private ProductService productService;
-        private int pageSize = 9;
+        private int productsPerPage;
 
         public WishlistController(WishlistService wishlistService, ProductService productService)
         {
             this.wishlistService = wishlistService;
             this.productService = productService;
+            this.productsPerPage = Int32.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["PageSize"]);
+        }
+
+        protected override void OnAuthentication(System.Web.Mvc.Filters.AuthenticationContext filterContext)
+        {
+            base.OnAuthentication(filterContext);
+            if (Request.IsAuthenticated)
+            {
+                string id = User.Identity.GetUserId();
+                if (HttpRuntime.Cache[id + ".productsPerPage"] == null)
+                {
+                    productsPerPage = productService.GetProductsPerPage(User.Identity.GetUserId());
+                    HttpRuntime.Cache.Add(id + ".productsPerPage", productsPerPage, null, Cache.NoAbsoluteExpiration, Cache.NoSlidingExpiration, CacheItemPriority.Default, null);
+                }
+                else
+                {
+                    productsPerPage = Int32.Parse(HttpRuntime.Cache[id + ".productsPerPage"].ToString());
+                }
+            }
         }
 
         public ActionResult Index(int page = 1)
@@ -52,7 +72,7 @@ namespace CatalogueNew.Web.Controllers
             wishlistService.Remove(productID, userID);
 
             int pageNumber = Int32.Parse(page);
-            var pageItems = productService.GetProducts(pageNumber, userID, pageSize);
+            var pageItems = productService.GetProducts(pageNumber, userID, productsPerPage);
 
             return Json(new { Page = pageItems.Items.Count() <= 0 ? pageItems.CurrentPage - 1 : pageItems.CurrentPage });
         }
