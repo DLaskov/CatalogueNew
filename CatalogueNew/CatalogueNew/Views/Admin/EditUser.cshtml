@@ -86,7 +86,7 @@
                     {
                         string stringFormat = Model.User.BirthDate.ToString().Substring(0, 9);
                         <input type="hidden" hidden id="stringFormat" value="@stringFormat" />
-                        @Html.TextBoxFor(model => model.User.BirthDate, new { @class = "form-control datepicker", placeholder = stringFormat, value = stringFormat })
+                        @Html.TextBoxFor(model => model.User.BirthDate, new { @class = "form-control datepicker", placeholder = stringFormat, @Value = stringFormat })
                     }
                     else
                     {

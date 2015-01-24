@@ -11,7 +11,6 @@ namespace CatalogueNew.Models.Services
 {
     public class ProductService : BaseService, IProductService
     {
-
         public ProductService(ICatalogueContext context)
             : base(context)
         {

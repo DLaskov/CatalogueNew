@@ -121,7 +121,8 @@ namespace CatalogueNew.Web.Controllers
                 BirthDate = model.BirthDate,
                 Email = model.Email,
                 LastName = model.LastName,
-                Gender = model.Gender
+                Gender = model.Gender,
+                ProductsPerPage = Int32.Parse(System.Web.Configuration.WebConfigurationManager.AppSettings["PageSize"])
             };
 
             var result = await userManager.CreateAsync(user, model.Password);
@@ -191,7 +192,7 @@ namespace CatalogueNew.Web.Controllers
                 if (model.OldPassword == null || model.NewPassword == null || model.ConfirmPassword == null)
                 {
                     authService.ModifyUser(user);
-
+                    HttpRuntime.Cache.Remove(user.Id + ".productsPerPage");
                     return RedirectToAction("Manage", new { Message = ModifyUserSuccess });
                 }
 
@@ -203,7 +204,7 @@ namespace CatalogueNew.Web.Controllers
                     user.PasswordHash = passHash;
 
                     authService.ModifyUser(user);
-
+                    HttpRuntime.Cache.Remove(user.Id + ".productsPerPage");
                     return RedirectToAction("Manage", new { Message = ChangePasswordSuccess });
                 }
                 else
